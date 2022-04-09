@@ -1,0 +1,21 @@
+version: "3.2"
+
+volumes:
+  storage-let-me-rent:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:12
+    container_name: storage-let-me-rent
+    domainname: storage
+    volumes:
+      - type: volume
+        source: storage-let-me-rent
+        target: /var/lib/postgresql/dataConfig
+    environment:
+      POSTGRES_DB: letmerent
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespass
+    ports:
+      - "5435:5432"

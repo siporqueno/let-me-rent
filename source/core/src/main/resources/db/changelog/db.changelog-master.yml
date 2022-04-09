@@ -1,0 +1,6 @@
+databaseChangeLog:
+	- preConditions:
+		  - runningAs: postgres
+
+	- changeSet:
+		  id: 1
