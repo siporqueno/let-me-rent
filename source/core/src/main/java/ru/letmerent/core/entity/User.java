@@ -38,7 +38,6 @@ public class User {
     private String userName;
     @Column(name = "password")
     private String password;
-    
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
         joinColumns = @JoinColumn(name = "user_id"),
@@ -49,7 +48,17 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Instrument> instruments;
     
-    public User(String firstName, String secondName, String lastName, String email, String userName, String password, List<Role> roles, List<Instrument> instruments) {
+    public User
+        (
+            String firstName,
+            String secondName,
+            String lastName,
+            String email,
+            String userName,
+            String password,
+            List<Role> roles,
+            List<Instrument> instruments
+        ) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;

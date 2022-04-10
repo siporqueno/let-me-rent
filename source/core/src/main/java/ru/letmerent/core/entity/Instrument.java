@@ -7,14 +7,17 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "instrument")
@@ -28,23 +31,47 @@ public class Instrument {
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "brand")
-    private String brand;
     @Column(name = "description")
     private String description;
+    @Column(name = "price")
+    private BigDecimal price;
     @Column(name = "fee")
     private BigDecimal fee;
     @ManyToOne
     private User owner;
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
-    private List<Picture> pictures = new ArrayList<>();
+    private List<Picture> pictures;
+    @ManyToOne
+    private Producer producer;
+    @ManyToOne
+    private Category category;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "instrument_rent",
+        joinColumns = @JoinColumn(name = "instrument_id"),
+        inverseJoinColumns = @JoinColumn(name = "rent_id")
+    )
+    private List<Rent> rents;
     
-    public Instrument(String title, String brand, String description, BigDecimal fee, User owner, List<Picture> pictures) {
+    public Instrument
+        (
+            String title,
+            String description,
+            BigDecimal price,
+            BigDecimal fee,
+            User owner,
+            List<Picture> pictures,
+            Producer producer,
+            Category category,
+            List<Rent> rents
+        ) {
         this.title = title;
-        this.brand = brand;
         this.description = description;
+        this.price = price;
         this.fee = fee;
         this.owner = owner;
         this.pictures = pictures;
+        this.producer = producer;
+        this.category = category;
+        this.rents = rents;
     }
 }

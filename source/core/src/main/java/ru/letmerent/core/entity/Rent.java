@@ -10,9 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "rent")
 @Entity
@@ -24,21 +26,19 @@ public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     @ManyToOne
     private User renter;
-    @ManyToOne
-    private User lessor;
-    
     @Column(name = "date_start")
     private LocalDateTime dateStart;
     @Column(name = "date_end")
     private LocalDateTime dateEnd;
+    @ManyToMany(mappedBy = "rents")
+    private List<Instrument> instruments;
     
-    public Rent(User renter, User lessor, LocalDateTime dateStart, LocalDateTime dateEnd) {
+    public Rent(User renter, LocalDateTime dateStart, LocalDateTime dateEnd, List<Instrument> instruments) {
         this.renter = renter;
-        this.lessor = lessor;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.instruments = instruments;
     }
 }

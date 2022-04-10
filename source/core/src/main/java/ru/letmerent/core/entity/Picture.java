@@ -18,27 +18,16 @@ import javax.persistence.Table;
 @Getter
 @Setter
 public class Picture {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name = "name", nullable = false)
-    private String name;
-    
-    @Column(name = "content_type", nullable = false)
-    private String contentType;
-    
-    @Column(name = "storage_uuid")
-    private String storageUUID;
-    
+    @Column(name = "url", nullable = false)
+    private String url;
     @ManyToOne
     private Instrument instrument;
     
-    public Picture(String name, String contentType, String storageUUID, Instrument instrument) {
-        this.name = name;
-        this.contentType = contentType;
-        this.storageUUID = storageUUID;
+    public Picture(String url, Instrument instrument) {
+        this.url = url;
         this.instrument = instrument;
     }
 }

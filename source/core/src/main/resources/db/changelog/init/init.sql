@@ -1,3 +1,23 @@
+CREATE TABLE IF NOT EXISTS role
+(
+    id   BIGSERIAL    NOT NULL primary key,
+    name varchar(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS category
+(
+    id          BIGSERIAL    NOT NULL primary key,
+    name        varchar(255) NOT NULL UNIQUE,
+    description varchar(255)
+);
+
+CREATE TABLE IF NOT EXISTS producer
+(
+    id          BIGSERIAL    NOT NULL primary key,
+    name        varchar(255) NOT NULL UNIQUE,
+    description varchar(255)
+);
+
 CREATE TABLE IF NOT EXISTS "user"
 (
     id          BIGSERIAL    NOT NULL primary key,
@@ -9,18 +29,14 @@ CREATE TABLE IF NOT EXISTS "user"
     password    varchar(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS role
-(
-    id   BIGSERIAL    NOT NULL primary key,
-    name varchar(255) NOT NULL UNIQUE
-);
-
 CREATE TABLE IF NOT EXISTS instrument
 (
     id          BIGSERIAL    NOT NULL primary key,
     title       varchar(255) NOT NULL,
-    brand       varchar(255) NOT NULL default 'no_brand',
+    category_id BIGINT       NOT NULL REFERENCES category,
+    producer_id BIGINT       NOT NULL REFERENCES producer,
     description varchar(255),
+    price       numeric,
     fee         numeric,
     user_id     BIGINT       NOT NULL REFERENCES "user"
 );
@@ -36,10 +52,8 @@ CREATE TABLE IF NOT EXISTS rent
 
 CREATE TABLE IF NOT EXISTS picture
 (
-    id           BIGSERIAL    NOT NULL primary key,
-    name         varchar(255) not null,
-    content_type varchar(255) not null,
-    storage_uuid varchar(255) not null
+    id  BIGSERIAL    NOT NULL primary key,
+    url varchar(500) not null
 );
 
 CREATE TABLE IF NOT EXISTS user_role
