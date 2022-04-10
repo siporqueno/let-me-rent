@@ -3,6 +3,7 @@ package ru.letmerent.core.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.User;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import java.util.Collection;
 public interface InstrumentController {
 
     Collection<Instrument> getAllInstrument();
+
+    Collection<Instrument> getAllInstrumentByOwner(User user);
 
     Instrument getInstrumentById(Long id);
 
