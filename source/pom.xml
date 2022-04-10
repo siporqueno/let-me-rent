@@ -20,6 +20,7 @@
         <java.version>11</java.version>
         <spring.version>2.6.6</spring.version>
         <lombok.version>1.18.22</lombok.version>
+        <liquibase.version>4.9.0</liquibase.version>
         <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
     <dependencies>
