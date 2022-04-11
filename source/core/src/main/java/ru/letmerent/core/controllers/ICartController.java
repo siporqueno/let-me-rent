@@ -2,20 +2,20 @@ package ru.letmerent.core.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.letmerent.core.entity.Cart;
+import ru.letmerent.core.entity.ICart;
 import ru.letmerent.core.entity.User;
 
 @Controller
 @RequestMapping("/api/v1/carts")
-public interface CartController {
+public interface ICartController {
 
-    Cart createUserCart(User user);
+    ICart createUserCart(User user);
 
-    Cart getCartByUserId(Long id);
+    ICart getCartByUserId(Long id);
 
-    Cart addInstrumentInCart(Long id);
+    ICart addInstrumentInCart(Long id);
 
-    Cart removeInstrumentFromCart(Long id);
+    ICart removeInstrumentFromCart(Long id);
 
     void clearCart();
 }

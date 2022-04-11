@@ -1,4 +1,4 @@
 package ru.letmerent.core.entity;
 
-public interface Cart {
+public interface IOrder {
 }

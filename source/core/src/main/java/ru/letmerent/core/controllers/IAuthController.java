@@ -6,7 +6,7 @@ import ru.letmerent.core.entity.User;
 
 @Controller
 @RequestMapping("/api/v1/auth")
-public interface AuthController {
+public interface IAuthController {
 
     User authenticate(String token);
 

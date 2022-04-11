@@ -1,4 +1,4 @@
 package ru.letmerent.core.entity;
 
-public interface Order {
+public interface ICart {
 }

@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Controller
 @RequestMapping("/api/v1/instruments")
-public interface InstrumentController {
+public interface IInstrumentController {
 
     Collection<Instrument> getAllInstrument();
 
