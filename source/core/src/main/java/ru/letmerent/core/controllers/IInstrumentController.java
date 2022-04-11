@@ -27,5 +27,7 @@ public interface IInstrumentController {
     Instrument modifyInstrument(Instrument instrument);
 
     Instrument changeInstrumentPrice(Long id, BigDecimal price);
+    
+    Instrument changeInstrumentFee(Long id, BigDecimal price);
 
 }
