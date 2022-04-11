@@ -46,32 +46,9 @@ public class Instrument {
     @ManyToOne
     private Category category;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "instrument_rent",
+    @JoinTable(name = "instrument_orderItem",
         joinColumns = @JoinColumn(name = "instrument_id"),
-        inverseJoinColumns = @JoinColumn(name = "rent_id")
+        inverseJoinColumns = @JoinColumn(name = "orderItem_id")
     )
-    private List<Rent> rents;
-    
-    public Instrument
-        (
-            String title,
-            String description,
-            BigDecimal price,
-            BigDecimal fee,
-            User owner,
-            List<Picture> pictures,
-            Producer producer,
-            Category category,
-            List<Rent> rents
-        ) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.fee = fee;
-        this.owner = owner;
-        this.pictures = pictures;
-        this.producer = producer;
-        this.category = category;
-        this.rents = rents;
-    }
+    private List<OrderItem> orderItems;
 }

@@ -11,13 +11,6 @@ CREATE TABLE IF NOT EXISTS category
     description varchar(255)
 );
 
-CREATE TABLE IF NOT EXISTS producer
-(
-    id          BIGSERIAL    NOT NULL primary key,
-    name        varchar(255) NOT NULL UNIQUE,
-    description varchar(255)
-);
-
 CREATE TABLE IF NOT EXISTS "user"
 (
     id          BIGSERIAL    NOT NULL primary key,
@@ -33,21 +26,27 @@ CREATE TABLE IF NOT EXISTS instrument
 (
     id          BIGSERIAL    NOT NULL primary key,
     title       varchar(255) NOT NULL,
-    category_id BIGINT       NOT NULL REFERENCES category,
-    producer_id BIGINT       NOT NULL REFERENCES producer,
+    category BIGINT       NOT NULL REFERENCES category,
     description varchar(255),
     price       numeric,
     fee         numeric,
-    user_id     BIGINT       NOT NULL REFERENCES "user"
+    owner     BIGINT       NOT NULL REFERENCES "user"
 );
 
-CREATE TABLE IF NOT EXISTS rent
+CREATE TABLE IF NOT EXISTS "order"
 (
-    id         BIGSERIAL                   NOT NULL primary key,
-    renter     BIGINT                      NOT NULL REFERENCES "user",
-    lessor     BIGINT                      NOT NULL REFERENCES "user",
-    date_start timestamp without time zone not null,
-    date_end   timestamp without time zone not null
+    id          BIGSERIAL                   NOT NULL primary key,
+    renter      BIGINT                      NOT NULL REFERENCES "user",
+    date_start  timestamp without time zone not null,
+    date_finish timestamp without time zone not null
+);
+
+CREATE TABLE IF NOT EXISTS order_item
+(
+    id          BIGSERIAL                   NOT NULL primary key,
+    "order"       BIGINT                      NOT NULL REFERENCES "order",
+    date_start  timestamp without time zone not null,
+    date_finish timestamp without time zone not null
 );
 
 CREATE TABLE IF NOT EXISTS picture
@@ -63,16 +62,30 @@ CREATE TABLE IF NOT EXISTS user_role
     PRIMARY KEY (user_id, role_id)
 );
 
-CREATE TABLE IF NOT EXISTS instrument_rent
+CREATE TABLE IF NOT EXISTS user_order
 (
-    instrument_id BIGINT NOT NULL REFERENCES "user",
-    rent_id       BIGINT NOT NULL REFERENCES role,
-    PRIMARY KEY (instrument_id, rent_id)
+    user_id BIGINT NOT NULL REFERENCES "user",
+    order_id BIGINT NOT NULL REFERENCES "order",
+    PRIMARY KEY (user_id, order_id)
 );
 
 CREATE TABLE IF NOT EXISTS instrument_picture
 (
-    instrument_id BIGINT NOT NULL REFERENCES "user",
+    instrument_id BIGINT NOT NULL REFERENCES instrument,
     picture_id    BIGINT NOT NULL REFERENCES picture,
     PRIMARY KEY (instrument_id, picture_id)
+);
+
+CREATE TABLE IF NOT EXISTS instrument_orderItem
+(
+    instrument_id BIGINT NOT NULL REFERENCES instrument,
+    orderItem_id    BIGINT NOT NULL REFERENCES order_item,
+    PRIMARY KEY (instrument_id, orderItem_id)
+);
+
+CREATE TABLE IF NOT EXISTS order_orderItem
+(
+    order_id BIGINT NOT NULL REFERENCES "order",
+    orderItem_id    BIGINT NOT NULL REFERENCES order_item,
+    PRIMARY KEY (order_id, orderItem_id)
 );

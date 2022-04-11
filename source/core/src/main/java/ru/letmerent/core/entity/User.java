@@ -44,28 +44,8 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
-    
     @OneToMany(mappedBy = "owner")
     private List<Instrument> instruments;
-    
-    public User
-        (
-            String firstName,
-            String secondName,
-            String lastName,
-            String email,
-            String userName,
-            String password,
-            List<Role> roles,
-            List<Instrument> instruments
-        ) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.email = email;
-        this.userName = userName;
-        this.password = password;
-        this.roles = roles;
-        this.instruments = instruments;
-    }
+    @OneToMany(mappedBy = "renter")
+    private List<Order> orders;
 }
