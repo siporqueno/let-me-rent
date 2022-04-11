@@ -1,0 +1,90 @@
+<div>
+    <p></p>
+    <h3>СПИСОК ИНСТРУМЕНТОВ, КОТОРЫЕ МОЖНО АРЕНДОВАТЬ</h3>
+    <p></p>
+    <div class="row g-2">
+        <div class="col-6 col-md-2">
+            <form novalidate ng-submit="loadTools()">
+                <div class="form-floating input-group-sm">
+                    <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title">
+                    <label for="filterTitle">Название инструмента</label>
+                </div>
+               <p></p>
+                <div class="form-floating input-group-sm">
+                    <input type="text" class="form-control" id="filterOwner" placeholder="" ng-model="filter.owner.userName">
+                    <label for="filterOwner">Имя владельца</label>
+                </div>
+                <p></p>
+                <div class="form-floating input-group-sm">
+                    <input type="number" class="form-control" id="filterMaxFee" placeholder=""
+                           ng-model="filter.max_fee">
+                    <label for="filterMaxFee">Максимальная цена</label>
+                </div>
+                <p></p>
+                <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить фильтрацию</button>
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-10">
+            <table id="tools-list" class="table">
+                <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Название инструмента</td>
+                    <td>Марка (производитель)</td>
+                    <td>Фото</td>
+                    <td>Владелец/арендодатель</td>
+                    <td>Цена аренды в сутки</td>
+                    <td>Сумма залога</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+<!--//Код для работы с бэком-->
+<!--                <tr ng-repeat="t in toolsPage.content">-->
+<!--                    <td>{{t.id}}</td>-->
+<!--                    <td>{{t.title}}</td>-->
+<!--                    <td>{{t.brand}}</td>-->
+<!--                    <td>{{t.picture.url}}</td> //ЗДЕСЬ НАДО БУДЕТ, НАВЕРНОЕ, СДЕЛАТЬ линк какой-то на фото-->
+<!--                    <td>{{t.owner.userName}}</td>-->
+<!--                    <td>{{t.fee}}</td>-->
+<!--                    <td>{{t.price}}</td>-->
+<!--                    <td>-->
+<!--                        <button class="btn btn-primary" ng-click="navToToolInfoPage(t.id)">Информация+Календарь</button>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <button class="btn btn-primary" ng-click="tryToRent(t.id)">Арендовать</button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
+<!--//код для наглядности, пока бэк не подключился-->
+                <tr>
+                    <td>{{'1'}}</td>
+                    <td>{{'Дрель'}}</td>
+                    <td>{{'Makita'}}</td>
+                    <td>{{'ФОТКА'}}</td>
+                    <td>{{'Владелец'}}</td>
+                    <td>{{'300'}}</td>
+                    <td>{{'3000'}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="navToToolInfoPage(1)">Информация+Календарь</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="tryToRent(1)">Арендовать</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p></p>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                        <button class="page-link" ng-click="loadTools(pageIndex)">{{pageIndex}}</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

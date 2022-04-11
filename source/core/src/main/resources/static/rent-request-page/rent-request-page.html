@@ -1,0 +1,29 @@
+<div>
+    <h3>Информация об инструменте</h3>
+    <h5>Пока тут нормально не отображается ничего, т.к. нет данных из базы</h5>
+    <p>{{'Название инструмента: ' + tool.title}}</p>
+    <p>{{'Производитель: ' + tool.producer.name}}</p>
+    <p>{{'Марка : ' + tool.brand}}</p>
+    <p>{{'Фотографии: ' + tool.picture.url}}</p> <!--    вот здесь видимо, какой-то сделать ng-repeat и показать несколько фото-->
+    <p>Владелец инструмента:</p>
+    <p>{{'ФИО: ' + tool.owner.firstName + tool.owner.secondName +tool.owner.lastName}}</p>
+    <p>{{'Email Владельца: ' + tool.owner.email}}</p>
+    <p>{{'Цена аренды в сутки: ' + tool.fee}}</p>
+    <p>{{'Сумма залога: ' + tool.price}}</p>
+    <p>{{'Календарь аренды'}}</p>
+    <p>{{'ЗДЕСЬ ПОДГРУЖАЕТСЯ КАЛЕНДАРЬ' + tool.ЗДЕСЬ НАДО БУДЕТ ВЫТАЩИТЬ ДАТЫ ИЗ СПИСКА Rent В ИНСТРУМЕНТЕ}}</p>
+    <p>{{'РУКОВОДСТВО ПО ЭКСПЛУАТАЦИИ, КОММЕНТАРИИ ВЛАДЕЛЬЦА'}}</p>
+    <p>{{'ЗДЕСЬ ПОДГРУЖАЕТСЯ ИНСТРУКЦИЯ' + tool.description}}</p>
+
+    <p>Комментарий: в идеале как-то связать календарь с форомой аренды, чтобы из календаря выбирать свободные даты и они попадали в форму ниже</p>
+    <p></p>
+    <h3>Арендовать инструмент</h3>
+    <p></p>
+    <form novalidate ng-submit="rentTool()">
+        <input class="form-control" type="text" placeholder="Дата начала аренды" ng-model="rent.dateStart">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Дата окончания аренды" ng-model="rent.dateEnd">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Арендовать</button>
+    </form>
+</div>
