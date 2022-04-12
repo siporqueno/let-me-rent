@@ -33,6 +33,6 @@ public class OrderItem {
     private LocalDateTime dateFinish;
     @ManyToOne
     private Order order;
-    @ManyToMany(mappedBy = "orderItems")
-    List<Instrument> instruments;
+    @ManyToOne
+    private Instrument instrument;
 }
