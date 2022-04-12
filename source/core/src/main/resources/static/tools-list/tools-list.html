@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-md-4 mx-auto">
-            <div class="small fw-light">Поиск по максимаотной цене цена</div>
+            <div class="small fw-light">Поиск по максимальной цене</div>
             <div class="input-group">
                 <input class="form-control border-end-0 border" type="search" value="search" id="filterMaxFee" placeholder=""
                        ng-model="filter.max_fee">
@@ -44,11 +44,11 @@
             <table id="tools-list" class="table">
                 <thead>
                 <tr>
-                    <td>ID</td>
                     <td>Название инструмента</td>
-                    <td>Марка (производитель)</td>
+                    <td>Марка</td>
+                    <td>Производитель</td>
                     <td>Фото</td>
-                    <td>Владелец/арендодатель</td>
+                    <td>Владелец</td>
                     <td>Цена аренды в сутки</td>
                     <td>Сумма залога</td>
                     <td></td>
@@ -58,10 +58,10 @@
                 <tbody>
 <!--//Код для работы с бэком-->
 <!--                <tr ng-repeat="t in toolsPage.content">-->
-<!--                    <td>{{t.id}}</td>-->
 <!--                    <td>{{t.title}}</td>-->
 <!--                    <td>{{t.brand}}</td>-->
-<!--                    <td>{{t.picture.url}}</td> //ЗДЕСЬ НАДО БУДЕТ, НАВЕРНОЕ, СДЕЛАТЬ линк какой-то на фото-->
+<!--                    <td>{{t.producerName}}</td>-->
+<!--                    <td>{{t.avatarPictureUrl}}</td> -->
 <!--                    <td>{{t.owner.userName}}</td>-->
 <!--                    <td>{{t.fee}}</td>-->
 <!--                    <td>{{t.price}}</td>-->
@@ -75,16 +75,17 @@
 
 <!--//код для наглядности, пока бэк не подключился-->
                 <tr>
-                    <td>{{'1'}}</td>
                     <td>{{'Дрель'}}</td>
                     <td>{{'Makita'}}</td>
+                    <td>{{'Производитель Makita'}}</td>
                     <td>{{'ФОТКА'}}</td>
                     <td>{{'Владелец'}}</td>
                     <td>{{'300'}}</td>
                     <td>{{'3000'}}</td>
                     <td>
-                        <button class="btn btn-primary" ng-click="navToToolInfoPage(1)">Информация+Календарь</button>
+                        <button class="btn btn-primary" ng-click="navToToolInfoPage(1)">Инфо+Календарь</button>
                     </td>
+<!--                    С Денисом оговорили - оставляю напоминалку в коде - ПОДУМАТЬ НАД ФОРМИРОВАНИЕ ЗАКАЗА И КОРЗИНЫ-->
                     <td>
                         <button class="btn btn-primary" ng-click="tryToRent(1)">Арендовать</button>
                     </td>
