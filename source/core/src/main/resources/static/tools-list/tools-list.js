@@ -30,7 +30,11 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     //
 
     $(document).ready(function() {
-        $('#tools-list').DataTable();
+        $('#tools-list').DataTable( {
+                             language: {
+                                 url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json'
+                             }
+                         });
     } );
 
     $scope.navToToolInfoPage = function (toolId) {
