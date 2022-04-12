@@ -1,5 +1,7 @@
 package ru.letmerent.core.dtos;
 
+import java.util.stream.Collectors;
+
 @NoArgsConstructor
 @Data
 public class UserDto {
@@ -10,7 +12,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String userName;
-    private List<Order> orders;
+    private List<OrderDto> orders;
 
     public UserDto (User user){
         this.id=user.getId();
@@ -19,6 +21,6 @@ public class UserDto {
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.userName = user.getUserName();
-        this.orders = user.getOrders();
+        this.orders = user.getOrders().stream().map(OrderDto::new).collect(Collectors.toList());
     }
 }
