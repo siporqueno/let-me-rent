@@ -45,10 +45,6 @@ public class Instrument {
     private Producer producer;
     @ManyToOne
     private Category category;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "instrument_orderItem",
-        joinColumns = @JoinColumn(name = "instrument_id"),
-        inverseJoinColumns = @JoinColumn(name = "orderItem_id")
-    )
+   @ManyToOne
     private List<OrderItem> orderItems;
 }
