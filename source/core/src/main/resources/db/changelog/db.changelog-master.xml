@@ -4,25 +4,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
-    <preConditions>
-        <runningAs  username="postgres"/>
-    </preConditions>
+        <preConditions>
+            <runningAs  username="postgres"/>
+        </preConditions>
 
-    <!--<changeSet  id="1"  author="artem.smirnov">
-        <createTable  tableName="users">
-            <column  name="user_id"  type="bigint" autoIncrement="true">
-                <constraints  primaryKey="true" primaryKeyName="pk_users_user_id"  nullable="false"/>
-            </column>
-            <column name="username" type="character varying(120)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="start_date" type="date" defaultValueDate="current_timestamp">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end_date" type="date" defaultValueDate="to_date('31.12.2999', 'DD.MM.YYYY')">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>-->
+    <include file="init/changelog-init.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
