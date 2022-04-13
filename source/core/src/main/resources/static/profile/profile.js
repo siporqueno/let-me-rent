@@ -37,7 +37,9 @@ angular.module('tools').controller('profileController', function ($scope, $http)
     //     });
     // };
 
-    //
+    // $scope.changeTool = function (toolId) {
+    //         $location.path('/edit-tool/' + toolId);
+    //     }
 
     // $scope.loadMyProfile();
     // $scope.loadRents();

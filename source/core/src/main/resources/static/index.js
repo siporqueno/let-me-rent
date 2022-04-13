@@ -26,6 +26,10 @@
                 templateUrl: 'profile/profile.html',
                 controller: 'profileController'
             })
+            .when('/edit-tool/:toolId', {
+                templateUrl: 'edit-tool/edit-tool.html',
+                controller: 'editToolController'
+            })
             .when('/authorisation', {
                 templateUrl: 'authorisation/authorisation.html',
                 controller: 'authorisationController'
