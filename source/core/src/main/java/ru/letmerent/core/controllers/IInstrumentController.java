@@ -1,33 +1,58 @@
 package ru.letmerent.core.controllers;
 
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.User;
+import ru.letmerent.core.services.InstrumentService;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/instruments")
-public interface IInstrumentController {
+public class IInstrumentController {
 
-    Collection<Instrument> getAllInstrument();
+    private final InstrumentService instrumentService;
 
-    Collection<Instrument> getAllInstrumentByOwner(User user);
+    @GetMapping
+    Collection<Instrument> getAllInstrument() {
+        return instrumentService.getAllInstruments();
+    }
 
-    Instrument getInstrumentById(Long id);
+    Collection<Instrument> getAllInstrumentByOwner(User user) {
+        throw new UnsupportedOperationException();
+    }
 
-    void addNewInstrument(Instrument instrument);
+    Instrument getInstrumentById(Long id) {
+        return null;
+    }
 
-    boolean deleteInstrument(Long id);
+    void addNewInstrument(Instrument instrument) {
+        throw new UnsupportedOperationException();
+    }
 
-    boolean deleteInstrument(Instrument instrument);
+    boolean deleteInstrument(Long id) {
+        throw new UnsupportedOperationException();
+    }
 
-    Instrument modifyInstrument(Instrument instrument);
+    boolean deleteInstrument(Instrument instrument) {
+        throw new UnsupportedOperationException();
+    }
 
-    Instrument changeInstrumentPrice(Long id, BigDecimal price);
+    Instrument modifyInstrument(Instrument instrument) {
+        throw new UnsupportedOperationException();
+    }
+
+    Instrument changeInstrumentPrice(Long id, BigDecimal price) {
+        throw new UnsupportedOperationException();
+    }
     
-    Instrument changeInstrumentFee(Long id, BigDecimal price);
+    Instrument changeInstrumentFee(Long id, BigDecimal price) {
+        throw new UnsupportedOperationException();
+    }
 
 }
