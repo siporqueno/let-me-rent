@@ -14,21 +14,23 @@
      свежим взглядом будет понятно-->
     <h4>Список инструментов, взятых в аренду</h4>
      <table class="table align-middle">
-        <thread scope="col">
+        <thead scope="col">
             <tr>
                 <th scope="col">Номер заказа</th>
                 <th scope="col">Список инструментов</th>
             </tr>
-        </thread>
+        </thead>
         <tbody>
-        <tr ng-repeat="ord in userProfile.orders">
+<!--        <tr ng-repeat="ord in userProfile.orders">-->
+<!--Мешал отображать атрибут ng-repeat="ord in userProfile.orders", потому что он ничего не отдает пока-->
+        <tr>
 <!--            // код для работы с бэком-->
 <!--            <th scope="row">{{ord.id}}</th>-->
             <!--//код для наглядности, пока бэк не подключился-->
             <th scope="row">{{'1'}}</th>
             <td>
                 <table class="table align-middle table-bordered">
-                    <thread>
+                    <thead>
                         <tr>
                             <th scope="col">Название инструмента</th>
                             <th scope="col">Марка инструмента</th>
@@ -37,7 +39,7 @@
                             <th scope="col">Дата окончания аренды</th>
                             <th scope="col">Сумма залога</th>
                         </tr>
-                    </thread>
+                    </thead>
                     <tbody>
 <!--                   // код для работы с бэком-->
 <!--                    <tr ng-repeat="i in ord.orderItems">-->
