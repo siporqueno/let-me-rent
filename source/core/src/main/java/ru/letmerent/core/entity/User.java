@@ -1,51 +1,57 @@
 package ru.letmerent.core.entity;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "second_name")
     private String secondName;
+
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email")
+
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "username")
+
+    @Column(name = "username", unique = true)
     private String userName;
+
     @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
-    @OneToMany(mappedBy = "owner")
-    private List<Instrument> instruments;
-    @OneToMany(mappedBy = "renter")
-    private List<Order> orders;
+
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<GrantedAuthority> authorities;
 }
