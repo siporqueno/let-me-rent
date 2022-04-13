@@ -2,41 +2,27 @@
     <p></p>
     <h3>СПИСОК ИНСТРУМЕНТОВ, КОТОРЫЕ МОЖНО АРЕНДОВАТЬ</h3>
     <p></p>
-    <div class="row mx-md-n5">
-        <div class="col-md-4 mx-auto">
-            <div class="small fw-light">Поиск по названию инструмента</div>
-            <div class="input-group">
-                <input class="form-control border-end-0 border" type="search" value="search" id="filterTitle" placeholder="" ng-model="filter.title">
-                <span class="input-group-append">
-                    <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+    <div class="container">
+        <form novalidate class="input-group col" ng-submit="loadTools()">
+            <div class="col-md-3" style="margin-left:10px">
+                <div class="input-group">
+                    <input class="form-control border" type="search" value="" id="filterTitle" placeholder="названиe инструмента" ng-model="filter.title">
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 mx-auto">
-            <div class="small fw-light">Поиск по имени владельца</div>
-            <div class="input-group">
-                <input class="form-control border-end-0 border" type="search" value="search" id="filterOwner" placeholder="" ng-model="filter.owner.userName">
-                <span class="input-group-append">
-                    <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+            <div class="col-md-3" style="margin-left:10px">
+                <div class="input-group">
+                    <input class="form-control border" type="search" value="" id="filterOwner" placeholder="именя владельца" ng-model="filter.owner.userName">
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 mx-auto">
-            <div class="small fw-light">Поиск по максимальной цене</div>
-            <div class="input-group">
-                <input class="form-control border-end-0 border" type="search" value="search" id="filterMaxFee" placeholder=""
-                       ng-model="filter.max_fee">
-                <span class="input-group-append">
-                    <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+            <div class="col-md-3" style="margin-left:10px">
+                <div class="input-group">
+                    <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.max_fee">
+                </div>
             </div>
-        </div>
+            <span class="col-md-3 input-group-btn" style="width:0; margin-left:10px;">
+                <button class="btn btn-outline-warning btn-default" type="submit">Применить</button>
+            </span>
+        </form>
     </div>
     <div class="mt-4"></div>
     <div class="container">
