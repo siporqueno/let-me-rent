@@ -1,54 +1,61 @@
 package ru.letmerent.core.entity;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.Table;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import java.math.BigDecimal;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
-@Table(name = "instrument")
+@Table(name = "instruments")
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Instrument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "price")
     private BigDecimal price;
+
     @Column(name = "fee")
     private BigDecimal fee;
+
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+
+    @Column(name = "category")
+    private Long categoryId;
+
     @ManyToOne
-    private User owner;
+    @JoinColumn(name = "owner")
+    private User user;
+
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
-    private List<Picture> pictures;
+    private Collection<Picture> pictures;
+
     @ManyToOne
-    private Producer producer;
-    @ManyToOne
-    private Category category;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "instrument_orderItem",
-        joinColumns = @JoinColumn(name = "instrument_id"),
-        inverseJoinColumns = @JoinColumn(name = "orderItem_id")
-    )
-    private List<OrderItem> orderItems;
+    @JoinColumn(name = "brand_brand_id")
+    private Brand brand;
+
 }
