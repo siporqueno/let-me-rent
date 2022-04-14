@@ -9,34 +9,27 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-@Table(name = "instruments")
 @Entity
-@NoArgsConstructor
+@Table(name = "brands")
 @Data
-public class Instrument {
+@NoArgsConstructor
+public class Brand {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "brand_id")
+    private Long brandId;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "brand_name", unique = true)
+    private String brandName;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "fee")
-    private BigDecimal fee;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;
@@ -44,18 +37,9 @@ public class Instrument {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "category")
-    private Long categoryId;
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "owner")
-    private User user;
-
-    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
-    private Collection<Picture> pictures;
-
-    @ManyToOne
-    @JoinColumn(name = "brand_brand_id")
-    private Brand brand;
-
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private Collection<Instrument> instruments;
 }

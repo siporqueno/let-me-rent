@@ -109,3 +109,23 @@ COMMENT ON CONSTRAINT fk_grants_users_user_id ON public.granted_authorities
     IS 'Вторичный ключ на таблицу Users';
 COMMENT ON CONSTRAINT fk_grants_roles_user_id ON public.granted_authorities
     IS 'Вторичный ключ на таблицу Roles';
+
+CREATE TABLE public.brands
+(
+    brand_id bigserial NOT NULL,
+    brand_name character varying(250) NOT NULL,
+    description character varying(2000),
+    start_date date DEFAULT current_timestamp,
+    end_date date DEFAULT to_date('31.12.2999', 'DD.MM.YYYY'),
+    update_date date DEFAULT current_timestamp,
+    CONSTRAINT pk_brands_brand_id PRIMARY KEY (brand_id),
+    CONSTRAINT unique_brand_brand_name UNIQUE (brand_name)
+);
+ALTER TABLE IF EXISTS public.brands
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public.instruments
+    ADD COLUMN brand_brand_id bigint;
+ALTER TABLE IF EXISTS public.instruments
+    ADD CONSTRAINT fk_instruments_brands_brand_id FOREIGN KEY (brand_brand_id)
+        REFERENCES public.brands (brand_id) MATCH SIMPLE;
