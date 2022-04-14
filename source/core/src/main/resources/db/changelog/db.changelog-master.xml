@@ -8,6 +8,6 @@
             <runningAs  username="postgres"/>
         </preConditions>
 
-    <include file="init/changelog-init.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-init.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

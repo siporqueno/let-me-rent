@@ -9,25 +9,37 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "brands")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long roleId;
+    @Column(name = "brand_id")
+    private Long brandId;
 
-    @Column(name = "name")
-    private String roleName;
+    @Column(name = "brand_name", unique = true)
+    private String brandName;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;
 
     @Column(name = "end_date")
     private LocalDateTime endDate;
+
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
+
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private Collection<Instrument> instruments;
 }
