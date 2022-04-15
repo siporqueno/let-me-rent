@@ -54,7 +54,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     // СТРАНИЦУ АВТОРИЗАЦИИ
     // $location.path('/authorisation');
     // И после авторизации уже отправка запроса о желании арендовать.
-    $location.path('/rent-request-page/' + toolId);
+    $location.path('/cart/');
     }
 
     $scope.loadTools();
