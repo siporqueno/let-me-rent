@@ -4,27 +4,37 @@
     <p></p>
     <div class="container">
         <form novalidate class="input-group col" ng-submit="loadTools()">
-            <div class="col-md-2" style="margin-left:10px">
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
                 <div class="input-group">
                     <input class="form-control border" type="search" value="" id="filterTitle" placeholder="названиe инструмента" ng-model="filter.title">
                 </div>
             </div>
-            <div class="col-md-2" style="margin-left:10px">
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
                 <div class="input-group">
                     <input class="form-control border" type="search" value="" id="filterCategory" placeholder="категория" ng-model="filter.categoryName">
                 </div>
             </div>
-            <div class="col-md-2" style="margin-left:10px">
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
                 <div class="input-group">
                     <input class="form-control border" type="search" value="" id="filterOwner" placeholder="имя владельца" ng-model="filter.owner.userName">
                 </div>
             </div>
-            <div class="col-md-2" style="margin-left:10px">
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
                 <div class="input-group">
                     <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.max_fee">
                 </div>
             </div>
-            <span class="col-md-2 input-group-btn" style="width:0; margin-left:10px;">
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
+                <div class="input-group">
+                    <input class="form-control border datepicker" type="search" value="" id="filterStartDate" placeholder="дата начала аренды" ng-model="filter.startDate">
+                </div>
+            </div>
+            <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
+                <div class="input-group">
+                    <input class="form-control border datepicker" type="search" value="" id="filterFinishDate" placeholder="дата окочания аренды" ng-model="filter.FinishDate">
+                </div>
+            </div>
+            <span class="col-md-2 input-group-btn" style="width:0; margin-left:10px; margin-top:10px;">
                 <button class="btn btn-outline-warning btn-default" type="submit">Применить&nbsp;фильтрацию</button>
             </span>
         </form>

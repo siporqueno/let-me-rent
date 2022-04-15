@@ -38,6 +38,12 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                          });
     } );
 
+    $(document).ready(function() {
+       $('.datepicker').datepicker({
+          format: 'mm-dd-yyyy'
+        });
+    });
+
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
     }
