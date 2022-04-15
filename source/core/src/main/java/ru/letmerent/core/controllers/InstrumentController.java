@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,16 +20,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.letmerent.core.converters.InstrumentConverter;
 import ru.letmerent.core.dto.InstrumentDto;
+import ru.letmerent.core.services.InstrumentService;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/instruments")
 @Tag(name = "API для работы с инструментом")
+@RequiredArgsConstructor
 public class InstrumentController {
+
+    final private InstrumentService instrumentService;
+    final private InstrumentConverter converter;
 
     @Operation(summary = "Вывод информации по всем инструментам")
     @GetMapping
@@ -42,7 +49,8 @@ public class InstrumentController {
                                     implementation = InstrumentDto.class))
             ))
     ResponseEntity<Collection<InstrumentDto>> getAllInstrument() {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+        return new ResponseEntity<Collection<InstrumentDto>>(instrumentService.getAllInstruments().stream()
+                .map(converter::toListDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @Operation(summary = "Информация по инструменту")
