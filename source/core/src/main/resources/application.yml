@@ -1,7 +1,7 @@
 server:
-  port: 8888
+  port: 8890
   servlet:
-    context-path: /let-me-rent/
+    context-path: /let-me-rent
 
 spring:
   application:
@@ -19,3 +19,19 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+  jackson:
+    default-property-inclusion: NON_NULL
+  main:
+    allow-bean-definition-overriding: true
+
+swagger:
+  title: CoreService
+  description: API для работы с let-me-rent
+  contact:
+    mail: let-me-rent@gmail.com
+    command: ДайПогонять
+    url: https://gb.ru/
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
