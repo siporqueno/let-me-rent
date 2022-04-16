@@ -10,8 +10,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -30,27 +28,15 @@ public class InstrumentDto implements Serializable {
     @Schema(description = "Бренд инструмента", example = "Bosch")
     String brandName;
 
-    @Schema(description = "Красткое описание инструмента", example = "Супер инструмент, одной рукой держу, другой слёзы счастья вытираю")
-    String description;
-
     @Schema(description = "Цена инструмента", example = "1000000")
     BigDecimal price;
 
     @Schema(description = "Платёж за аренду", example = "1000000")
-    BigDecimal fee;
+    BigDecimal fee; // в профиле пока не фигурирует, но, может, добавим
 
-    @Schema(description = "Модель пользователя-владельца")
-    UserDto owner;
+    @Schema(description = "Username владельца", example = "borodach")
+    String ownerUsername;
 
-    @Schema(description = "Список URL-ссылок на изображения")
-    List<String> picturesUrls;
-
-    @Schema(description = "URL-ссылка на аватар")
-    String avatarPictureUrl;
-
-    @Schema(description = "Название категории")
-    String categoryName;
-
-    @Schema(description = "Список интервалов занятости данного инструмента")
-    List<LocalDateTime> intervals;
+    @Schema(description = "Название категории", example = "Дрели")
+    String categoryName; // в профиле пока не фигурирует, но, может, добавим
 }
