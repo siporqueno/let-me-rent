@@ -1,5 +1,5 @@
 angular.module('tools').controller('editToolController', function ($scope, $http, $routeParams, $location) {
-    const contextPath = 'http://localhost:8888/';
+    const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
 
     $scope.prepareToolForUpdate = function () {
         $http.get(contextPath + 'наш эндпоинт' + $routeParams.toolId)

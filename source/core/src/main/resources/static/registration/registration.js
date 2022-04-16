@@ -1,5 +1,5 @@
 angular.module('tools').controller('registrationController', function ($scope, $http, $routeParams, $location) {
-    // const contextPath = 'http://localhost:8888/';
+    // const contextPath = 'http://localhost:8890/let-me-rent/';
 
     //
     // $scope.registerUser = function () {

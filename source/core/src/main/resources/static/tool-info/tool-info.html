@@ -8,8 +8,8 @@
     <p>{{'Фотографии: ' + tool.picturesUrls}}</p> <!--    вот здесь видимо, какой-то сделать ng-repeat и показать несколько фото-->
     <p>Владелец инструмента:</p>
     <p>{{'Имя пользователя на сайте: ' + tool.ownerUsername}}</p>
-    <p>{{'ФИО: ' + tool.firstName + tool.secondName +tool.lastName}}</p>
-    <p>{{'Email Владельца: ' + tool.email}}</p>
+    <p>{{'ФИО: ' + tool.ownerFirstname + ' ' + tool.ownerSecondname + ' ' + tool.ownerLastname}}</p>
+    <p>{{'Email Владельца: ' + tool.ownerEmail}}</p>
     <p>{{'Цена аренды в сутки: ' + tool.fee}}</p>
     <p>{{'Сумма залога: ' + tool.price}}</p>
     <p>{{'Календарь занятости инструмента'}}</p>
@@ -23,16 +23,16 @@
         </thead>
         <tbody>
         <!--//Код для работы с бэком-->
-        <!--                <tr ng-repeat="i in tool.intervals">-->
-        <!--                    <td>{{i.dateStart}}</td>-->
-        <!--                    <td>{{i.dateFinish}}</td>-->
-        <!--                </tr>-->
+                        <tr ng-repeat="i in tool.intervals">
+                            <td>{{i.dateStart}}</td>
+                            <td>{{i.dateFinish}}</td>
+                        </tr>
 
         <!--//код для наглядности, пока бэк не подключился-->
-        <tr>
-            <td>{{'01.05.2022'}}</td>
-            <td>{{'31.05.22'}}</td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>{{'01.05.2022'}}</td>-->
+<!--            <td>{{'31.05.22'}}</td>-->
+<!--        </tr>-->
         </tbody>
     </table>
     <p>{{'РУКОВОДСТВО ПО ЭКСПЛУАТАЦИИ, КОММЕНТАРИИ ВЛАДЕЛЬЦА'}}</p>
