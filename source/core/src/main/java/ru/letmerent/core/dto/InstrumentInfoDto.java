@@ -22,16 +22,16 @@ public class InstrumentInfoDto extends InstrumentDto {
     List<String> picturesUrls;
 
     @Schema(description = "Имя владельца", example = "Александр")
-    String firstName;
+    String ownerFirstName;
 
     @Schema(description = "Отчество владельца", example = "Родионович")
-    String secondName;
+    String ownerSecondName;
 
     @Schema(description = "Фамилия владельца", example = "Бородач")
-    String lastName;
+    String ownerLastName;
 
     @Schema(description = "Электронная почта", example = "super_boroda@gmail.com")
-    String email;
+    String ownerEmail;
 
     @Schema(description = "Краткое описание инструмента", example = "Супер инструмент, одной рукой держу, другой слёзы счастья вытираю")
     String description;

@@ -1,5 +1,5 @@
 angular.module('tools').controller('profileController', function ($scope, $http) {
-    // const contextPath = 'http://localhost:8888/';
+    // const contextPath = 'http://localhost:8890/let-me-rent/';
     //
     // $scope.loadRents = function () {
     //     $http({

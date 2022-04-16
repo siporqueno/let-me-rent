@@ -10,8 +10,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             params: {
                 p: pageIndex,
                 title: $scope.filter ? $scope.filter.title : null,
-                category: $scope.filter ? $scope.filter.categoryName : null,
-                owner: $scope.filter ? $scope.filter.owner.userName : null,
+                categoryName: $scope.filter ? $scope.filter.categoryName : null,
+                ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
                 max_fee: $scope.filter ? $scope.filter.max_fee : null,
                 startDate: $scope.filter ? $scope.filter.startDate : null,
                 finishDate: $scope.filter ? $scope.filter.finishDate : null

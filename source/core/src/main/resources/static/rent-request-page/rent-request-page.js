@@ -1,5 +1,5 @@
 angular.module('tool').controller('rentRequestController', function ($scope, $http, $routeParams, $location) {
-    const contextPath = 'http://localhost:8888/';
+    const contextPath = 'http://localhost:8890/let-me-rent/';
 
     // $scope.showToolInfo = function () {   //ЗАГОТОВОЧКА ДЛЯ ЗАГРУЗКИ ИНФО ПО конкретному инструменту
     //     $http.get(contextPath + 'НАШ ЭНДПОИНТ' + $routeParams.toolId)

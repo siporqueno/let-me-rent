@@ -52,7 +52,7 @@
     }
 
     function run($rootScope, $http, $localStorage) {
-        // const contextPath = 'http://localhost:8888';
+        // const contextPath = 'http://localhost:8890/let-me-rent/';
         // if ($localStorage.webMarketUser) {
         //     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
         // }
