@@ -31,7 +31,7 @@
             </div>
             <div class="col-md-2" style="margin-left:10px; margin-top:10px;">
                 <div class="input-group">
-                    <input class="form-control border datepicker" type="search" value="" id="filterFinishDate" placeholder="дата окочания аренды" ng-model="filter.FinishDate">
+                    <input class="form-control border datepicker" type="search" value="" id="filterFinishDate" placeholder="дата окочания аренды" ng-model="filter.finishDate">
                 </div>
             </div>
             <span class="col-md-2 input-group-btn" style="width:0; margin-left:10px; margin-top:10px;">
@@ -45,9 +45,9 @@
             <table id="tools-list" class="table">
                 <thead>
                 <tr>
-                    <td>Название инструмента</td>
                     <td>Категория</td>
-                    <td>Марка, производитель</td>
+                    <td>Название инструмента</td>
+                    <td>Брэнд</td>
                     <td>Фото</td>
                     <td>Владелец</td>
                     <td>Цена аренды в сутки</td>
@@ -58,12 +58,12 @@
                 </thead>
                 <tbody>
 <!--//Код для работы с бэком-->
-<!--                <tr ng-repeat="t in toolsPage.content">-->
+<!--                <tr ng-repeat="t in toolsPage.instruments">-->
 <!--                    <td>{{t.categoryName}}</td>-->
 <!--                    <td>{{t.title}}</td>-->
-<!--                    <td>{{t.brand + ', ' + t.producerName}}</td>-->
+<!--                    <td>{{t.brand}}</td>-->
 <!--                    <td>{{t.avatarPictureUrl}}</td> -->
-<!--                    <td>{{t.owner.userName}}</td>-->
+<!--                    <td>{{t.ownerUsername}}</td>-->
 <!--                    <td>{{t.fee}}</td>-->
 <!--                    <td>{{t.price}}</td>-->
 <!--                    <td>-->

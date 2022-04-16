@@ -1,18 +1,20 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $localStorage) {
-    const contextPath = 'http://localhost:8888/api/v1/instruments';
+    const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
     let currentPageIndex = 1;
 
     $scope.loadTools = function (pageIndex = 1) { // ЗАГОТОВОЧКА ПО ЗАГРУЗКЕ СТРАНИЦЫ СО СПИСКОМ
         currentPageIndex = pageIndex;
         $http({
-            url: contextPath + 'энд-поинт метода контролллера, если будет (но, наверное, здесь будет только contextPath)',
+            url: contextPath,
             method: 'GET',
             params: {
                 p: pageIndex,
                 title: $scope.filter ? $scope.filter.title : null,
                 category: $scope.filter ? $scope.filter.categoryName : null,
                 owner: $scope.filter ? $scope.filter.owner.userName : null,
-                max_fee: $scope.filter ? $scope.filter.max_fee : null
+                max_fee: $scope.filter ? $scope.filter.max_fee : null,
+                startDate: $scope.filter ? $scope.filter.startDate : null,
+                finishDate: $scope.filter ? $scope.filter.finishDate : null
             }
         }).then(function (response) {
             $scope.toolsPage = response.data;
