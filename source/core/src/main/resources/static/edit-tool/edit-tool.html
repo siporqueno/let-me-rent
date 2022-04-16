@@ -1,0 +1,23 @@
+<div>
+    <p></p>
+    <h3>Изменить сведения об инструменте</h3>
+    <form novalidate ng-submit="updateTool()">
+        <input class="form-control" type="number" hidden placeholder="ID" ng-model="updated_tool.id">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Категория" ng-model="updated_tool.categoryName">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Название инструмента" ng-model="updated_tool.title">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Марка" ng-model="updated_tool.brand">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Фото" ng-model="updated_tool.picturesUrls">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Цена аренды в сутки" ng-model="updated_tool.fee">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Сумма залога" ng-model="updated_tool.price">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Описание" ng-model="updated_tool.description">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+</div>
