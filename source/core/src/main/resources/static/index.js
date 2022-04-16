@@ -42,6 +42,10 @@
                 templateUrl: 'add-tool-form/add-tool-form.html',
                 controller: 'addToolFormController'
             })
+            .when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
