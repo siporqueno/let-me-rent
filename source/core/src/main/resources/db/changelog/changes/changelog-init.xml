@@ -12,4 +12,8 @@
         <sqlFile path="sql/v1_edit_schema.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="03_initial_data" author="artem.smirnov" failOnError="true">
+        <sqlFile path="sql/v2_insert_initial_data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>

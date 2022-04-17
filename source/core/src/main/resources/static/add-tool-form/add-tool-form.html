@@ -6,11 +6,10 @@
         <p></p>
         <input class="form-control" type="text" placeholder="Марка" ng-model="new_tool.brand">
         <p></p>
-        <input class="form-control" type="text" placeholder="Производитель" ng-model="new_tool.producerName">
-        <p></p><!--        с добавлением фото пока не знаю, как корректно сделать - должна быть возможность сюда несколько фоток добавить-->
+<!--        с добавлением фото пока не знаю, как корректно сделать - должна быть возможность сюда несколько фоток добавить-->
         <input class="form-control" type="text" placeholder="Фото" ng-model="new_tool.picturesUrls">
         <p></p> <!-- Наверное, лучше без этого поля обойтись? Брать userName из localStorage - чтобы точное было имя, а то при вводе пользователь может и ошибиться легко  -->
-        <input class="form-control" type="text" placeholder="Владелец(арендодатель)" ng-model="new_tool.owner.userName">
+        <input class="form-control" type="text" placeholder="Владелец(арендодатель)" ng-model="new_tool.ownerUsername">
         <p></p>
         <input class="form-control" type="number" placeholder="Цена аренды в сутки" ng-model="new_tool.fee">
         <p></p>
