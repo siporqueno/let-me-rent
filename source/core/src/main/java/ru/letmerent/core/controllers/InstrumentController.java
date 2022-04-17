@@ -101,19 +101,19 @@ public class InstrumentController {
         return new ResponseEntity<>(new InstrumentDto(), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Информация по инструменту по имени пользователя")
-    @GetMapping("/{username}")
-    @ApiResponse(
-            responseCode = "200",
-            description = "Информация по инструменту.",
-            content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(
-                            implementation = InstrumentDto.class))
-    )
-    ResponseEntity<InstrumentDto> getInstrumentByUsername(@Parameter(description = "Имя пользователя") @PathVariable String username) {
-        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
-    }
+//    @Operation(summary = "Информация по инструменту по имени пользователя") //todo конфликт мапинга с ru.letmerent.core.controllers.InstrumentController.getInstrumentById
+//    @GetMapping("/{username}")
+//    @ApiResponse(
+//            responseCode = "200",
+//            description = "Информация по инструменту.",
+//            content = @Content(
+//                    mediaType = "application/json",
+//                    schema = @Schema(
+//                            implementation = InstrumentDto.class))
+//    )
+//    ResponseEntity<InstrumentDto> getInstrumentByUsername(@Parameter(description = "Имя пользователя") @PathVariable String username) {
+//        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
+//    }
 
     @Operation(summary = "Удаление инструмента")
     @DeleteMapping("/{id}")
