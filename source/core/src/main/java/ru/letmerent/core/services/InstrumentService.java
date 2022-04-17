@@ -1,11 +1,11 @@
 package ru.letmerent.core.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ru.letmerent.core.entity.Instrument;
-
-import java.util.List;
 
 public interface InstrumentService {
 
-    List<Instrument> getAllInstruments();
+    Page<Instrument> getAllInstruments(Pageable pageable);
     Instrument getInstrumentById(Long id);
 }

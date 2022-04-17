@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -21,17 +23,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.letmerent.core.converters.InstrumentConverter;
 import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.PageDto;
+import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.services.InstrumentService;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/instruments")
 @Tag(name = "API для работы с инструментом")
+@RequiredArgsConstructor
 public class InstrumentController {
+
+    private final InstrumentService instrumentService;
+    private final InstrumentConverter instrumentConverter;
 
     @Operation(summary = "Вывод информации по всем инструментам")
     @GetMapping
@@ -45,7 +58,16 @@ public class InstrumentController {
                                     implementation = InstrumentDto.class))
             ))
     PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable) {
-        return new PageDto<>();
+        Page<Instrument> page = instrumentService.getAllInstruments(pageable);
+
+        List<InstrumentForListDto> instrumentForListDtos = page.get()
+                .map(instrumentConverter::toListDto).collect(toList());
+        PageDto<InstrumentForListDto> pageDto = new PageDto<>();
+        pageDto.setInstruments(instrumentForListDtos);
+        pageDto.setTotalPages(page.getTotalPages());
+        pageDto.setTotalElements(page.getTotalElements());
+
+        return pageDto;
     }
 
     @Operation(summary = "Информация по инструменту")
@@ -59,7 +81,9 @@ public class InstrumentController {
                             implementation = InstrumentDto.class))
     )
     ResponseEntity<InstrumentInfoDto> getInstrumentById(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
-        return new ResponseEntity<>(new InstrumentInfoDto(), HttpStatus.OK);
+        InstrumentInfoDto infoDto = Optional.ofNullable(instrumentService.getInstrumentById(id))
+                .map(instrumentConverter::toInstrumentInfoDto).orElse(null);
+        return new ResponseEntity<>(infoDto, HttpStatus.OK);
     }
 
     @Operation(summary = "Добавление нового инструмента")
