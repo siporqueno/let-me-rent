@@ -26,5 +26,5 @@ public class PageDto<T extends Serializable> implements Serializable {
     int totalPages;
 
     @Schema(description = "Всего позиций", example = "100")
-    int totalElements;
+    long totalElements;
 }
