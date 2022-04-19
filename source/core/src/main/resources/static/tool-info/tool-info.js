@@ -1,4 +1,4 @@
-angular.module('tool').controller('toolInfoController', function ($scope, $http, $routeParams, $location) {
+angular.module('tools').controller('toolInfoController', function ($scope, $http, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
 
     $scope.showToolInfo = function () {   //ЗАГОТОВОЧКА ДЛЯ ЗАГРУЗКИ ИНФО ПО конкретному инструменту

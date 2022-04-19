@@ -2,7 +2,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
     let currentPageIndex = 1;
 
-    $scope.loadTools = function (pageIndex = 1) { // ЗАГОТОВОЧКА ПО ЗАГРУЗКЕ СТРАНИЦЫ СО СПИСКОМ
+    $scope.loadTools = function (pageIndex = 1) {
         currentPageIndex = pageIndex;
         $http({
             url: contextPath,
