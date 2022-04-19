@@ -12,6 +12,6 @@ angular.module('tool').controller('toolInfoController', function ($scope, $http,
             });
     }
 
-
     $scope.showToolInfo();
+
 });

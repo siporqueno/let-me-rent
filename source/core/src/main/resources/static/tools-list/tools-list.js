@@ -1,4 +1,4 @@
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $localStorage) {
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
     let currentPageIndex = 1;
 
