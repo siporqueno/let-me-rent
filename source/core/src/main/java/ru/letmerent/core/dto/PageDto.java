@@ -22,6 +22,15 @@ public class PageDto<T extends Serializable> implements Serializable {
     @Schema(description = "Список позиций на странице")
     List<T> instruments;
 
+    @Schema(description = "Первая страница")
+    boolean firstPage;
+
+    @Schema(description = "Последняя страница")
+    boolean lastPage;
+
+    @Schema(description = "Текущая страница")
+    int number;
+
     @Schema(description = "Всего страниц", example = "5")
     int totalPages;
 

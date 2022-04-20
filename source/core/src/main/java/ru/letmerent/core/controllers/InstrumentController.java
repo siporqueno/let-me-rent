@@ -64,6 +64,9 @@ public class InstrumentController {
                 .map(instrumentConverter::toListDto).collect(toList());
         PageDto<InstrumentForListDto> pageDto = new PageDto<>();
         pageDto.setInstruments(instrumentForListDtos);
+        pageDto.setFirstPage(page.isFirst());
+        pageDto.setLastPage(page.isLast());
+        pageDto.setNumber(page.getNumber());
         pageDto.setTotalPages(page.getTotalPages());
         pageDto.setTotalElements(page.getTotalElements());
 
