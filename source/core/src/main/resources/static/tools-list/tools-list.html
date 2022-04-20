@@ -87,8 +87,15 @@
 
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                    <li ng-class="toolsPage.firstPage ? 'page-item disabled' : 'page-item'">
+                        <button class="page-link" ng-click="loadTools(toolsPage.number)"><<</button>
+                    </li>
+                    <li ng-class="toolsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                        ng-repeat="pageIndex in paginationArray">
                         <button class="page-link" ng-click="loadTools(pageIndex)">{{pageIndex}}</button>
+                    </li>
+                    <li ng-class="toolsPage.last ? 'page-item disabled' : 'page-item'">
+                        <button class="page-link" ng-click="loadTools(toolsPage.number + 2)">>></button>
                     </li>
                 </ul>
             </nav>
