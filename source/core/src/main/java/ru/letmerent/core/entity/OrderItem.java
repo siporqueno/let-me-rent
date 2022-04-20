@@ -1,5 +1,6 @@
 package ru.letmerent.core.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "order_items")
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Check(constraints = "date_start < date_end")
@@ -44,5 +46,12 @@ public class OrderItem {
 
     @Column(name = "rent_price")
     private BigDecimal rentPrice;
-
+    
+    public OrderItem(Order order, Instrument instrument, LocalDateTime startDate, LocalDateTime endDate, BigDecimal rentPrice) {
+        this.order = order;
+        this.instrument = instrument;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rentPrice = rentPrice;
+    }
 }

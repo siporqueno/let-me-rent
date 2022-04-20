@@ -2,16 +2,15 @@ package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
+import ru.letmerent.core.dto.IntervalDto;
 import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.CategoryService;
-
-import java.util.stream.Collectors;
+import ru.letmerent.core.services.OrderItemService;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +19,7 @@ import static java.util.stream.Collectors.toList;
 public class InstrumentConverter {
 
     private final CategoryService categoryService;
+    private final OrderItemService orderItemService;
 
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
@@ -49,7 +49,12 @@ public class InstrumentConverter {
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());
         dto.setDescription(instrument.getDescription());
-        dto.setIntervals(null); //todo описать логику получения интервалов доступности
+        dto.setIntervals(
+            orderItemService.findAllByInstrument(instrument)
+            .stream()
+            .map(orderItem -> new IntervalDto(orderItem.getStartDate(),orderItem.getEndDate()))
+            .collect(toList())
+        );
 
         User owner = instrument.getUser();
         dto.setOwnerUsername(owner.getUserName());
