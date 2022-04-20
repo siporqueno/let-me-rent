@@ -5,30 +5,51 @@
     <table class="table align-middle table-bordered">
         <thead>
         <tr>
-            <th scope="col">Номер заказа</th>
             <th scope="col">Название инструмента</th>
             <th scope="col">Марка инструмента</th>
             <th scope="col">Владелец инструмента</th>
-            <th scope="col">Дата начала аренды</th>
-            <th scope="col">Дата окончания аренды</th>
+            <th scope="col">Цена аренды в день</th>
             <th scope="col">Сумма залога</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
+<!--        //код для работы с бэком-->
+<!--        <tr ng-repeat="i in cart.items">-->
+<!--            <td>{{i.toolTitle}}</td>-->
+<!--            <td>{{i.toolBrandName}}</td>-->
+<!--            <td>{{i.toolOwnerUsername}}</td>-->
+<!--            <td>{{i.toolFee}}</td>-->
+<!--            <td>{{i.toolPrice}}</td>-->
+
+<!--//код для наглядности пока-->
         <tr>
-            <td>{{'1'}}</td>
             <td>{{'Дрель'}}</td>
-            <td>{{'Makita'}}</td>
+            <td>{{'Макита'}}</td>
             <td>{{'Владелец'}}</td>
-            <td>{{'15.05.2022'}}</td>
-            <td>{{'31.05.2022'}}</td>
-            <td>{{'3000'}}</td>
+            <td>{{'10'}}</td>
+            <td>{{'100'}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="order(1)">Заказать</button>
+                <button class="btn btn-danger" ng-click="deleteItem(i.toolId)">Удалить</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" ng-click="tryToRent(i.toolId)">Арендовать отдельно</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" ng-click="navToToolInfoPage(i.toolId)">Инфо/Календарь</button>
             </td>
         </tr>
         </tbody>
     </table>
-<br/>
+    <br/>
+    <h3>Форма оформления заказа на аренду всех инструментов в корзине</h3>
+    <form novalidate ng-submit="rentToolsList()">
+        <input class="form-control" type="text" placeholder="Дата начала аренды" ng-model="period.dateStart">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Дата окончания аренды" ng-model="period.dateFinish">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Арендовать все позиции в корзине в указанные даты</button>
+    </form>
 </div>

@@ -54,6 +54,7 @@
                     <td>Сумма залога</td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,10 +68,13 @@
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>
                     <td>
-                        <button class="btn btn-primary" ng-click="navToToolInfoPage(t.id)">Информация+Календарь</button>
+                        <button class="btn btn-primary" ng-click="navToToolInfoPage(t.id)">Инфо+Календарь</button>
                     </td>
                     <td>
-                        <button class="btn btn-primary" ng-click="tryToRent(t.id)">В корзину</button>
+                        <button class="btn btn-primary" ng-click="putIntoCart(t.id)">Положить в корзину</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="tryToRent(t.id)">Арендовать</button>
                     </td>
                 </tr>
 
