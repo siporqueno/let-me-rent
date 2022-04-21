@@ -1,5 +1,6 @@
 package ru.letmerent.core.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +13,8 @@ import ru.letmerent.core.dto.UserDto;
 import ru.letmerent.core.exceptions.ApplicationError;
 import ru.letmerent.core.services.impl.UserService;
 
+import java.util.Date;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "API для работы с пользователями")
@@ -20,18 +23,37 @@ public class UserController {
 
     private final UserService userService;
     private final UserConverter userConverter;
+    private final ObjectMapper mapper;
 
     @Operation(summary = "Регистрация нового пользователя")
     @ApiResponse(
             responseCode = "200",
             description = "Аутентификая прошла успешно.")
     @PostMapping
-    public ResponseEntity<?> createNewUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> registerNewUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return new ResponseEntity<>(new ApplicationError(this.getClass().toString(),
-                    HttpStatus.UNPROCESSABLE_ENTITY.toString(),
-                    "Incorrect password confirmation"),
-                    HttpStatus.UNPROCESSABLE_ENTITY);
+            return ResponseEntity.unprocessableEntity()
+                    .body(mapper.valueToTree(ApplicationError.builder()
+                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                            .userMessage("Incorrect password confirmation")
+                            .date(new Date())
+                            .build()));
+        }
+        if (userService.existByEmail(userDto.getEmail())) {
+            return ResponseEntity.badRequest()
+                    .body(mapper.valueToTree(ApplicationError.builder()
+                            .errorCode(HttpStatus.BAD_REQUEST.value())
+                            .userMessage("Email is already in use!")
+                            .date(new Date())
+                            .build()));
+        }
+        if (userService.existByUsername(userDto.getUserName())) {
+            return ResponseEntity.badRequest()
+                    .body(mapper.valueToTree(ApplicationError.builder()
+                            .errorCode(HttpStatus.BAD_REQUEST.value())
+                            .userMessage("Username is already taken!")
+                            .date(new Date())
+                            .build()));
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -45,10 +67,12 @@ public class UserController {
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return new ResponseEntity<>(new ApplicationError(this.getClass().toString(),
-                    HttpStatus.UNPROCESSABLE_ENTITY.toString(),
-                    "Incorrect password confirmation"),
-                    HttpStatus.UNPROCESSABLE_ENTITY);
+            return ResponseEntity.unprocessableEntity()
+                    .body(mapper.valueToTree(ApplicationError.builder()
+                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                            .userMessage("Incorrect password confirmation")
+                            .date(new Date())
+                            .build()));
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -57,10 +81,12 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return new ResponseEntity<>(new ApplicationError(this.getClass().toString(),
-                    HttpStatus.UNPROCESSABLE_ENTITY.toString(),
-                    "Incorrect password confirmation"),
-                    HttpStatus.UNPROCESSABLE_ENTITY);
+            return ResponseEntity.unprocessableEntity()
+                    .body(mapper.valueToTree(ApplicationError.builder()
+                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                            .userMessage("Incorrect password confirmation")
+                            .date(new Date())
+                            .build()));
         }
         userService.deleteUser(userDto.getUserName());
         return new ResponseEntity<>(HttpStatus.OK);

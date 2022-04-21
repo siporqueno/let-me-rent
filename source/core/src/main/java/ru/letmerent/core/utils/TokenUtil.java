@@ -3,6 +3,11 @@ package ru.letmerent.core.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +21,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class TokenUtil {
 
     @Value("${properties.jwt.secretKey}")
@@ -41,6 +47,24 @@ public class TokenUtil {
                 .setExpiration(endDate)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (ExpiredJwtException expEx) {
+            log.error("Token expired");
+        } catch (UnsupportedJwtException unsEx) {
+            log.error("Unsupported jwt");
+        } catch (MalformedJwtException mjEx) {
+            log.error("Malformed jwt");
+        } catch (SignatureException sEx) {
+            log.error("Invalid signature");
+        } catch (Exception e) {
+            log.error("invalid token");
+        }
+        return false;
     }
 
     public String getUsernameFromToken(String token) {

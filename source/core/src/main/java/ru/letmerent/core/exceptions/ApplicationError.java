@@ -1,20 +1,19 @@
 package ru.letmerent.core.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ApplicationError {
     private String serviceName;
-    private String errorCode;
+    private Integer errorCode;
     private String userMessage;
     private Date date;
-
-    public ApplicationError(String serviceName, String errorCode, String userMessage) {
-        this.serviceName = serviceName;
-        this.errorCode = errorCode;
-        this.userMessage = userMessage;
-        this.date = new Date();
-    }
 }

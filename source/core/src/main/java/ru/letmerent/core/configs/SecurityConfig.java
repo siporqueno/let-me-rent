@@ -10,15 +10,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import ru.letmerent.core.repositories.UserRepository;
+import ru.letmerent.core.services.impl.UserService;
 import ru.letmerent.core.utils.TokenFilter;
 
 @Configuration
@@ -27,23 +25,21 @@ import ru.letmerent.core.utils.TokenFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final TokenFilter requestFilter;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    @Bean(name = "authenticationManager")
+    @Override @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> (UserDetails) userRepository.findByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found.", username))));
+        auth.userDetailsService(userService);
     }
 
     @Override

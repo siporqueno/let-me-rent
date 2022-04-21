@@ -14,7 +14,6 @@ import ru.letmerent.core.entity.User;
 import ru.letmerent.core.repositories.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +22,6 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
-    private final BCryptPasswordEncoder encoder;
 
     public User findByUsername(String username) {
         return userRepository.findByUserName(username).orElseThrow(() ->
@@ -33,13 +31,19 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), rolesToAuthorities(user.getAuthorities()));
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
+                user.getPassword(),
+                user.getAuthorities().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
+                        .collect(Collectors.toList()));
     }
 
-    private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<ru.letmerent.core.entity.GrantedAuthority> authorities) {
-        return authorities.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
-                .collect(Collectors.toList());
+    public Boolean existByUsername(String username) {
+        return userRepository.existsByUserName(username);
+    }
+
+    public Boolean existByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     @Transactional
