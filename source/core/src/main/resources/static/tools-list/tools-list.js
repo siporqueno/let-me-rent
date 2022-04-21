@@ -31,15 +31,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-
-    $(document).ready(function() {
-        $('#tools-list').DataTable( {
-                             language: {
-                                 url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json'
-                             }
-                         });
-    } );
-
     $(document).ready(function() {
        $('.datepicker').datepicker({
           format: 'mm-dd-yyyy'
