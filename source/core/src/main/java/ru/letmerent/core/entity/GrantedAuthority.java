@@ -29,8 +29,9 @@ public class GrantedAuthority {
     @JoinColumn(name = "user_user_id")
     private User user;
 
-    @Column(name = "role_role_id")
-    private Long roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_role_id")
+    private Role role;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;

@@ -1,7 +1,9 @@
 package ru.letmerent.core.entity;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +18,8 @@ import java.util.Collection;
 
 @Table(name = "users")
 @Entity
-@NoArgsConstructor
 @Data
+@Builder
 public class User {
 
     @Id
@@ -44,14 +46,17 @@ public class User {
     private String password;
 
     @Column(name = "start_date")
+    @CreationTimestamp
     private LocalDateTime startDate;
 
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
     @Column(name = "update_date")
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Collection<GrantedAuthority> authorities;
+
 }

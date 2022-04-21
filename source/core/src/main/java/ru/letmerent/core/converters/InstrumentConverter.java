@@ -2,7 +2,6 @@ package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.entity.Category;
@@ -10,8 +9,6 @@ import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.CategoryService;
-
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
