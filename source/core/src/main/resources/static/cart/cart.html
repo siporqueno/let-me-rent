@@ -35,6 +35,7 @@
                 <button class="btn btn-danger" ng-click="deleteItem(i.toolId)">Удалить</button>
             </td>
             <td>
+                <!-- НА обсуждение, нужен или нет этот функционал "Арендовать отдельно" -->
                 <button class="btn btn-primary" ng-click="tryToRent(i.toolId)">Арендовать отдельно</button>
             </td>
             <td>
@@ -43,6 +44,37 @@
         </tr>
         </tbody>
     </table>
+    <br/>
+    <h4>Период аренды инструментов в корзине (данные из фильтра на странице со списком инструментов)</h4>
+    <table class="table align-middle table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Дата начала аренды</th>
+            <th scope="col">Дата окончания аренды</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--        //код для работы с бэком-->
+        <!--        <tr>-->
+        <!--            <td>{{фиг знает пока как, но дата начала из фильтра на странице со списком инструментов}}</td>-->
+        <!--            <td>{{фиг знает пока как, но дата окончания из фильтра на странице со списком инструментов}}</td>-->
+        <!--            <td>
+                              <button class="btn btn-danger" ng-click="rentToolsListForFilterPeriod()">Оформить заказ</button>
+                        </td>
+                        </tr>-->
+
+        <!--//код для наглядности пока-->
+        <tr>
+            <td>{{'01.05.2022'}}</td>
+            <td>{{'15.05.2022'}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="rentToolsListForFilterPeriod()">Оформить заказ</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
     <br/>
     <h3>Форма оформления заказа на аренду всех инструментов в корзине</h3>
     <form novalidate ng-submit="rentToolsList()">
