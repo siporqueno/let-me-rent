@@ -83,9 +83,9 @@ class InstrumentConverterTest {
         InstrumentInfoDto instrumentInfoDto = instrumentConverter.toInstrumentInfoDto(instrument);
         
         assertEquals(2, instrumentInfoDto.getIntervals().size());
-        assertEquals(startDate, instrumentInfoDto.getIntervals().get(0).getDateStart());
-        assertEquals(endDate, instrumentInfoDto.getIntervals().get(0).getDateFinish());
-        assertEquals(startDate2, instrumentInfoDto.getIntervals().get(1).getDateStart());
-        assertEquals(endDate2, instrumentInfoDto.getIntervals().get(1).getDateFinish());
+        assertEquals(startDate, instrumentInfoDto.getIntervals().get(1).getDateStart());
+        assertEquals(endDate, instrumentInfoDto.getIntervals().get(1).getDateFinish());
+        assertEquals(startDate2, instrumentInfoDto.getIntervals().get(0).getDateStart());
+        assertEquals(endDate2, instrumentInfoDto.getIntervals().get(0).getDateFinish());
     }
 }

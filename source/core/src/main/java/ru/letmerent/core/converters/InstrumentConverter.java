@@ -12,6 +12,8 @@ import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 
+import java.util.Comparator;
+
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -51,9 +53,10 @@ public class InstrumentConverter {
         dto.setDescription(instrument.getDescription());
         dto.setIntervals(
             orderItemService.findAllByInstrumentId(instrument.getId())
-            .stream()
-            .map(orderItem -> new IntervalDto(orderItem.getStartDate(),orderItem.getEndDate()))
-            .collect(toList())
+                .stream()
+                .map(orderItem -> new IntervalDto(orderItem.getStartDate(), orderItem.getEndDate()))
+                .sorted(Comparator.comparing(IntervalDto::getDateStart).reversed())
+                .collect(toList())
         );
 
         User owner = instrument.getUser();
