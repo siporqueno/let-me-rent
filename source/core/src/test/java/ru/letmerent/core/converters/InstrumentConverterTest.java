@@ -27,7 +27,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class InstrumentConverterTest {
-    private final Long id = 1L;
     @Mock
     private User user;
     @Mock
@@ -62,14 +61,13 @@ class InstrumentConverterTest {
         List<Picture> pictures = Collections.emptyList();
         Category category = new Category("test_name", "test_description", startDate, endDate);
         Instrument instrument = new Instrument(
-            id,
             "test_title",
             "test_description",
             new BigDecimal(1000),
             new BigDecimal(100),
             startDate,
             endDate,
-            id,
+            1L,
             user,
             pictures,
             brand
@@ -79,7 +77,7 @@ class InstrumentConverterTest {
             new OrderItem(order, instrument, startDate2, endDate2, new BigDecimal(2000))
         );
         
-        doReturn(orderItems).when(orderItemService).findAllByInstrument(instrument);
+        doReturn(orderItems).when(orderItemService).findAllByInstrumentId(instrument.getId());
         doReturn(category).when(categoryService).getCategoryById(instrument.getId());
         
         InstrumentInfoDto instrumentInfoDto = instrumentConverter.toInstrumentInfoDto(instrument);

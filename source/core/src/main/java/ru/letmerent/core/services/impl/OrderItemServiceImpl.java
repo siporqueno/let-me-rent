@@ -1,7 +1,6 @@
 package ru.letmerent.core.services.impl;
 
 import org.springframework.stereotype.Service;
-import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.OrderItem;
 import ru.letmerent.core.repositories.OrderItemRepository;
 import ru.letmerent.core.services.OrderItemService;
@@ -18,7 +17,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
     
     @Override
-    public List<OrderItem> findAllByInstrument(Instrument instrument) {
-        return orderItemRepository.findAllByInstrument(instrument);
+    public List<OrderItem> findAllByInstrumentId(Long instrumentId) {
+        return orderItemRepository.findAllByInstrumentId(instrumentId);
     }
 }

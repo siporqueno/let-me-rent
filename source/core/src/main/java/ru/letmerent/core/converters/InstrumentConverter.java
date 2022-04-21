@@ -50,7 +50,7 @@ public class InstrumentConverter {
         dto.setFee(instrument.getFee());
         dto.setDescription(instrument.getDescription());
         dto.setIntervals(
-            orderItemService.findAllByInstrument(instrument)
+            orderItemService.findAllByInstrumentId(instrument.getId())
             .stream()
             .map(orderItem -> new IntervalDto(orderItem.getStartDate(),orderItem.getEndDate()))
             .collect(toList())
