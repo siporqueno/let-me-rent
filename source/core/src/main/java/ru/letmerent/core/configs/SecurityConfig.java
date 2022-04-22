@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import ru.letmerent.core.services.impl.UserService;
 import ru.letmerent.core.utils.TokenFilter;
 
 @Configuration
@@ -25,7 +23,6 @@ import ru.letmerent.core.utils.TokenFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final TokenFilter requestFilter;
-    private final UserService userService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -35,11 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
     }
 
     @Override
@@ -59,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .and();
 
-        http.authorizeRequests()
+        http.authorizeRequests().antMatchers("/api/v1/auth").permitAll()
+                .antMatchers("/api/v1/users/*").authenticated()
                 .anyRequest().permitAll();
 
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);

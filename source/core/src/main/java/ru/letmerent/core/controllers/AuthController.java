@@ -2,6 +2,7 @@ package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.dto.AuthRequest;
-import ru.letmerent.core.dto.AuthResponse;
 import ru.letmerent.core.exceptions.ApplicationError;
 import ru.letmerent.core.services.impl.UserService;
 import ru.letmerent.core.utils.TokenUtil;
@@ -40,22 +40,20 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper mapper;
 
-    @Operation(summary = "Аутентификация")
+    @Operation(summary = "Авторизация пользователя")
     @PostMapping
-    @ApiResponse(
-            responseCode = "200",
-            description = "Аутентификая прошла успешно.",
-            content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = AuthResponse.class)
-            ))
+    @ApiResponse(responseCode = "200", description = "Авторизация выполнена успешно.",
+            headers = @Header(name = "Authorization", description = "Токен пользователя"))
+    @ApiResponse(responseCode = "401", description = "Авторизация выполнена ошибочно",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
             String token = tokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).header(HttpHeaders.AUTHORIZATION, token).build();
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -13,10 +16,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 
 @Table(name = "users")
 @Entity
@@ -51,14 +56,17 @@ public class User {
 
     @Column(name = "start_date")
     @CreationTimestamp
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    @Temporal(value = TemporalType.DATE)
+    @Generated(value = GenerationTime.INSERT)
+    @ColumnDefault(value = "to_date('31.12.2999','DD.MM.YYYY')")
+    private Date endDate;
 
     @Column(name = "update_date")
     @UpdateTimestamp
-    private LocalDateTime updateDate;
+    private Date updateDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Collection<GrantedAuthority> authorities;

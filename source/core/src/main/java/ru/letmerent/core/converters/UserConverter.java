@@ -1,6 +1,7 @@
 package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.letmerent.core.dto.UserDto;
 import ru.letmerent.core.entity.GrantedAuthority;
@@ -9,6 +10,7 @@ import ru.letmerent.core.exceptions.ResourceNotFoundException;
 import ru.letmerent.core.repositories.RoleRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserConverter {
 
+    private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
     public UserDto userToUserDtoConverter(User user) {
@@ -26,7 +29,6 @@ public class UserConverter {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .userName(user.getUserName())
-                .password(user.getPassword())
                 .roles(user.getAuthorities()
                         .stream()
                         .map(a -> a.getRole().getRoleName())
@@ -51,7 +53,7 @@ public class UserConverter {
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
                 .userName(userDto.getUserName())
-                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
                 .authorities(authorities)
                 .build();
     }

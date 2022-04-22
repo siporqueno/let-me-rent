@@ -2,6 +2,8 @@ package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +28,11 @@ public class UserController {
     private final ObjectMapper mapper;
 
     @Operation(summary = "Регистрация нового пользователя")
-    @ApiResponse(
-            responseCode = "200",
+    @ApiResponse(responseCode = "201",
             description = "Аутентификая прошла успешно.")
+    @ApiResponse(responseCode = "404", description = "Не корректные параметры запроса",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     @PostMapping
     public ResponseEntity<?> registerNewUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
@@ -59,11 +63,20 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Получение информации о пользователе")
+    @ApiResponse(responseCode = "200", description = "Информация о пользователе",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserDto.class)))
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
     }
 
+    @Operation(summary = "Модификация пользовательских данных")
+    @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
+    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
@@ -78,6 +91,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "Модификация пользовательских данных")
+    @ApiResponse(responseCode = "200", description = "пользователь успешно удален")
+    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
