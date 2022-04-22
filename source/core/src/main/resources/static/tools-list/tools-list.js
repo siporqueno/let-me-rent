@@ -2,13 +2,13 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
     let currentPageIndex = 1;
 
-    $scope.loadTools = function (pageIndex = 1) {
+    $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
         $http({
             url: contextPath,
             method: 'GET',
             params: {
-                p: pageIndex,
+                page: pageIndex,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
