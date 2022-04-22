@@ -1,4 +1,4 @@
-package ru.letmerent.core.exceptions;
+package ru.letmerent.core.exceptions.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,6 @@ import java.util.Date;
 public class ApplicationError {
     private String serviceName;
     private Integer errorCode;
-    private String userMessage;
+    private Object userMessage;
     private Date date;
 }

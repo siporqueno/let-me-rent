@@ -9,6 +9,9 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Getter
@@ -32,14 +35,24 @@ public class UserDto {
     @Schema(description = "Фамилия пользователя", example = "Бородач")
     String lastName;
 
+    @NotNull
+    @Max(255)
     @Schema(description = "Электронная почта", example = "super_boroda@gmail.com")
     String email;
 
+    @NotNull
+    @Max(255)
     @Schema(description = "Уникальное наименование пользователя", example = "super_boroda")
     String userName;
 
+    @NotNull
+    @Min(3)
+    @Max(12)
     String password;
 
+    @NotNull
+    @Min(3)
+    @Max(12)
     String passwordConfirmation;
 
     Collection<String> roles;

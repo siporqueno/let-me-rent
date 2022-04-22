@@ -12,9 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.letmerent.core.converters.UserConverter;
 import ru.letmerent.core.dto.UserDto;
-import ru.letmerent.core.exceptions.ApplicationError;
+import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.services.impl.UserService;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -34,7 +35,7 @@ public class UserController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ApplicationError.class)))
     @PostMapping
-    public ResponseEntity<?> registerNewUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> registerNewUser(@Valid @RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
             return ResponseEntity.unprocessableEntity()
                     .body(mapper.valueToTree(ApplicationError.builder()
