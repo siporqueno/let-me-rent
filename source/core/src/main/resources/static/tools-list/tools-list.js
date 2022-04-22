@@ -32,10 +32,23 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
     $(document).ready(function() {
-       $('.datepicker').datepicker({
-          format: 'mm-dd-yyyy'
-        });
+       $('.datepickerStart').datepicker({
+          format: 'dd-mm-yyyy'
+        }).datepicker("setDate", new Date());
     });
+
+    Date.prototype.addDays = function(days) {
+    this.setDate(this.getDate() + days);
+    return this;
+    };
+
+    $(document).ready(function() {
+    var currentDate = new Date();
+    var myDate = currentDate.addDays(28);
+           $('.datepickerEnd').datepicker({
+              format: 'dd-mm-yyyy'
+            }).datepicker("setDate", myDate);
+        });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
