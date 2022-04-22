@@ -28,7 +28,7 @@ public class InstrumentConverter {
         dto.setFee(instrument.getFee());
         dto.setOwnerUsername(instrument.getUser().getUserName());
 
-        Category category = categoryService.getCategoryById(instrument.getId());
+        Category category = categoryService.getCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
         dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getUrl).orElse(null));

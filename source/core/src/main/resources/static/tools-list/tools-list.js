@@ -1,8 +1,8 @@
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $localStorage) {
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
     let currentPageIndex = 1;
 
-    $scope.loadTools = function (pageIndex = 1) { // ЗАГОТОВОЧКА ПО ЗАГРУЗКЕ СТРАНИЦЫ СО СПИСКОМ
+    $scope.loadTools = function (pageIndex = 1) {
         currentPageIndex = pageIndex;
         $http({
             url: contextPath,
@@ -31,15 +31,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-
-    $(document).ready(function() {
-        $('#tools-list').DataTable( {
-                             language: {
-                                 url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json'
-                             }
-                         });
-    } );
-
     $(document).ready(function() {
        $('.datepicker').datepicker({
           format: 'mm-dd-yyyy'
@@ -55,8 +46,18 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     //    ТУТ ЕСЛИ НЕ АВТОРИЗОВАН, ТО АЛЕРТ, ЧТО НАДО АВТОРИЗОВАТЬСЯ СНАЧАЛА, И ПЕРЕБРОСКА НА
     // СТРАНИЦУ АВТОРИЗАЦИИ
     // $location.path('/authorisation');
-    // И после авторизации уже отправка запроса о желании арендовать.
-    $location.path('/cart/');
+    // А после авторизации/если авторизован, то уже формируем запрос на аренду на отдельной странице:
+    $location.path('/rent-request-page/' + toolId);
+    }
+
+    $scope.putIntoCart = function (toolId) {
+        // доработать запрос по энд-поинтам после добавления логики на бэке по Redis и авторизации
+        $http({
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + toolId,
+            method: 'GET'
+        }).then(function (response) {
+            // $location.path('/cart/'); //опционально. Я бы не стала здесь сразу перебрасывать в корзину.
+        });
     }
 
     $scope.loadTools();
