@@ -28,7 +28,7 @@ public class OrderItemDto {
     LocalDateTime endDate;
 
 //    @Schema(description = "Модель заказа")
-//    OrderDto order;
+//    OrderDto order; // пока нигде не надо, закомементировала
 
     @Schema(description = "Модель инструмента")
     InstrumentDto instrument;
@@ -46,5 +46,7 @@ public class OrderItemDto {
         this.rentLength = Duration.between(startDate,endDate).toDays() +1L; //это если считаем все дни включительно
         this.rentPrice = instrument.getFee().multiply(new BigDecimal(rentLength));
     }
+
+
 
 }

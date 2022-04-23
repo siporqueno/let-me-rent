@@ -36,6 +36,6 @@ public class InstrumentInfoDto extends InstrumentDto {
     @Schema(description = "Краткое описание инструмента", example = "Супер инструмент, одной рукой держу, другой слёзы счастья вытираю")
     String description;
 
-    @Schema(description = "Интервалы занятости")
+    @Schema(description = "Интервалы доступности")
     List<IntervalDto> intervals;
 }
