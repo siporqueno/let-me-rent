@@ -16,4 +16,8 @@
         <sqlFile path="sql/v2_insert_initial_data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="04_add_initial_data" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v3_add_initial_data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
