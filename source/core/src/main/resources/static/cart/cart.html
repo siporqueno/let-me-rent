@@ -2,86 +2,62 @@
     <p></p>
     <h1>СПИСОК ИНСТРУМЕНТОВ ДОБАВЛЕННЫХ В КОРЗИНУ</h1>
     <br/>
-    <table class="table align-middle table-bordered">
+    <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
+    <br/>
+    <button class="btn btn-primary" ng-click="navToToolsList()">К ВЫБОРУ</button>
+    <br/>
+    <table class="table align-middle table-bordered" ng-show="cart.items.length > 0">
         <thead>
         <tr>
             <th scope="col">Название инструмента</th>
             <th scope="col">Марка инструмента</th>
             <th scope="col">Владелец инструмента</th>
-            <th scope="col">Цена аренды в день</th>
+            <th scope="col">Дата начала аренды</th>
+            <th scope="col">Дата окончания аренды</th>
+            <th scope="col">Стоимость аренды</th>
             <th scope="col">Сумма залога</th>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-<!--        //код для работы с бэком-->
-<!--        <tr ng-repeat="i in cart.items">-->
-<!--            <td>{{i.toolTitle}}</td>-->
-<!--            <td>{{i.toolBrandName}}</td>-->
-<!--            <td>{{i.toolOwnerUsername}}</td>-->
-<!--            <td>{{i.toolFee}}</td>-->
-<!--            <td>{{i.toolPrice}}</td>-->
-
-<!--//код для наглядности пока-->
-        <tr>
-            <td>{{'Дрель'}}</td>
-            <td>{{'Макита'}}</td>
-            <td>{{'Владелец'}}</td>
-            <td>{{'10'}}</td>
-            <td>{{'100'}}</td>
-            <td>
-                <button class="btn btn-danger" ng-click="deleteItem(i.toolId)">Удалить</button>
-            </td>
-            <td>
-                <!-- НА обсуждение, нужен или нет этот функционал "Арендовать отдельно" -->
-                <button class="btn btn-primary" ng-click="tryToRent(i.toolId)">Арендовать отдельно</button>
-            </td>
-            <td>
-                <button class="btn btn-primary" ng-click="navToToolInfoPage(i.toolId)">Инфо/Календарь</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <h4>Период аренды инструментов в корзине (данные из фильтра на странице со списком инструментов)</h4>
-    <table class="table align-middle table-bordered">
-        <thead>
-        <tr>
-            <th scope="col">Дата начала аренды</th>
-            <th scope="col">Дата окончания аренды</th>
-            <th scope="col"></th>
-        </tr>
+          </tr>
         </thead>
         <tbody>
         <!--        //код для работы с бэком-->
-        <!--        <tr>-->
-        <!--            <td>{{фиг знает пока как, но дата начала из фильтра на странице со списком инструментов}}</td>-->
-        <!--            <td>{{фиг знает пока как, но дата окончания из фильтра на странице со списком инструментов}}</td>-->
-        <!--            <td>
-                              <button class="btn btn-danger" ng-click="rentToolsListForFilterPeriod()">Оформить заказ</button>
-                        </td>
-                        </tr>-->
+                <tr ng-repeat="i in cart.items">
+                    <td>{{i.instrument.title}}</td>
+                    <td>{{i.instrument.brandName}}</td>
+                    <td>{{i.instrument.ownerUsername}}</td>
+                    <td>{{i.startDate}}</td>
+                    <td>{{i.endDate}}</td>
+                    <td>{{i.instrument.fee + '*' + i.rentLength + '=' + i.rentPrice}}</td>
+                    <td>{{i.instrument.price}}</td>
 
         <!--//код для наглядности пока-->
-        <tr>
-            <td>{{'01.05.2022'}}</td>
-            <td>{{'15.05.2022'}}</td>
+<!--        <tr>-->
+<!--            <td>{{'Дрель'}}</td>-->
+<!--            <td>{{'Макита'}}</td>-->
+<!--            <td>{{'Владелец'}}</td>-->
+<!--            <td>{{'10'}}</td>-->
+<!--            <td>{{'100'}}</td>-->
             <td>
-                <button class="btn btn-danger" ng-click="rentToolsListForFilterPeriod()">Оформить заказ</button>
+                <button class="btn btn-danger" ng-click="deleteItem(i.instrument.id)">X</button>
             </td>
+                      <td>
+                <button class="btn btn-info" ng-click="navToToolInfoPage(i.instrument.id)">i</button>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{'Итого цена: ' + cart.totalFee}}</td>
+            <td>{{'Итого залог: ' + cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
-
     <br/>
-    <h3>Форма оформления заказа на аренду всех инструментов в корзине</h3>
-    <form novalidate ng-submit="rentToolsList()">
-        <input class="form-control" type="text" placeholder="Дата начала аренды" ng-model="period.dateStart">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Дата окончания аренды" ng-model="period.dateFinish">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Арендовать все позиции в корзине в указанные даты</button>
-    </form>
+    <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+
 </div>

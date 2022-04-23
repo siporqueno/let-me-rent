@@ -16,7 +16,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель пользователя")
 @ToString
-public class UserDto {
+public class UserDto { //TODO: это старый вариант ДТО - будем корректировать, когда доберемся до ЛК
 
     @Schema(description = "Идентификатор пользователя", example = "12345678")
     Long id;

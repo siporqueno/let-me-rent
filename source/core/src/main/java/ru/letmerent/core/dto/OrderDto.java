@@ -17,7 +17,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель заказа")
 @ToString
-public class OrderDto {
+public class OrderDto { //TODO: это старый вариант ДТО - будем корректировать, когда доберемся до заказов
 
     @Schema(description = "Идентификатор заказа", example = "12345678")
     Long id;

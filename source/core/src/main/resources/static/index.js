@@ -52,16 +52,16 @@
     }
 
     function run($rootScope, $http, $localStorage) {
-        // const contextPath = 'http://localhost:8890/let-me-rent/';
-        // if ($localStorage.webMarketUser) {
-        //     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        const contextPath = 'http://localhost:8890/let-me-rent';
+        // if ($localStorage.letMeRentUser) {
+        //     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.letMeRentUser.token;
         // }
-        // if (!$localStorage.webMarketGuestCartId) {
-        //     $http.get(contextPath + '/api/v1/cart/generate')
-        //         .then(function successCallback(response) {
-        //             $localStorage.webMarketGuestCartId = response.data.value;
-        //         });
-        // }
+        if (!$localStorage.letMeRentGuestCartId) {
+            $http.get(contextPath + '/api/v1/carts/generate')
+                .then(function successCallback(response) {
+                    $localStorage.letMeRentGuestCartId = response.data.value;
+                });
+        }
     }
 })();
 
