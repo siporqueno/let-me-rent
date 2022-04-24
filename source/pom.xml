@@ -14,7 +14,7 @@
     </parent>
     <groupId>ru.letmerent</groupId>
     <artifactId>letmerent</artifactId>
-    <version>${project.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>letmerent</name>
     <properties>
         <java.version>11</java.version>

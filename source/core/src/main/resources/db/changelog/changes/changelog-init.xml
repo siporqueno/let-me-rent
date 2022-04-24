@@ -16,8 +16,12 @@
         <sqlFile path="sql/v2_insert_initial_data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="04_add_initial_data" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v3_add_initial_data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+  
     <changeSet id="04_edit_data" author="artem.smirnov" failOnError="true">
         <sqlFile path="sql/v3_edit_user_date.sql" relativeToChangelogFile="true"/>
-    </changeSet>
+    </changeSet>  
 
 </databaseChangeLog>
