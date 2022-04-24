@@ -2,17 +2,13 @@ package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.IntervalDto;
-import ru.letmerent.core.entity.Brand;
 import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
-import ru.letmerent.core.services.BrandService;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 
@@ -20,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -30,8 +25,6 @@ public class InstrumentConverter {
 
     private final CategoryService categoryService;
     private final OrderItemService orderItemService;
-
-    private final BrandService brandService;
 
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
@@ -46,7 +39,7 @@ public class InstrumentConverter {
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
-        dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getUrl).orElse(null));
+        dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getName).orElse(null));
 
         return dto;
     }
@@ -56,6 +49,7 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
+        dto.setPicturesNames(instrument.getPictures().stream().map(Picture::getName).collect(toList()));
         if (!CollectionUtils.isEmpty(instrument.getPictures())) {
             dto.setPicturesUrls(instrument.getPictures().stream().map(Picture::getUrl).collect(toList()));
         }

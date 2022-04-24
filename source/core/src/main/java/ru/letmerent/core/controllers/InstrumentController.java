@@ -37,7 +37,6 @@ import ru.letmerent.core.services.impl.UserService;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -89,7 +88,7 @@ public class InstrumentController {
                             implementation = InstrumentDto.class))
     )
     ResponseEntity<InstrumentInfoDto> getInstrumentById(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
-        InstrumentInfoDto infoDto = Optional.ofNullable(instrumentService.getInstrumentById(id))
+        InstrumentInfoDto infoDto = instrumentService.getInstrumentById(id)
                 .map(instrumentConverter::toInstrumentInfoDto).orElse(null);
         return new ResponseEntity<>(infoDto, HttpStatus.OK);
     }

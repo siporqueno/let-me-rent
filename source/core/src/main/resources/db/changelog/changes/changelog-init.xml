@@ -28,4 +28,8 @@
         <sqlFile path="sql/v5_add_data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="06_picture_table" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v4_edit_picture_table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
