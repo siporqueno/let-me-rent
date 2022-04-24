@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Check;
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -44,5 +44,12 @@ public class OrderItem {
 
     @Column(name = "rent_price")
     private BigDecimal rentPrice;
-
+    
+    public OrderItem(Order order, Instrument instrument, LocalDateTime startDate, LocalDateTime endDate, BigDecimal rentPrice) {
+        this.order = order;
+        this.instrument = instrument;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rentPrice = rentPrice;
+    }
 }

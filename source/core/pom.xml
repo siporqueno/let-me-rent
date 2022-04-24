@@ -14,6 +14,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <swagger.version>2.2.0</swagger.version>
     </properties>
 
     <dependencies>
@@ -68,11 +69,18 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
+      <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
