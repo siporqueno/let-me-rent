@@ -39,7 +39,7 @@ public class InstrumentConverter {
         Category category = categoryService.getCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
-        dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getUrl).orElse(null));
+        dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getName).orElse(null));
 
         return dto;
     }
@@ -49,7 +49,7 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
-        dto.setPicturesUrls(instrument.getPictures().stream().map(Picture::getUrl).collect(toList()));
+        dto.setPicturesNames(instrument.getPictures().stream().map(Picture::getName).collect(toList()));
         dto.setBrandName(instrument.getBrand().getBrandName());
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());

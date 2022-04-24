@@ -47,3 +47,6 @@ logging:
     ru:
       letmerent:
         core: info
+
+variables:
+  picture-storage-root: picture_storage
