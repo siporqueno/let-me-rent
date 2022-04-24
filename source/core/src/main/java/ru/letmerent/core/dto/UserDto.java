@@ -2,13 +2,17 @@ package ru.letmerent.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -16,6 +20,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель пользователя")
 @ToString
+@Builder
 public class UserDto {
 
     @Schema(description = "Идентификатор пользователя", example = "12345678")
@@ -30,12 +35,25 @@ public class UserDto {
     @Schema(description = "Фамилия пользователя", example = "Бородач")
     String lastName;
 
+    @NotNull
+    @Max(255)
     @Schema(description = "Электронная почта", example = "super_boroda@gmail.com")
     String email;
 
+    @NotNull
+    @Max(255)
     @Schema(description = "Уникальное наименование пользователя", example = "super_boroda")
     String userName;
 
-    @Schema(description = "Список аренд пользователя")
-    List<OrderDto> orders;
+    @NotNull
+    @Min(3)
+    @Max(12)
+    String password;
+
+    @NotNull
+    @Min(3)
+    @Max(12)
+    String passwordConfirmation;
+
+    Collection<String> roles;
 }
