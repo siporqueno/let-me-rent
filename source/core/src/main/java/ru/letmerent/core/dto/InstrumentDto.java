@@ -7,9 +7,11 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import ru.letmerent.core.entity.Picture;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,5 +40,8 @@ public class InstrumentDto implements Serializable {
     String ownerUsername;
 
     @Schema(description = "Название категории", example = "Дрели")
-    String categoryName;
+    String categoryName; // в профиле пока не фигурирует, но, может, добавим
+    
+    @Schema(description = "список картинок")
+    List<Picture> pictures;
 }

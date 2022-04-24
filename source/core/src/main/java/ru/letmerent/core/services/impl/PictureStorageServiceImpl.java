@@ -126,4 +126,9 @@ public class PictureStorageServiceImpl implements PictureStorageService {
                 return MediaType.IMAGE_PNG;
         }
     }
+    
+    @Override
+    public List<Picture> findAllPictureByInstrumentId(Long instrumentId) {
+        return pictureRepository.findAllByInstrumentId(instrumentId);
+    }
 }

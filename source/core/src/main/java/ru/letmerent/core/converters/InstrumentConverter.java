@@ -11,6 +11,7 @@ import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
+import ru.letmerent.core.services.PictureStorageService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import static java.util.stream.Collectors.toList;
 public class InstrumentConverter {
 
     private final CategoryService categoryService;
+    private final PictureStorageService pictureStorageService;
     private final OrderItemService orderItemService;
 
     public InstrumentForListDto toListDto(Instrument instrument) {
@@ -35,6 +37,7 @@ public class InstrumentConverter {
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());
         dto.setOwnerUsername(instrument.getUser().getUserName());
+        dto.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrument.getId()));
 
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
