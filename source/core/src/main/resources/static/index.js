@@ -18,7 +18,7 @@
                 templateUrl: 'tool-info/tool-info.html',
                 controller: 'toolInfoController'
             })
-            .when('/rent-request-page/:toolId', {
+            .when('/rent-request-page/:toolId', { //ПО ЛОГИКЕ ПРИЛОЖЕНИЯ ЭТО ПОКА ЛИШНЯЯ СТРАНИЦА. ПОТОМ УБЕРЕМ
                 templateUrl: 'rent-request-page/rent-request-page.html',
                 controller: 'rentRequestController'
             })
@@ -52,61 +52,27 @@
     }
 
     function run($rootScope, $http, $localStorage) {
-        // const contextPath = 'http://localhost:8890/let-me-rent/';
-        // if ($localStorage.webMarketUser) {
-        //     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
-        // }
-        // if (!$localStorage.webMarketGuestCartId) {
-        //     $http.get(contextPath + '/api/v1/cart/generate')
-        //         .then(function successCallback(response) {
-        //             $localStorage.webMarketGuestCartId = response.data.value;
-        //         });
-        // }
+        const contextPath = 'http://localhost:8890/let-me-rent';
+        if ($localStorage.letMeRentUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.letMeRentUser.token;
+        }
+        if (!$localStorage.letMeRentGuestCartId) {
+            $http.get(contextPath + '/api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    $localStorage.letMeRentGuestCartId = response.data.value;
+                });
+        }
     }
 })();
 
 angular.module('tools').controller('indexController', function ($rootScope, $scope, $http, $localStorage) {
-    const contextPath = 'http://localhost:8189/tools';
+    const contextPath = 'http://localhost:8890/let-me-rent';
 
-    // $scope.tryToAuth = function () {
-    //     $http.post(contextPath + '/auth', $scope.user)
-    //         .then(function successCallback(response) {
-    //             if (response.data.token) {
-    //                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-    //                 $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
-    //
-    //                 $scope.user.username = null;
-    //                 $scope.user.password = null;
-    //
-    //                 $http.get(contextPath + '/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/merge')
-    //                     .then(function successCallback(response) {
-    //                     });
-    //             }
-    //         }, function errorCallback(response) {
-    //         });
-    // };
-    //
-    // $scope.tryToLogout = function () {
-    //     $scope.clearUser();
-    //     if ($scope.user.username) {
-    //         $scope.user.username = null;
-    //     }
-    //     if ($scope.user.password) {
-    //         $scope.user.password = null;
-    //     }
-    //     $location.path('/');
-    // };
-    //
-    // $scope.clearUser = function () {
-    //     delete $localStorage.webMarketUser;
-    //     $http.defaults.headers.common.Authorization = '';
-    // };
-    //
-    // $rootScope.isUserLoggedIn = function () {
-    //     if ($localStorage.webMarketUser) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // };
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.letMeRentUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });

@@ -62,7 +62,7 @@ public class UserController {
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+    }//TODO: если возникают ошибки валидации, то на фронт летит сложный объект ApplicationError, в котором лежать Violation, а в них поля "ИМЯ поля" и "сообщение об ошибке". Сложно пока это отразить на фронте - или на бэке надо сделать лист строк,или на фронте научиться их отражать.
 
     @Operation(summary = "Получение информации о пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",

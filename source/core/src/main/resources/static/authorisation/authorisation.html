@@ -5,11 +5,11 @@
 
     <ul style="list-style-type: none;">
         <li class="nav-item">
-            <!--    <li class="nav-item" ng-show="!isUserLoggedIn()"> //КОГДА СОЗДАДИМ АВТОРИЗАЦИЮ МОЖНО БУДЕТ ПОДВЯЗАТЬ ПОКАЗ В ЗАВИСИМОСТИ ОТ ТОГО, ЗАЛОГИНИЛСЯ ИЛИ НЕТ-->
+            <li class="nav-item" ng-show="!isUserLoggedIn()">
             <form class="align-middle" ng-submit="tryToAuth()">
                 <div class="input-group input-group-sm" style="padding: 4px;">
-                    <input id="navLoginField" class="form-control" ng-model="user.userName" type="text"
-                           aria-describedby="inputGroup-sizing-sm" placeholder="Enter Email" style="margin-left: 10px;">
+                    <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
+                           aria-describedby="inputGroup-sizing-sm" placeholder="Enter Username" style="margin-left: 10px;">
 
                     <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
                            aria-describedby="inputGroup-sizing-sm" placeholder="Enter Password" style="margin-left: 10px;">
@@ -20,9 +20,9 @@
             </form>
         </li>
     </ul>
-<!--    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">-->
-<!--        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>-->
-<!--    </li> //КОГДА СОЗДАДИМ АВТОРИЗАЦИЮ МОЖНО БУДЕТ ПОДВЯЗАТЬ ПОКАЗ В ЗАВИСИМОСТИ ОТ ТОГО, ЗАЛОГИНИЛСЯ ИЛИ НЕТ-->
+    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+    </li>
 
     <p></p>
     <p></p>

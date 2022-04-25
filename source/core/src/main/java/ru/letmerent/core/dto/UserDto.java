@@ -21,7 +21,7 @@ import java.util.Collection;
 @Schema(description = "Модель пользователя")
 @ToString
 @Builder
-public class UserDto {
+public class UserDto {//TODO: Разобраться с валидацией: он работает как-то криво (в телеграмме отправила фото)
 
     @Schema(description = "Идентификатор пользователя", example = "12345678")
     Long id;
