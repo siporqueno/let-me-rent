@@ -22,6 +22,10 @@
   
     <changeSet id="04_edit_data" author="artem.smirnov" failOnError="true">
         <sqlFile path="sql/v3_edit_user_date.sql" relativeToChangelogFile="true"/>
-    </changeSet>  
+    </changeSet>
+
+    <changeSet id="06_add_relations_instrument_category" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v6_add_relation_instrument_category.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 
 </databaseChangeLog>

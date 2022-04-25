@@ -58,6 +58,10 @@ public class Instrument {
     @JoinColumn(name = "brand_brand_id")
     private Brand brand;
     
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    
     public Instrument(
         String title,
         String description,
@@ -68,7 +72,8 @@ public class Instrument {
         Long categoryId,
         User user,
         Collection<Picture> pictures,
-        Brand brand
+        Brand brand,
+        Category category
     ) {
         this.title = title;
         this.description = description;
@@ -80,5 +85,6 @@ public class Instrument {
         this.user = user;
         this.pictures = pictures;
         this.brand = brand;
+        this.category = category;
     }
 }
