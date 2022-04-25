@@ -11,8 +11,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 page: pageIndex,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
-                ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
-                max_fee: $scope.filter ? $scope.filter.max_fee : null,
+                ownerName: $scope.filter ? $scope.filter.ownerUsername : null,
+                maxFee: $scope.filter ? $scope.filter.maxFee : null,
                 startDate: $scope.filter ? $scope.filter.startDate : null,
                 endDate: $scope.filter ? $scope.filter.endDate : null
             }
@@ -33,7 +33,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $(document).ready(function() {
        $('.datepickerStart').datepicker({
-          format: 'dd-mm-yyyy'
+          format: 'yyyy-MM-dd'
         });
     });
 
@@ -46,7 +46,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     var currentDate = new Date();
     var myDate = currentDate.addDays(28);
            $('.datepickerEnd').datepicker({
-              format: 'dd-mm-yyyy'
+              format: 'yyyy-MM-dd'
             });
         });
 
