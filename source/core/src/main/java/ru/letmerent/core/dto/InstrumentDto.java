@@ -11,7 +11,7 @@ import ru.letmerent.core.entity.Picture;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -43,5 +43,5 @@ public class InstrumentDto implements Serializable {
     String categoryName; // в профиле пока не фигурирует, но, может, добавим
     
     @Schema(description = "список картинок")
-    List<Picture> pictures;
+    Collection<Picture> pictures;
 }

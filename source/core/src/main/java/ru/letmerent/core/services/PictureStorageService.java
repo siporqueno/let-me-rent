@@ -11,13 +11,13 @@ import java.util.List;
 public interface PictureStorageService {
     void save(MultipartFile picture, Instrument instrument);
     
-    List<String> loadInstrumentPicturesName(Instrument instrument);
-    
     List<Picture> findAllPictureByInstrumentId(Long instrumentId);
     
     Resource load(String pictureName);
     
-    void deletePictures(Instrument instrument, List<Long> pictureIds);
+    Resource load(Long pictureId);
+    
+    void deletePictures(Long instrumentId, List<Long> pictureIds);
     
     MediaType getMediaType(String fileName);
     

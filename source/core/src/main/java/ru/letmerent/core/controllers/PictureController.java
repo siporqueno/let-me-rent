@@ -1,4 +1,4 @@
-package ru.letmerent.core.controller;
+package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +59,7 @@ public class PictureController {
         }
     }
     
-    @Operation(summary = "Получение картинки")
+    @Operation(summary = "Получение картинки по имени")
     @ApiResponse(responseCode = "200", description = "Получение картинки",
         content = {
             @Content(mediaType = "image/png", schema = @Schema(implementation = Resource.class)),
@@ -68,7 +68,7 @@ public class PictureController {
         }
     )
     @GetMapping("/{pictureName:.+}")
-    public ResponseEntity<Object> getPicture(@PathVariable String pictureName) {
+    public ResponseEntity<Object> getPictureByName(@PathVariable String pictureName) {
         try {
             Resource picture = storageService.load(pictureName);
             MediaType mediaType = storageService.getMediaType(picture.getFilename());
@@ -78,17 +78,23 @@ public class PictureController {
         }
     }
     
-    @Operation(summary = "Получение списка имен картинок инструмента")
-    @ApiResponse(responseCode = "200", description = "Получение списка имен картинок инструмента", content = @Content(mediaType = "application/json"))
-    @GetMapping("/all/{instrumentId}")
-    public ResponseEntity<Object> getPicturesNames(@PathVariable Long instrumentId) {
-        Optional<Instrument> oInstrument = instrumentService.getInstrumentById(instrumentId);
-        if (oInstrument.isEmpty()) {
-            return getErrorResponse(COULD_NOT_FIND_INSTRUMENT + instrumentId);
+    @Operation(summary = "Получение картинки по id")
+    @ApiResponse(responseCode = "200", description = "Получение картинки",
+        content = {
+            @Content(mediaType = "image/png", schema = @Schema(implementation = Resource.class)),
+            @Content(mediaType = "image/jpeg", schema = @Schema(implementation = Resource.class)),
+            @Content(mediaType = "image/gif", schema = @Schema(implementation = Resource.class))
         }
-        
-        List<String> pictures = storageService.loadInstrumentPicturesName(oInstrument.get());
-        return ResponseEntity.ok(pictures);
+    )
+    @GetMapping("/byId/{pictureId}")
+    public ResponseEntity<Object> getPictureById(@PathVariable Long pictureId) {
+        try {
+            Resource picture = storageService.load(pictureId);
+            MediaType mediaType = storageService.getMediaType(picture.getFilename());
+            return ResponseEntity.ok().contentType(mediaType).body(picture);
+        } catch (Exception e) {
+            return getErrorResponse(e.getMessage());
+        }
     }
     
     @Operation(summary = "Удалить картинки инструмента")
@@ -100,7 +106,7 @@ public class PictureController {
         if (oInstrument.isEmpty()) {
             return getErrorResponse(COULD_NOT_FIND_INSTRUMENT + instrumentId);
         }
-        storageService.deletePictures(oInstrument.get(), pictureIds);
+        storageService.deletePictures(oInstrument.get().getId(), pictureIds);
         
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

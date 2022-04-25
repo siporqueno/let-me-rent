@@ -1,5 +1,6 @@
 package ru.letmerent.core.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,12 +30,9 @@ import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.PageDto;
 import ru.letmerent.core.entity.Instrument;
-import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.InstrumentService;
-import ru.letmerent.core.services.impl.UserService;
 
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -45,9 +42,11 @@ import static java.util.stream.Collectors.toList;
 @Tag(name = "API для работы с инструментом")
 @RequiredArgsConstructor
 public class InstrumentController {
-
+    private static final String COULD_NOT_FIND_INSTRUMENT = "Could not find instrument with id: ";
+    
     private final InstrumentService instrumentService;
     private final InstrumentConverter instrumentConverter;
+    private final ObjectMapper mapper;
     private final UserService userService;
 
     @Operation(summary = "Вывод информации по всем инструментам")
@@ -87,9 +86,19 @@ public class InstrumentController {
                     schema = @Schema(
                             implementation = InstrumentDto.class))
     )
-    ResponseEntity<InstrumentInfoDto> getInstrumentById(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
-        InstrumentInfoDto infoDto = instrumentService.getInstrumentById(id)
-                .map(instrumentConverter::toInstrumentInfoDto).orElse(null);
+    ResponseEntity<Object> getInstrumentById(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
+        Optional<Instrument> oInstrument = instrumentService.getInstrumentById(id);
+        if (oInstrument.isEmpty()) {
+            return ResponseEntity.badRequest()
+                .body(mapper.valueToTree(ApplicationError.builder()
+                    .errorCode(HttpStatus.BAD_REQUEST.value())
+                    .userMessage(COULD_NOT_FIND_INSTRUMENT)
+                    .date(new Date())
+                    .build()));
+        }
+        
+        InstrumentInfoDto infoDto = instrumentConverter.toInstrumentInfoDto(oInstrument.get());
+        
         return new ResponseEntity<>(infoDto, HttpStatus.OK);
     }
 

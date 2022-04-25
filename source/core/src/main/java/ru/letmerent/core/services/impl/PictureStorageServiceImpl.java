@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
-import ru.letmerent.core.exceptions.BaseException;
 import ru.letmerent.core.repositories.PictureRepository;
 import ru.letmerent.core.services.PictureStorageService;
 
@@ -20,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -58,7 +58,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             pictureRepository.save(new Picture(newName, instrument));
         } catch (IOException e) {
             log.error("Could not save picture: {}", e.getClass());
-            throw new BaseException("Could not save picture " + " " + file.getName());
+            throw new RuntimeException("Could not save picture " + " " + file.getName());
         }
     }
     
@@ -71,24 +71,26 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new BaseException("Could not read the picture or picture does not exists!");
+                throw new RuntimeException("Could not read the picture or picture does not exists!");
             }
         } catch (MalformedURLException e) {
-            throw new BaseException("Error: " + e.getMessage());
+            throw new RuntimeException("Error: " + e.getMessage());
         }
     }
     
     @Override
-    public List<String> loadInstrumentPicturesName(Instrument instrument) {
-        return pictureRepository.findAllByInstrumentId(instrument.getId())
-            .stream()
-            .map(Picture::getName)
-            .collect(Collectors.toList());
+    public Resource load(Long pictureId) {
+        Optional<Picture> oPicture = pictureRepository.findById(pictureId);
+        if (oPicture.isPresent()) {
+            return load(oPicture.get().getName());
+        } else {
+            throw new RuntimeException("Could not read the picture or picture does not exists!");
+        }
     }
     
     @Override
-    public void deletePictures(Instrument instrument, List<Long> pictureIds) {
-        Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrument.getId());
+    public void deletePictures(Long instrumentId, List<Long> pictureIds) {
+        Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrumentId);
         if (isNull(pictureIds) || pictureIds.isEmpty()) {
             allByInstrumentId.forEach(pic -> {
                 try {
