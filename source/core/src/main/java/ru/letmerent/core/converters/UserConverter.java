@@ -10,7 +10,6 @@ import ru.letmerent.core.exceptions.ResourceNotFoundException;
 import ru.letmerent.core.repositories.RoleRepository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,7 @@ public class UserConverter {
 
     public User userDtoToUserConverter(UserDto userDto) { //TODO:разобраться, как поступаем с ролями, когда пользователь регистрируется: юзер при регистрации роль не вводит и вылетает ошибка при попытке сохранить польователя
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if (!userDto.getRoles().isEmpty() && userDto.getRoles() != null) {
+        if (userDto.getRoles() != null && !userDto.getRoles().isEmpty()) {
             for (String role : userDto.getRoles()) {
                 GrantedAuthority authority = new GrantedAuthority();
                 authority.setRole(roleRepository.findByRoleName(role).orElseThrow(() ->

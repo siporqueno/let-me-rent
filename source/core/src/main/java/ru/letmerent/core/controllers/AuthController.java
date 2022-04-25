@@ -27,6 +27,7 @@ import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.services.impl.UserService;
 import ru.letmerent.core.utils.TokenUtil;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -44,10 +45,13 @@ public class AuthController {
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Авторизация выполнена успешно.",
             headers = @Header(name = "Authorization", description = "Токен пользователя"))
+    @ApiResponse(responseCode = "400", description = "Ошибочный запрос",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     @ApiResponse(responseCode = "401", description = "Авторизация выполнена ошибочно",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ApplicationError.class)))
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody AuthRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
