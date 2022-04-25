@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class ValidationHandlerControllerAdvice {
+public class ValidationHandler {
 
     @ResponseBody
     @ExceptionHandler(ConstraintViolationException.class)

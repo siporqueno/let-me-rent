@@ -68,6 +68,9 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = UserDto.class)))
+    @ApiResponse(responseCode = "404", description = "Пользователь не найден",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
