@@ -52,7 +52,7 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
-        dto.setPicturesNames(instrument.getPictures().stream().map(Picture::getName).collect(toList()));
+        dto.setPictures(instrument.getPictures());
         dto.setBrandName(instrument.getBrand().getBrandName());
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());

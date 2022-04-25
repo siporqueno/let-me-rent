@@ -18,9 +18,6 @@ import java.util.List;
 @ToString
 public class InstrumentInfoDto extends InstrumentDto {
 
-    @Schema(description = "Список имен изображений")
-    List<String> picturesNames;
-
     @Schema(description = "Имя владельца", example = "Александр")
     String ownerFirstName;
 
