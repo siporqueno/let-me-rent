@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.max_fee">
+                        <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.maxFee">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate" placeholder="дата окочания аренды" ng-model="filter.endDate">
+                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate" placeholder="дата окончания аренды" ng-model="filter.endDate">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -60,6 +60,7 @@
                     <td>Сумма залога</td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -72,14 +73,13 @@
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>
                     <td>
-                        <button class = "btn">
-                            <i class="material-icons" ng-click="navToToolInfoPage(t.id)" title = "Информация о инструменте">info</i>
-                        </button>
+                        <button class="btn btn-primary" ng-click="navToToolInfoPage(t.id)">Инфо+Календарь</button>
                     </td>
                     <td>
-                        <button class = "btn">
-                            <i class="material-icons" ng-click="putIntoCart(t.id)" title = "Добавить в корзину">add_shopping_cart</i>
-                        </button>
+                        <button class="btn btn-primary" ng-click="putIntoCart(t.id)">Положить в корзину</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="tryToRent(t.id)">Арендовать</button>
                     </td>
                 </tr>
 
