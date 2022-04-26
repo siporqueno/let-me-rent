@@ -34,19 +34,19 @@ public class UserDto {//TODO: Разобраться с валидацией: о
     @Schema(description = "Фамилия пользователя", example = "Бородач")
     String lastName;
 
-    @NotNull
+    @NotNull(message = "Заполните адрес электронной почты. Данное поле не может быть пустым")
     @Schema(description = "Электронная почта", example = "super_boroda@gmail.com", required = true)
     String email;
 
-    @NotNull
+    @NotNull(message = "Укажите логин. Данное поле не может быть пустым")
     @Schema(description = "Уникальное наименование пользователя", example = "super_boroda", required = true)
     String userName;
 
-    @NotNull
+    @NotNull(message = "Укажите пароль. Данное поле не может быть пустым")
             @Schema(description = "Пароль пользователя", example = "111111", required = true)
     String password;
 
-    @NotNull
+    @NotNull(message = "Укажите подтерждение пароля. Данное поле не может быть пустым")
     @Schema(description = "Подтверждение пароля пользователя", example = "111111", required = true)
     String passwordConfirmation;
 

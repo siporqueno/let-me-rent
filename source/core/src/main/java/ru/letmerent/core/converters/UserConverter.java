@@ -35,7 +35,7 @@ public class UserConverter {
                 .build();
     }
 
-    public User userDtoToUserConverter(UserDto userDto) { //TODO:разобраться, как поступаем с ролями, когда пользователь регистрируется: юзер при регистрации роль не вводит и вылетает ошибка при попытке сохранить польователя
+    public User userDtoToUserConverter(UserDto userDto) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (userDto.getRoles() != null && !userDto.getRoles().isEmpty()) {
             for (String role : userDto.getRoles()) {

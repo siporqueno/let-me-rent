@@ -4,19 +4,20 @@ angular.module('tools').controller('registrationController', function ($scope, $
 
     $scope.registerUser = function () {
         $http.post(contextPath, $scope.new_user)
-            .then(function successCallback (response) {
+            .then(function successCallback(response) {
                 $scope.new_user = null;
                 alert('Вы успешно зарегистрированы, для продолжения работы вам необходимо авторизоваться');
                 $location.path('/authorisation');
-            }, function failureCallback (response) {
-                alert(response.data.userMessage);
-                // TODO: если возникают ошибки валидации, то на фронт летит сложный объект ApplicationError, в котором лежат Violation, а в них поля "ИМЯ поля" и "сообщение об ошибке". Сложно пока это отразить на фронте - или на бэке надо сделать лист строк,или на фронте научиться их отражать
+            }, function failureCallback(response) {
+                if (angular.isArray(response.data.userMessage)) {
+                    for (let i = 0; i < response.data.userMessage.length; i++) {
+                        alert(response.data.userMessage[i].message);
+                    }
+                } else {
+                    alert(response.data.userMessage);
+                }
             });
     };
-
-
-
-
 
 
 });

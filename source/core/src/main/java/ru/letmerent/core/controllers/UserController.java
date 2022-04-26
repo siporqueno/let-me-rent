@@ -40,7 +40,7 @@ public class UserController {
             return ResponseEntity.unprocessableEntity()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Incorrect password confirmation")
+                            .userMessage("Некорректное подтверждение пароля. Данные пароля и подтверждения должны совпадать")
                             .date(new Date())
                             .build()));
         }
@@ -48,7 +48,7 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Email is already in use!")
+                            .userMessage("Выбранный адрес электронной почты уже используется!")
                             .date(new Date())
                             .build()));
         }
@@ -56,13 +56,13 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Username is already taken!")
+                            .userMessage("Такой логин уже существует!")
                             .date(new Date())
                             .build()));
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }//TODO: если возникают ошибки валидации, то на фронт летит сложный объект ApplicationError, в котором лежать Violation, а в них поля "ИМЯ поля" и "сообщение об ошибке". Сложно пока это отразить на фронте - или на бэке надо сделать лист строк,или на фронте научиться их отражать.
+    }
 
     @Operation(summary = "Получение информации о пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",
