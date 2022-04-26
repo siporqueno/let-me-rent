@@ -1,5 +1,6 @@
 package ru.letmerent.core.services.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -12,6 +13,7 @@ import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.repositories.PictureRepository;
 import ru.letmerent.core.services.PictureStorageService;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -28,18 +30,21 @@ import static java.util.Objects.nonNull;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PictureStorageServiceImpl implements PictureStorageService {
-    private final Path root;
+
+    @Value("${variables.picture-storage-root:picture_storage}")
+    private String storagePath;
+
+    private Path root;
+
     private final PictureRepository pictureRepository;
-    
-    public PictureStorageServiceImpl(PictureRepository pictureRepository,
-                                     @Value("${variables.picture-storage-root:picture_storage}") String path
-    ) {
-        this.pictureRepository = pictureRepository;
-        
-        root = Paths.get(path);
+
+    @PostConstruct
+    public void init() {
+        this.root = Paths.get(storagePath);
     }
-    
+
     @Override
     public void save(MultipartFile file, Instrument instrument) {
         try {
