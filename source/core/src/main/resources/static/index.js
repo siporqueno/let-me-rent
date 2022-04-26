@@ -46,6 +46,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/compare-page', {
+                templateUrl: 'compare-page/compare-page.html',
+                controller: 'comparePageController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

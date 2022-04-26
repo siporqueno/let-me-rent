@@ -73,5 +73,14 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         });
     }
 
+    // $scope.compare = function (toolId) { //НАБРОСОК КОДА ПО ДОБАВЛЕНИЮ К СРАВНЕНИЮ
+    //     // тут будет какая-то логика, похожая на работу с корзиной
+    //     $http({
+    //         url: contextPath + 'api/v1/СПЕЦИАЛЬНЫЙ ЭНД-ПОИНТ/' + $localStorage.toolsForCompareId + '/add/' + toolId,
+    //         method: 'GET'
+    //     }).then(function (response) {
+    //     });
+    // }
+
     $scope.loadTools();
 });

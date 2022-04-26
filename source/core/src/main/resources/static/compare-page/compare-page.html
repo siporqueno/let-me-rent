@@ -1,0 +1,67 @@
+<div>
+    <p></p>
+    <h3>СРАВНЕНИЕ ВЫБРАННЫХ ИНСТРУМЕНТОВ</h3>
+    <p></p>
+    <div class="container">
+
+        <button class="btn btn-primary" ng-click="sortByFeeIncrease()">Сортиовать по возрастанию цены</button>
+        <button class="btn btn-info" ng-click="sortByFeeDecrease()">Сортиовать по убыванию цены</button>
+        <button class="btn btn-primary" ng-click="sortByPriceIncrease()">Сортиовать по возрастанию суммы залога</button>
+        <button class="btn btn-info" ng-click="sortByPriceDecrease()">Сортиовать по убыванию суммы залога</button>
+
+
+        <div>
+            <table id="tools-compare-list" class="table">
+                <thead>
+                <tr>
+                    <td>Категория</td> <!--Не уверена, возможно, лишняя инфо. Я бы убрала категорию -->
+                    <td>Название инструмента</td>
+                    <td>Брэнд</td>
+                    <td>Фото</td>
+                    <td>Владелец</td>
+                    <td>Цена аренды в сутки</td>
+                    <td>Сумма залога</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+<!--&lt;!&ndash;                КОД ДЛЯ РАБОТЫ С БЭКОМ&ndash;&gt;-->
+<!--                <tr ng-repeat="t in toolsCompareList.instruments">-->
+<!--                    <td>{{t.categoryName}}</td>-->
+<!--                    <td>{{t.title}}</td>-->
+<!--                    <td>{{t.brandName}}</td>-->
+<!--                    <td>{{t.avatarPictureUrl}}</td>-->
+<!--                    <td>{{t.ownerUsername}}</td>-->
+<!--                    <td>{{t.fee}}</td>-->
+<!--                    <td>{{t.price}}</td>-->
+<!--                    <td>-->
+<!--                        <button class="btn btn-info" ng-click="navToToolInfoPage(t.id)">i</button>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <button class="btn btn-danger" ng-click="deleteTool(t.id)">X</button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
+<!--                КОД ДЛЯ НАГЛЯДНОСТИ-->
+                <tr>
+                    <td>{{'Дрели'}}</td>
+                    <td>{{'Дрель'}}</td>
+                    <td>{{'Makita'}}</td>
+                    <td>{{'Фотка'}}</td>
+                    <td>{{'Владелец'}}</td>
+                    <td>{{'100'}}</td>
+                    <td>{{'1000'}}</td>
+                    <td>
+                        <button class="btn btn-info" ng-click="navToToolInfoPage(t.id)">i</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deleteTool(t.id)">X</button>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
