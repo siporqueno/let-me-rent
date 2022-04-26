@@ -1,16 +1,27 @@
 package ru.letmerent.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonDeserialize(using = CartDeserializer.class)
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -30,6 +41,11 @@ public class Cart {
         this.items = new ArrayList<>();
     }
 
+    @JsonCreator
+    public Cart(@JsonProperty("items") List<OrderItemDto> items) {
+        this.items = new ArrayList<>(items);
+    }
+
 //    public boolean add(Long instrumentId) {
 //        for (OrderItemDto i : items) {
 //            if (i.getProductId().equals(productId)) {
@@ -42,7 +58,7 @@ public class Cart {
 //    }
 
     public void add(InstrumentForListDto instrument, LocalDateTime startDate, LocalDateTime endDate) {
-        items.add(new OrderItemDto(instrument,startDate,endDate));
+        items.add(new OrderItemDto(instrument, startDate, endDate));
         recalculate();
     }
 
