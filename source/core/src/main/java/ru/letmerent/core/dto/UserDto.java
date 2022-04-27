@@ -2,12 +2,16 @@ package ru.letmerent.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -16,7 +20,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель пользователя")
 @ToString
-public class UserDto { //TODO: это старый вариант ДТО - будем корректировать, когда доберемся до ЛК
+@Builder
+public class UserDto {
 
     @Schema(description = "Идентификатор пользователя", example = "12345678")
     Long id;
@@ -30,12 +35,26 @@ public class UserDto { //TODO: это старый вариант ДТО - бу�
     @Schema(description = "Фамилия пользователя", example = "Бородач")
     String lastName;
 
-    @Schema(description = "Электронная почта", example = "super_boroda@gmail.com")
+    @NotNull
+    @Size(max = 255, message = "email не может быть более 255 символов")
+    @Schema(description = "Электронная почта", example = "super_boroda@gmail.com", required = true)
     String email;
 
-    @Schema(description = "Уникальное наименование пользователя", example = "super_boroda")
+    @NotNull
+    @Size(max = 255, message = "Имя пользователя не может быть более 255 символов")
+    @Schema(description = "Уникальное наименование пользователя", example = "super_boroda", required = true)
     String userName;
 
-    @Schema(description = "Список аренд пользователя")
-    List<OrderDto> orders;
+    @NotNull
+    @Size(min = 3, max = 16, message = "Пароль должен быть от 3х до 16-ти символов")
+    @Schema(description = "Пароль пользователя", example = "111111", required = true)
+    String password;
+
+    @NotNull
+    @Size(min = 3, max = 16, message = "Пароль должен быть от 3х до 16-ти символов")
+    @Schema(description = "Подтверждение пароля пользователя", example = "111111", required = true)
+    String passwordConfirmation;
+
+    @Schema(description = "Список ролей пользователя", implementation = List.class)
+    Collection<String> roles;
 }

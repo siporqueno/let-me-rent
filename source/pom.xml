@@ -21,6 +21,8 @@
         <spring.version>2.6.6</spring.version>
         <lombok.version>1.18.22</lombok.version>
         <liquibase.version>4.9.0</liquibase.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <junit.version>5.8.2</junit.version>
         <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
     <dependencies>
@@ -33,6 +35,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

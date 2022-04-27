@@ -30,7 +30,7 @@ public class CartService {
     private final InstrumentConverter instrumentConverter;
     private final ObjectMapper objectMapper;
 
-    @Value("${utils.cart.prefix}")
+    @Value("${properties.cart.prefix}")
     private String cartPrefix;
 
     public String getCartUuidFromSuffix(String suffix) {
