@@ -1,5 +1,7 @@
 package ru.letmerent.core.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +20,8 @@ import java.util.Collection;
 @Table(name = "brands")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Brand {
 
     @Id

@@ -5,10 +5,12 @@ import org.springframework.stereotype.Component;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.IntervalDto;
+import ru.letmerent.core.entity.Brand;
 import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
+import ru.letmerent.core.services.BrandService;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 
@@ -26,6 +28,8 @@ public class InstrumentConverter {
     private final CategoryService categoryService;
     private final OrderItemService orderItemService;
 
+    private final BrandService brandService;
+
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
 
@@ -36,7 +40,7 @@ public class InstrumentConverter {
         dto.setFee(instrument.getFee());
         dto.setOwnerUsername(instrument.getUser().getUserName());
 
-        Category category = categoryService.getCategoryById(instrument.getCategoryId());
+        Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
         dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getUrl).orElse(null));
@@ -63,12 +67,31 @@ public class InstrumentConverter {
         dto.setOwnerSecondName(owner.getSecondName());
         dto.setOwnerLastName(owner.getLastName());
 
-        Category category = categoryService.getCategoryById(instrument.getId());
+        Category category = categoryService.findCategoryById(instrument.getId());
         dto.setCategoryName(category.getName());
 
         return dto;
     }
-    
+
+    public Instrument toInstrument(InstrumentInfoDto instrumentDto, User user) {
+        Brand brand = brandService.findByBrandName(instrumentDto.getBrandName())
+                .orElse(brandService.createBrand(Brand.builder().brandName(instrumentDto.getBrandName()).startDate(LocalDateTime.now()).build()));
+
+        Category category = categoryService.findCategoryByName(instrumentDto.getCategoryName())
+                .orElse(categoryService.createCategory(new Category(instrumentDto.getCategoryName(),null, LocalDateTime.now(), null)));
+
+        Instrument instrument = new Instrument();
+        instrument.setTitle(instrumentDto.getTitle());
+        instrument.setDescription(instrumentDto.getDescription());
+        instrument.setPrice(instrumentDto.getPrice());
+        instrument.setFee(instrumentDto.getFee());
+        instrument.setUser(user);
+        instrument.setBrand(brand);
+        instrument.setCategoryId(category.getId());
+        instrument.setStartDate(LocalDateTime.now());
+        return null;
+    }
+
     private List<IntervalDto> initNoRentIntervals(Instrument instrument) {
         List<IntervalDto> noRentIntervals = new ArrayList<>();
         List<IntervalDto> rentIntervals = orderItemService.findAllByInstrumentId(instrument.getId())

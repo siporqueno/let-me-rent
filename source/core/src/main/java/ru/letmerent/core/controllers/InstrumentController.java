@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +31,9 @@ import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.PageDto;
 import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.InstrumentService;
+import ru.letmerent.core.services.impl.UserService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,6 +49,7 @@ public class InstrumentController {
 
     private final InstrumentService instrumentService;
     private final InstrumentConverter instrumentConverter;
+    private final UserService userService;
 
     @Operation(summary = "Вывод информации по всем инструментам")
     @GetMapping
@@ -100,8 +105,15 @@ public class InstrumentController {
                                     implementation = InstrumentDto.class))
             ))
     @PostMapping
-    ResponseEntity<InstrumentDto> addNewInstrument(@RequestBody InstrumentDto instrument, UriComponentsBuilder uriComponentsBuilder) {
-        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.CREATED);
+    ResponseEntity<InstrumentDto> addNewInstrument(@RequestBody InstrumentInfoDto instrumentDto, @AuthenticationPrincipal UserDetails userDetails, UriComponentsBuilder uriComponentsBuilder) {
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        Optional<InstrumentInfoDto> instrument = Optional.of(instrumentDto)
+                .map(item -> instrumentConverter.toInstrument(item, user))
+                .map(instrumentService::createInstrument)
+                .map(instrumentConverter::toInstrumentInfoDto);
+
+        return new ResponseEntity<>(instrumentDto, HttpStatus.CREATED);
     }
 
 //    @Operation(summary = "Информация по инструменту по имени пользователя") //todo конфликт мапинга с ru.letmerent.core.controllers.InstrumentController.getInstrumentById

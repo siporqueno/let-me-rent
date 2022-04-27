@@ -67,7 +67,7 @@ class InstrumentConverterTest {
             brand
         );
         
-        doReturn(category).when(categoryService).getCategoryById(instrument.getId());
+        doReturn(category).when(categoryService).findCategoryById(instrument.getId());
     }
     
     /**
