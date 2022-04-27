@@ -45,12 +45,12 @@ public class UserDto {
     @Schema(description = "Уникальное наименование пользователя", example = "super_boroda", required = true)
     String userName;
 
-    @NotNull
+    @NotNull(message = "Укажите пароль. Данное поле не может быть пустым")
     @Size(min = 3, max = 16, message = "Пароль должен быть от 3х до 16-ти символов")
     @Schema(description = "Пароль пользователя", example = "111111", required = true)
     String password;
 
-    @NotNull
+    @NotNull(message = "Укажите подтверждение пароля. Данное поле не может быть пустым")
     @Size(min = 3, max = 16, message = "Пароль должен быть от 3х до 16-ти символов")
     @Schema(description = "Подтверждение пароля пользователя", example = "111111", required = true)
     String passwordConfirmation;
