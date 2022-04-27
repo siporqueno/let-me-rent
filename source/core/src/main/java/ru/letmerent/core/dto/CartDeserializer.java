@@ -24,7 +24,7 @@ public class CartDeserializer extends StdDeserializer<Cart> {
         JsonNode node = jp.getCodec().readTree(jp);
         BigDecimal totalFee = node.get("totalFee").decimalValue();
         BigDecimal totalPrice = node.get("totalPrice").decimalValue();
-//        List<OrderItemDto> items = node.get("items").
+        JsonNode itemsNode = node.get("items");
 
         return new Cart().setTotalFee(totalFee).setTotalPrice(totalPrice);
     }

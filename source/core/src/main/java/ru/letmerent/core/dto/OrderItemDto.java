@@ -1,6 +1,8 @@
 package ru.letmerent.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@JsonDeserialize(using = OrderItemDtoDeserializer.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -39,6 +43,10 @@ public class OrderItemDto {
 
     @Schema(description = "Длительность аренды в днях за период от даты начала до даты окончания включительно")
     Long rentLength;
+
+    @JsonCreator
+    public OrderItemDto() {
+    }
 
     public OrderItemDto(InstrumentDto instrument, LocalDateTime startDate, LocalDateTime endDate) {
         this.startDate = startDate;

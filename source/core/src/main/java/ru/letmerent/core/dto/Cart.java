@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = CartDeserializer.class)
 @Data
@@ -42,8 +42,10 @@ public class Cart {
     }
 
     @JsonCreator
-    public Cart(@JsonProperty("items") List<OrderItemDto> items) {
+    public Cart(@JsonProperty("items") List<OrderItemDto> items, BigDecimal totalFee, BigDecimal totalPrice) {
         this.items = new ArrayList<>(items);
+        this.totalFee = totalFee;
+        this.totalPrice = totalPrice;
     }
 
 //    public boolean add(Long instrumentId) {
@@ -57,16 +59,19 @@ public class Cart {
 //        return false;
 //    }
 
+    @JsonIgnore
     public void add(InstrumentForListDto instrument, LocalDateTime startDate, LocalDateTime endDate) {
         items.add(new OrderItemDto(instrument, startDate, endDate));
         recalculate();
     }
 
+    @JsonIgnore
     public void remove(Long instrumentId) {
         items.removeIf(i -> i.getInstrument().getId().equals(instrumentId));
         recalculate();
     }
 
+    @JsonIgnore
     public void clear() {
         items.clear();
         totalPrice = BigDecimal.ZERO;
@@ -82,6 +87,7 @@ public class Cart {
         }
     }
 
+    @JsonIgnore
     public void merge(Cart another) {
         for (OrderItemDto anotherItem : another.items) {
             for (OrderItemDto myItem : items) {

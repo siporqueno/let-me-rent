@@ -44,30 +44,30 @@ public class CartService {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
 
-        Map<String, Object> lhm = (Map<String, Object>) redisTemplate.opsForValue().get(cartKey);
-        String itemsString = lhm.get("items").toString();
-        System.out.println(itemsString);
-        JSONArray jsonArray = new JSONArray(itemsString);
+//        Map<String, Object> lhm = (Map<String, Object>) redisTemplate.opsForValue().get(cartKey);
+//        String itemsString = lhm.get("items").toString();
+//        System.out.println(itemsString);
+//        JSONArray jsonArray = new JSONArray(itemsString);
+//
+//        BigDecimal totalFee = null;
+//        BigDecimal totalPrice = null;
+//        if (lhm.get("totalFee") != null) {
+//            totalFee = new BigDecimal((String) lhm.get("totalFee"));
+//        }
+//        if (lhm.get("totalPrice") != null) {
+//            totalPrice = new BigDecimal((String) lhm.get("totalPrice"));
+//        }
+//        System.out.println(totalFee);
+//        System.out.println(totalPrice);
+//
+//        Cart cart = null;
+//
+////        if (jsonItems.length() == 0) {
+//            cart = new Cart();
+////        } else System.out.println("Корзина не пуста");
 
-        BigDecimal totalFee = null;
-        BigDecimal totalPrice = null;
-        if (lhm.get("totalFee") != null) {
-            totalFee = new BigDecimal((String) lhm.get("totalFee"));
-        }
-        if (lhm.get("totalPrice") != null) {
-            totalPrice = new BigDecimal((String) lhm.get("totalPrice"));
-        }
-        System.out.println(totalFee);
-        System.out.println(totalPrice);
-
-        Cart cart = null;
-
-//        if (jsonItems.length() == 0) {
-            cart = new Cart();
-//        } else System.out.println("Корзина не пуста");
-
-//        return (Cart) redisTemplate.opsForValue().get(cartKey);
-        return cart;
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
+//        return cart;
     }
 
     public void addToCart(String cartKey, Long instrumentId, String startDate, String endDate) {
