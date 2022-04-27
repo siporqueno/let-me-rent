@@ -1,4 +1,4 @@
-package ru.letmerent.core.config;
+package ru.letmerent.core.configs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

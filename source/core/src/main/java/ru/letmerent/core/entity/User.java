@@ -1,7 +1,14 @@
 package ru.letmerent.core.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,15 +16,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 
 @Table(name = "users")
 @Entity
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -44,14 +55,20 @@ public class User {
     private String password;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    @CreationTimestamp
+    private Date startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    @Temporal(value = TemporalType.DATE)
+    @Generated(value = GenerationTime.INSERT)
+    @ColumnDefault(value = "to_date('31.12.2999','DD.MM.YYYY')")
+    private Date endDate;
 
     @Column(name = "update_date")
-    private LocalDateTime updateDate;
+    @UpdateTimestamp
+    private Date updateDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Collection<GrantedAuthority> authorities;
+
 }
