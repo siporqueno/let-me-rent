@@ -46,19 +46,14 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-//    public boolean add(Long instrumentId) {
-//        for (OrderItemDto i : items) {
-//            if (i.getProductId().equals(productId)) {
-//                i.changeQuantity(1);
-//                recalculate();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
     @JsonIgnore
     public void add(InstrumentForListDto instrument, LocalDateTime startDate, LocalDateTime endDate) {
+        for (OrderItemDto oi : items) {
+            if (oi.getInstrument().getId().equals(instrument.getId())) {
+                return;
+            }
+        }
+
         items.add(new OrderItemDto(instrument, startDate, endDate));
         recalculate();
     }
@@ -80,8 +75,8 @@ public class Cart {
         totalPrice = BigDecimal.ZERO;
         totalFee = BigDecimal.ZERO;
         for (OrderItemDto i : items) {
-            totalFee.add(i.getRentPrice());
-            totalPrice.add(i.getInstrument().getPrice());
+            totalFee = totalFee.add(i.getRentPrice());
+            totalPrice = totalPrice.add(i.getInstrument().getPrice());
         }
     }
 

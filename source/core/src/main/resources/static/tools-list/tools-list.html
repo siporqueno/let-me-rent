@@ -49,6 +49,7 @@
             <table id="tools-list" class="table">
                 <thead>
                 <tr>
+                    <td>Id</td>
                     <td>Категория</td>
                     <td>Название инструмента</td>
                     <td>Брэнд</td>
@@ -62,6 +63,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="t in toolsPage.instruments">
+                    <td>{{t.id}}</td>
                     <td>{{t.categoryName}}</td>
                     <td>{{t.title}}</td>
                     <td>{{t.brandName}}</td>
