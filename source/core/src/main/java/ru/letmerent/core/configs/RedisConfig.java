@@ -1,4 +1,4 @@
-package ru.letmerent.core.config;
+package ru.letmerent.core.configs;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +33,7 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
 //        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }

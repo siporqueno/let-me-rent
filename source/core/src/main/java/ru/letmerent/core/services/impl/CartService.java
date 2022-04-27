@@ -96,8 +96,7 @@ public class CartService {
 //        cart.setTotalPrice(totalPrice);
 //        cart.setTotalFee(totalFee);
 
-
-        return (Cart) redisTemplate.opsForValue().get(cartKey);
+        return objectMapper.convertValue(redisTemplate.opsForValue().get(cartKey), Cart.class);
 //        return cart;
     }
 

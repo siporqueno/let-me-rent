@@ -42,3 +42,9 @@ properties:
     lifeTime: 3600
   cart:
     prefix: LET_ME_RENT_
+
+logging:
+  level:
+    ru:
+      letmerent:
+        core: info
