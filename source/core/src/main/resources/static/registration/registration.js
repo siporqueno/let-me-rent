@@ -9,10 +9,14 @@ angular.module('tools').controller('registrationController', function ($scope, $
                 alert('Вы успешно зарегистрированы, для продолжения работы вам необходимо авторизоваться');
                 $location.path('/authorisation');
             }, function failureCallback(response) {
-                if (angular.isArray(response.data.userMessage)) {
+                if (response.data.userMessage == null) {
+                    alert("Заполните информационные поля регистрации!");
+                } else if (Array.isArray(response.data.userMessage)) {
+                    var result;
                     for (let i = 0; i < response.data.userMessage.length; i++) {
-                        alert(response.data.userMessage[i].message);
+                        result += response.data.userMessage[i].message + "\r\n\r\n"
                     }
+                    alert(result.toString());
                 } else {
                     alert(response.data.userMessage);
                 }
