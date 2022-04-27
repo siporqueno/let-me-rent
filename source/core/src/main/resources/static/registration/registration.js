@@ -12,9 +12,9 @@ angular.module('tools').controller('registrationController', function ($scope, $
                 if (response.data.userMessage == null) {
                     alert("Заполните информационные поля регистрации!");
                 } else if (Array.isArray(response.data.userMessage)) {
-                    var result;
+                    var result = "Не заполнены обязательные поля для регистрации: ";
                     for (let i = 0; i < response.data.userMessage.length; i++) {
-                        result += response.data.userMessage[i].message + "\r\n\r\n"
+                        result += "\r\n\r\n" + response.data.userMessage[i].message
                     }
                     alert(result.toString());
                 } else {
