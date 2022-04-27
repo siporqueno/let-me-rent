@@ -2,6 +2,7 @@ package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.IntervalDto;
@@ -73,7 +74,7 @@ public class InstrumentConverter {
         return dto;
     }
 
-    public Instrument toInstrument(InstrumentInfoDto instrumentDto, User user) {
+    public Instrument toInstrument(InstrumentDto instrumentDto, User user) {
         Brand brand = brandService.findByBrandName(instrumentDto.getBrandName())
                 .orElse(brandService.createBrand(Brand.builder().brandName(instrumentDto.getBrandName()).startDate(LocalDateTime.now()).build()));
 
@@ -82,7 +83,6 @@ public class InstrumentConverter {
 
         Instrument instrument = new Instrument();
         instrument.setTitle(instrumentDto.getTitle());
-        instrument.setDescription(instrumentDto.getDescription());
         instrument.setPrice(instrumentDto.getPrice());
         instrument.setFee(instrumentDto.getFee());
         instrument.setUser(user);
