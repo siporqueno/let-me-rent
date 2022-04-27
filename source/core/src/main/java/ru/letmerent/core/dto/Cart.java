@@ -1,9 +1,6 @@
 package ru.letmerent.core.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
@@ -20,7 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = CartDeserializer.class)
 @Data
 @Accessors(chain = true)

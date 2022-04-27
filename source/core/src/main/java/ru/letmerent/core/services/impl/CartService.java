@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.converters.InstrumentConverter;
 import ru.letmerent.core.dto.Cart;
+import ru.letmerent.core.dto.InstrumentDto;
+import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.OrderItemDto;
 
 import java.math.BigDecimal;
@@ -44,30 +46,59 @@ public class CartService {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
 
-//        Map<String, Object> lhm = (Map<String, Object>) redisTemplate.opsForValue().get(cartKey);
-//        String itemsString = lhm.get("items").toString();
-//        System.out.println(itemsString);
-//        JSONArray jsonArray = new JSONArray(itemsString);
-//
-//        BigDecimal totalFee = null;
-//        BigDecimal totalPrice = null;
-//        if (lhm.get("totalFee") != null) {
-//            totalFee = new BigDecimal((String) lhm.get("totalFee"));
-//        }
-//        if (lhm.get("totalPrice") != null) {
-//            totalPrice = new BigDecimal((String) lhm.get("totalPrice"));
-//        }
-//        System.out.println(totalFee);
-//        System.out.println(totalPrice);
-//
-//        Cart cart = null;
-//
-////        if (jsonItems.length() == 0) {
-//            cart = new Cart();
-////        } else System.out.println("Корзина не пуста");
+        Map<String, Object> lhm = (Map<String, Object>) redisTemplate.opsForValue().get(cartKey);
+        String itemsString = lhm.get("items").toString().replaceAll("=", ":");
+        System.out.println(itemsString);
+        JSONArray jsonArray = new JSONArray(itemsString);
+        System.out.println(jsonArray);
+        System.out.println(jsonArray.length());
 
-        return (Cart) redisTemplate.opsForValue().get(cartKey);
-//        return cart;
+        BigDecimal totalFee = null;
+        BigDecimal totalPrice = null;
+        if (lhm.get("totalFee") != null) {
+            totalFee = BigDecimal.valueOf(Double.parseDouble(lhm.get("totalFee").toString()));
+        }
+        System.out.println(totalFee);
+        if (lhm.get("totalPrice") != null) {
+            totalPrice = BigDecimal.valueOf(Double.parseDouble(lhm.get("totalPrice").toString()));
+        }
+        System.out.println(totalPrice);
+
+        Cart cart = new Cart();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsoOrderItem = (JSONObject) jsonArray.get(0);
+            System.out.println(jsoOrderItem);
+            JSONObject jsoInstrumentDto = jsoOrderItem.getJSONObject("instrument");
+            System.out.println(jsoInstrumentDto);
+            InstrumentDto iDto = new InstrumentForListDto();
+            iDto.setId(jsoInstrumentDto.getLong("id"));
+            iDto.setTitle(jsoInstrumentDto.getString("title"));
+            iDto.setBrandName(jsoInstrumentDto.getString("brandName"));
+            iDto.setPrice(jsoInstrumentDto.getBigDecimal("price"));
+            iDto.setFee(jsoInstrumentDto.getBigDecimal("fee"));
+            iDto.setOwnerUsername(jsoInstrumentDto.getString("ownerUsername"));
+            iDto.setCategoryName(jsoInstrumentDto.getString("categoryName"));
+
+            OrderItemDto dto = new OrderItemDto();
+            if (!jsoOrderItem.get("id").toString().equals("null")) {
+                dto.setId(jsoOrderItem.getLong("id"));
+            }
+            dto.setStartDate(convertStringDateToLocalDateTime(jsoOrderItem.getString("startDate")));
+            dto.setEndDate(convertStringDateToLocalDateTime(jsoOrderItem.getString("endDate")));
+            dto.setInstrument(iDto);
+            dto.setRentPrice(jsoOrderItem.getBigDecimal("rentPrice"));
+            dto.setRentLength(jsoOrderItem.getLong("rentLength"));
+
+            cart.setTotalPrice(totalPrice);
+            cart.setTotalFee(totalFee);
+
+            cart.getItems().add(dto);
+        }
+
+
+//        return (Cart) redisTemplate.opsForValue().get(cartKey);
+        return cart;
     }
 
     public void addToCart(String cartKey, Long instrumentId, String startDate, String endDate) {
