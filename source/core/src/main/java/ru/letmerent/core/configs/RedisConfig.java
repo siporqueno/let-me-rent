@@ -33,7 +33,7 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
 //        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }
@@ -49,7 +49,7 @@ public class RedisConfig {
                         .addSerializer(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 )
                 .build();
-        mapper.enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS);
+//        mapper.enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS);
         return mapper;
     }
 }
