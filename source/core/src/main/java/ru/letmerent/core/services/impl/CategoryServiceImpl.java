@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Optional<Category> findCategoryByName(String name) {
-        return null;
+        return repository.findByName(name);
     }
 
     @Override
