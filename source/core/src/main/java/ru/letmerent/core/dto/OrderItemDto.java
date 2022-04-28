@@ -46,7 +46,7 @@ public class OrderItemDto {
     @Schema(description = "Длительность аренды в днях за период от даты начала до даты окончания включительно")
     Long rentLength;
 
-    @JsonCreator
+//    @JsonCreator
     public OrderItemDto() {
     }
 
