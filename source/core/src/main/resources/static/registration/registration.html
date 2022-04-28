@@ -4,17 +4,17 @@
     <form novalidate ng-submit="registerUser()">
         <input class="form-control" type="text" placeholder="Введите логин" ng-model="new_user.userName">
         <p></p>
-        <input class="form-control" type="text" placeholder="Введите имя" ng-model="new_user.firstNAme">
+        <input class="form-control" type="text" placeholder="Введите имя" ng-model="new_user.firstName">
         <p></p>
-        <input class="form-control" type="text" placeholder="Введите отчество" ng-model="new_user.secondNAme">
+        <input class="form-control" type="text" placeholder="Введите отчество" ng-model="new_user.secondName">
         <p></p>
         <input class="form-control" type="text" placeholder="Введите фамилию" ng-model="new_user.lastName">
         <p></p>
         <input class="form-control" type="text" placeholder="Введите e-mail" ng-model="new_user.email">
         <p></p>
         <input class="form-control" type="text" placeholder="Введите пароль" ng-model="new_user.password">
-        <p></p> <!-- Подумать, как организовать лучше валидацию и переброску на бэк двух паролей, которые должны совпадать -->
-        <input class="form-control" type="text" placeholder="Повторите пароль" ng-model="new_user.password">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Повторите пароль" ng-model="new_user.passwordConfirmation">
         <p></p>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>

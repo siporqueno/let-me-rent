@@ -1,5 +1,6 @@
 angular.module('tools').controller('rentRequestController', function ($scope, $http, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
+    //ПОКА ПО ЛОГИКЕ ПРИЛОЖЕНИЯ ЭТА СТРАНИЦА НЕ НУЖНА, НО НЕ УБИРАЮ, ВДРУГ ПРИГОДИТСЯ ЕЩЕ
 
     $scope.showToolInfo = function () {
         $http.get(contextPath + $routeParams.toolId)
