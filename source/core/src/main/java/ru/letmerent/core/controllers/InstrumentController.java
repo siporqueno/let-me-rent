@@ -106,7 +106,7 @@ public class InstrumentController {
             ))
     @PostMapping
     @Transactional
-    ResponseEntity<InstrumentInfoDto> addNewInstrument(@RequestBody InstrumentDto instrumentDto, Principal principal, UriComponentsBuilder uriComponentsBuilder) {
+    ResponseEntity<InstrumentInfoDto> addNewInstrument(@RequestBody InstrumentInfoDto instrumentDto, Principal principal, UriComponentsBuilder uriComponentsBuilder) {
         User user = userService.findByUsername(principal.getName());
 
         Instrument instrument = instrumentConverter.toInstrument(instrumentDto, user);

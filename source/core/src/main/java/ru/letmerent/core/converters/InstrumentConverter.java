@@ -78,7 +78,7 @@ public class InstrumentConverter {
         return dto;
     }
 
-    public Instrument toInstrument(InstrumentDto instrumentDto, User user) {
+    public Instrument toInstrument(InstrumentInfoDto instrumentDto, User user) {
         Optional<Brand> brand = brandService.findByBrandName(instrumentDto.getBrandName());
         if (brand.isEmpty()) {
             brand = Optional.of(brandService.createBrand(Brand.builder().brandName(instrumentDto.getBrandName()).startDate(LocalDateTime.now()).build()));
@@ -91,6 +91,7 @@ public class InstrumentConverter {
 
         Instrument instrument = new Instrument();
         instrument.setTitle(instrumentDto.getTitle());
+        instrument.setDescription(instrumentDto.getDescription());
         instrument.setPrice(instrumentDto.getPrice());
         instrument.setFee(instrumentDto.getFee());
         instrument.setUser(user);
