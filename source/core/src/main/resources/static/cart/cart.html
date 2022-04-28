@@ -40,10 +40,14 @@
 <!--            <td>{{'10'}}</td>-->
 <!--            <td>{{'100'}}</td>-->
             <td>
-                <button class="btn btn-danger" ng-click="deleteItem(i.instrument.id)">X</button>
+                <button class = "btn">
+                    <i class="material-icons" ng-click="deleteItem(i.instrument.id)" title = "Удалить из корзины">close</i>
+                </button>
             </td>
-                      <td>
-                <button class="btn btn-info" ng-click="navToToolInfoPage(i.instrument.id)">i</button>
+            <td>
+                <button class = "btn">
+                    <i class="material-icons" ng-click="navToToolInfoPage(t.id)" title = "Информация о инструменте">info</i>
+                </button>
             </td>
         </tr>
         <tr>
