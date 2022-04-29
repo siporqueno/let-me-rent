@@ -2,24 +2,15 @@ package ru.letmerent.core.services.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import liquibase.pro.packaged.B;
 import lombok.RequiredArgsConstructor;
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.converters.InstrumentConverter;
 import ru.letmerent.core.dto.Cart;
-import ru.letmerent.core.dto.InstrumentDto;
-import ru.letmerent.core.dto.InstrumentForListDto;
-import ru.letmerent.core.dto.OrderItemDto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Service
@@ -46,58 +37,7 @@ public class CartService {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
 
-//        Map<String, Object> lhm = (Map<String, Object>) redisTemplate.opsForValue().get(cartKey);
-//        String itemsString = lhm.get("items").toString().replaceAll("=", ":");
-//        System.out.println(itemsString);
-//        JSONArray jsonArray = new JSONArray(itemsString);
-//        System.out.println(jsonArray);
-//        System.out.println(jsonArray.length());
-//
-//        BigDecimal totalFee = null;
-//        BigDecimal totalPrice = null;
-//        if (lhm.get("totalFee") != null) {
-//            totalFee = BigDecimal.valueOf(Double.parseDouble(lhm.get("totalFee").toString()));
-//        }
-//        System.out.println(totalFee);
-//        if (lhm.get("totalPrice") != null) {
-//            totalPrice = BigDecimal.valueOf(Double.parseDouble(lhm.get("totalPrice").toString()));
-//        }
-//        System.out.println(totalPrice);
-//
-//        Cart cart = new Cart();
-//
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            JSONObject jsoOrderItem = (JSONObject) jsonArray.get(0);
-//            System.out.println(jsoOrderItem);
-//            JSONObject jsoInstrumentDto = jsoOrderItem.getJSONObject("instrument");
-//            System.out.println(jsoInstrumentDto);
-//            InstrumentDto iDto = new InstrumentForListDto();
-//            iDto.setId(jsoInstrumentDto.getLong("id"));
-//            iDto.setTitle(jsoInstrumentDto.getString("title"));
-//            iDto.setBrandName(jsoInstrumentDto.getString("brandName"));
-//            iDto.setPrice(jsoInstrumentDto.getBigDecimal("price"));
-//            iDto.setFee(jsoInstrumentDto.getBigDecimal("fee"));
-//            iDto.setOwnerUsername(jsoInstrumentDto.getString("ownerUsername"));
-//            iDto.setCategoryName(jsoInstrumentDto.getString("categoryName"));
-//
-//            OrderItemDto oDto = new OrderItemDto();
-//            if (!jsoOrderItem.get("id").toString().equals("null")) {
-//                oDto.setId(jsoOrderItem.getLong("id"));
-//            }
-//            oDto.setStartDate(convertStringDateToLocalDateTime(jsoOrderItem.getString("startDate")));
-//            oDto.setEndDate(convertStringDateToLocalDateTime(jsoOrderItem.getString("endDate")));
-//            oDto.setInstrument(iDto);
-//            oDto.setRentPrice(jsoOrderItem.getBigDecimal("rentPrice"));
-//            oDto.setRentLength(jsoOrderItem.getLong("rentLength"));
-//
-//            cart.getItems().add(oDto);
-//        }
-//
-//        cart.setTotalPrice(totalPrice);
-//        cart.setTotalFee(totalFee);
-
         return objectMapper.convertValue(redisTemplate.opsForValue().get(cartKey), Cart.class);
-//        return cart;
     }
 
     public void addToCart(String cartKey, Long instrumentId, String startDate, String endDate) {

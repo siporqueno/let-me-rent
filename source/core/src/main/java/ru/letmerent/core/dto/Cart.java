@@ -1,27 +1,20 @@
 package ru.letmerent.core.dto;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-//@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
-//@JsonDeserialize(using = CartDeserializer.class)
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -37,17 +30,9 @@ public class Cart {
     @Schema(description = "Общая сумма залога за все элементы в корзине")
     private BigDecimal totalPrice;
 
-
     public Cart() {
         this.items = new ArrayList<>();
     }
-//
-//    @JsonCreator
-//    public Cart(@JsonProperty("items") List<OrderItemDto> items, BigDecimal totalFee, BigDecimal totalPrice) {
-//        this.items = new ArrayList<>(items);
-//        this.totalFee = totalFee;
-//        this.totalPrice = totalPrice;
-//    }
 
     @JsonIgnore
     public void add(InstrumentForListDto instrument, LocalDateTime startDate, LocalDateTime endDate) {
