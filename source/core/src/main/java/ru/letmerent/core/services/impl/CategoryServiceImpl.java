@@ -6,6 +6,8 @@ import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.repositories.CategoryRepository;
 import ru.letmerent.core.services.CategoryService;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -13,7 +15,17 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
 
     @Override
-    public Category getCategoryById(Long id) {
+    public Category findCategoryById(Long id) {
         return repository.getById(id);
+    }
+
+    @Override
+    public Optional<Category> findCategoryByName(String name) {
+        return repository.findByName(name);
+    }
+
+    @Override
+    public Category createCategory(Category category) {
+        return repository.save(category);
     }
 }

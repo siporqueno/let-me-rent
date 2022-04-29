@@ -40,7 +40,7 @@ public class UserController {
             return ResponseEntity.unprocessableEntity()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Incorrect password confirmation")
+                            .userMessage("Некорректное подтверждение пароля. Данные пароля и подтверждения должны совпадать")
                             .date(new Date())
                             .build()));
         }
@@ -48,7 +48,7 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Email is already in use!")
+                            .userMessage("Выбранный адрес электронной почты уже используется!")
                             .date(new Date())
                             .build()));
         }
@@ -56,7 +56,7 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Username is already taken!")
+                            .userMessage("Такой логин уже существует!")
                             .date(new Date())
                             .build()));
         }

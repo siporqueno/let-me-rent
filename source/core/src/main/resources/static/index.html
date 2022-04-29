@@ -32,7 +32,7 @@
     <script src="start-page/start-page.js"></script>
     <script src="tools-list/tools-list.js"></script>
     <script src="tool-info/tool-info.js"></script>
-    <script src="rent-request-page/rent-request-page.js"></script>
+    <script src="rent-request-page/rent-request-page.js"></script> <!-- ЭТО ПОКА ЛИШНЯЯ СТРАНИЦА, ПОТОМ УБЕРЕМ -->
     <script src="registration/registration.js"></script>
     <script src="edit-tool/edit-tool.js"></script>
     <script src="cart/cart.js"></script>
@@ -71,7 +71,10 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link material-icons" title = "Корзина" href="#!/cart">shopping_cart</a></li>
                     <li class="nav-item"><a class="nav-link material-icons" title = "Личный кабинет" href="#!/profile">account_circle</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!/authorisation">Авторизоваться</a></li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()"><a class="nav-link" href="#!/authorisation">Авторизоваться</a></li>
+                    <li class="nav-item" ng-show="isUserLoggedIn()">
+                        <button class="btn btn-info btn-sm" ng-click="tryToLogout()">Выйти из профиля</button>
+                    </li>
                 </ul>
             </div>
         </nav>
