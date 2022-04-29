@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 @Service
 @RequiredArgsConstructor
 public class CartService {
+
     private final RedisTemplate<String, Object> redisTemplate;
     private final InstrumentServiceImpl instrumentService;
     private final InstrumentConverter instrumentConverter;
@@ -74,10 +75,12 @@ public class CartService {
     private void execute(String cartKey, Consumer<Cart> action) {
         Cart cart = getCurrentCart(cartKey);
         action.accept(cart);
+
         redisTemplate.opsForValue().set(cartKey, cart);
     }
 
     public void updateCart(String cartKey, Cart cart) {
         redisTemplate.opsForValue().set(cartKey, cart);
     }
+
 }

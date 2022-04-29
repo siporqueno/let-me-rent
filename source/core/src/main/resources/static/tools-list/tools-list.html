@@ -38,6 +38,8 @@
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <span class="input-group-btn" style="width:0; margin-top:10px;">
                         <button class="btn btn-outline-warning btn-default" type="submit">Применить&nbsp;фильтрацию</button>
+<!--                        <span class="material-icons" type="submit">filter_alt</span>-->
+<!--                        <span class="material-icons" type="submit">filter_list</span>-->
                     </span>
                 </div>
             </div>
@@ -70,10 +72,14 @@
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>
                     <td>
-                        <button class="btn btn-info" ng-click="navToToolInfoPage(t.id)">i</button>
+                        <button class = "btn">
+                            <i class="material-icons" ng-click="navToToolInfoPage(t.id)" title = "Информация о инструменте">info</i>
+                        </button>
                     </td>
                     <td>
-                        <button class="btn btn-primary" ng-click="putIntoCart(t.id)">Положить в корзину</button>
+                        <button class = "btn">
+                            <i class="material-icons" ng-click="putIntoCart(t.id)" title = "Добавить в корзину">add_shopping_cart</i>
+                        </button>
                     </td>
                 </tr>
 

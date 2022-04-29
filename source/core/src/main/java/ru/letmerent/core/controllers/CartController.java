@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Tag(name = "API для работы с сервисом по действиям с корзиной")
 public class CartController {
 
-//    Cart createUserCart(User user); // Я ЗАКОММИТИЛА ТЕ МЕТОДЫ, КОТОРЫЕ БЫЛИ ПРОСТО НАБРОСАНЫ В ЗАГОТОВКЕ
+//    Cart createUserCart(User user); // Я ЗАКОММИТИЛА ТЕ МЕТОДЫ, КОТОРЫЕ БЫЛИ ПРОСТО НАБРОСАНЫ В ЗАГОТОВКЕ. Их, наверное, надо вообще убрать
 //
 //    Cart getCartByUserId(Long id);
 //
@@ -63,14 +63,10 @@ public class CartController {
     }
 
     @Operation(summary = "Добавление в корзину")
-    @GetMapping("/{uuid}/add/{instrumentId}/{startDate}/{endDate}") //TODO: ЛАЖА - подумать, как передовать с фронта или где-то выцеплять с бэка данные из фильтра по дате. Может, использовать IntervalDto как-то
+    @GetMapping("/{uuid}/add/{instrumentId}/{startDate}/{endDate}") //TODO: с фронта из фильтров даты прилетают в виде строк. Подумать, как передовать с фронта или где-то выцеплять с бэка данные из фильтра по дате. Может, использовать IntervalDto как-то
     @ApiResponse(
             responseCode = "200",
             description = "Элемент успешно добавлен в корзину")
-//    public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
-//            , @PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
-//        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId,startDate,endDate);
-//    }
     public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
             , @PathVariable String startDate, @PathVariable String endDate) {
         cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId,startDate,endDate);
@@ -112,4 +108,5 @@ public class CartController {
         }
         return cartService.getCartUuidFromSuffix(uuid);
     }
+
 }

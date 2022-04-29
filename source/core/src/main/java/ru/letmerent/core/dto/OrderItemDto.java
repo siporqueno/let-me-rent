@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(using = OrderItemDtoDeserializer.class)
-//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,7 +34,7 @@ public class OrderItemDto {
     LocalDateTime endDate;
 
 //    @Schema(description = "Модель заказа")
-//    OrderDto order;
+//    OrderDto order; // пока нигде не надо, закомементировала
 
     @Schema(description = "Модель инструмента")
     InstrumentDto instrument;
@@ -46,7 +45,6 @@ public class OrderItemDto {
     @Schema(description = "Длительность аренды в днях за период от даты начала до даты окончания включительно")
     Long rentLength;
 
-//    @JsonCreator
     public OrderItemDto() {
     }
 

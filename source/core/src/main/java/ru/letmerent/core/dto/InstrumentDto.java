@@ -38,5 +38,5 @@ public class InstrumentDto implements Serializable {
     String ownerUsername;
 
     @Schema(description = "Название категории", example = "Дрели")
-    String categoryName; // в профиле пока не фигурирует, но, может, добавим
+    String categoryName;
 }
