@@ -1,11 +1,11 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
-    const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
+    const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
     $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
         $http({
-            url: contextPath,
+            url: contextPath + "api/v1/instruments",
             method: 'GET',
             params: {
                 page: pageIndex,
@@ -14,7 +14,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
                 max_fee: $scope.filter ? $scope.filter.max_fee : null,
                 startDate: $scope.filter ? $scope.filter.startDate : null,
-                finishDate: $scope.filter ? $scope.filter.finishDate : null
+                endDate: $scope.filter ? $scope.filter.endDate : null
             }
         }).then(function (response) {
             $scope.toolsPage = response.data;
@@ -55,23 +55,15 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
 
-    $scope.tryToRent = function (toolId) {
-    //    ТУТ ЕСЛИ НЕ АВТОРИЗОВАН, ТО АЛЕРТ, ЧТО НАДО АВТОРИЗОВАТЬСЯ СНАЧАЛА, И ПЕРЕБРОСКА НА
-    // СТРАНИЦУ АВТОРИЗАЦИИ
-    // $location.path('/authorisation');
-    // А после авторизации/если авторизован, то уже формируем запрос на аренду на отдельной странице:
-    $location.path('/rent-request-page/' + toolId);
-    }
-
     $scope.putIntoCart = function (toolId) {
-        // доработать запрос по энд-поинтам после добавления логики на бэке по Redis и авторизации
         $http({
-            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + toolId,
+            url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
+                + toolId + '/'+ $scope.filter.startDate+ '/'+ $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
-            // $location.path('/cart/'); //опционально. Я бы не стала здесь сразу перебрасывать в корзину.
         });
     }
+
 
     $scope.loadTools();
 });

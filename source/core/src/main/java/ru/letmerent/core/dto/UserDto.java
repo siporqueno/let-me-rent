@@ -21,6 +21,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель пользователя")
 @ToString
+
 @Builder
 public class UserDto {
 

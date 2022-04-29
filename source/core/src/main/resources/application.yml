@@ -25,7 +25,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-
 swagger:
   title: CoreService
   description: API для работы с let-me-rent
@@ -38,6 +37,10 @@ springdoc:
   swagger-ui:
     path: /swagger-ui-custom.html
 
+utils:
+  cart:
+    prefix: LET_ME_RENT_
+
 properties:
   jwt:
     secretKey: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
@@ -48,3 +51,4 @@ logging:
     ru:
       letmerent:
         core: info
+
