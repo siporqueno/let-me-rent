@@ -45,8 +45,8 @@ public class CartController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = Cart.class)
             ))
-    public Cart getCart(@PathVariable String uuid) {
-        return cartService.getCurrentCart(uuid);
+    public Cart getCart(Principal principal, @PathVariable String uuid) {
+        return cartService.getCurrentCart(getCurrentCartUuid(principal, uuid));
     }
 
     @Operation(summary = "Получение uuid корзины")
@@ -67,9 +67,9 @@ public class CartController {
     @ApiResponse(
             responseCode = "200",
             description = "Элемент успешно добавлен в корзину")
-    public void add(@PathVariable String uuid, @PathVariable Long instrumentId
+    public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
             , @PathVariable String startDate, @PathVariable String endDate) {
-        cartService.addToCart(uuid, instrumentId,startDate,endDate);
+        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId,startDate,endDate);
     }
 
     @Operation(summary = "Удаление из корзины")
@@ -77,8 +77,8 @@ public class CartController {
     @ApiResponse(
             responseCode = "200",
             description = "Элемент успешно удален из корзины")
-    public void remove(@PathVariable String uuid, @PathVariable Long instrumentId) {
-        cartService.removeItemFromCart(uuid, instrumentId);
+    public void remove(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId) {
+        cartService.removeItemFromCart(getCurrentCartUuid(principal, uuid), instrumentId);
     }
 
     @Operation(summary = "Чистка корзины")
@@ -86,84 +86,27 @@ public class CartController {
     @ApiResponse(
             responseCode = "200",
             description = "Корзина очищена")
-    public void clear(@PathVariable String uuid) {
-        cartService.clearCart(uuid);
+    public void clear(Principal principal, @PathVariable String uuid) {
+        cartService.clearCart(getCurrentCartUuid(principal, uuid));
     }
 
+    @Operation(summary = "Слияние корзины незарегестрированного пользователя с его корзиной после регистрации/аутентификации")
+    @GetMapping("/{uuid}/merge")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Слияние корзин произведено успешно")
+    public void merge(Principal principal, @PathVariable String uuid) {
+        cartService.merge(
+                getCurrentCartUuid(principal, null),
+                getCurrentCartUuid(null, uuid)
+        );
+    }
 
+    private String getCurrentCartUuid(Principal principal, String uuid) {
+        if (principal != null) {
+            return cartService.getCartUuidFromSuffix(principal.getName());
+        }
+        return cartService.getCartUuidFromSuffix(uuid);
+    }
 
-
-    //КОд, который я писала для вариант для Redis
-//    @Operation(summary = "Получение корзины")
-//    @GetMapping("/{uuid}")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Корзина успешно получена",
-//            content = @Content(
-//                    mediaType = "application/json",
-//                    schema = @Schema(implementation = Cart.class)
-//            ))
-//    public Cart getCart(Principal principal, @PathVariable String uuid) {
-//        return cartService.getCurrentCart(getCurrentCartUuid(principal, uuid));
-//    }
-//
-//    @Operation(summary = "Получение uuid корзины")
-//    @GetMapping("/generate")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Отправлен uuid для корзины",
-//            content = @Content(
-//                    mediaType = "application/json",
-//                    schema = @Schema(implementation = StringResponse.class)
-//            ))
-//    public StringResponse getCartUuid() {
-//        return new StringResponse(cartService.generateCartUuid());
-//    }
-//
-//    @Operation(summary = "Добавление в корзину")
-//    @GetMapping("/{uuid}/add/{instrumentId}/{startDate}/{endDate}") //TODO: с фронта из фильтров даты прилетают в виде строк. Подумать, как передовать с фронта или где-то выцеплять с бэка данные из фильтра по дате. Может, использовать IntervalDto как-то
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Элемент успешно добавлен в корзину")
-//    public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
-//            , @PathVariable String startDate, @PathVariable String endDate) {
-//        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId,startDate,endDate);
-//    }
-//
-//    @Operation(summary = "Удаление из корзины")
-//    @GetMapping("/{uuid}/remove/{instrumentId}")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Элемент успешно удален из корзины")
-//    public void remove(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId) {
-//        cartService.removeItemFromCart(getCurrentCartUuid(principal, uuid), instrumentId);
-//    }
-//
-//    @Operation(summary = "Чистка корзины")
-//    @GetMapping("/{uuid}/clear")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Корзина очищена")
-//    public void clear(Principal principal, @PathVariable String uuid) {
-//        cartService.clearCart(getCurrentCartUuid(principal, uuid));
-//    }
-//
-//    @Operation(summary = "Слияние корзины незарегестрированного пользователя с его корзиной после регистрации/аутентификации")
-//    @GetMapping("/{uuid}/merge")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Слияние корзин произведено успешно")
-//    public void merge(Principal principal, @PathVariable String uuid) {
-//        cartService.merge(
-//                getCurrentCartUuid(principal, null),
-//                getCurrentCartUuid(null, uuid)
-//        );
-//    }
-//
-//    private String getCurrentCartUuid(Principal principal, String uuid) {
-//        if (principal != null) {
-//            return cartService.getCartUuidFromSuffix(principal.getName());
-//        }
-//        return cartService.getCartUuidFromSuffix(uuid);
-//    }
 }
