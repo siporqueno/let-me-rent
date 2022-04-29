@@ -22,7 +22,7 @@ public class CartService {
     private final InstrumentConverter instrumentConverter;
     private final ObjectMapper objectMapper;
 
-    @Value("${properties.cart.prefix}")
+    @Value("${utils.cart.prefix}")
     private String cartPrefix;
 
     public String getCartUuidFromSuffix(String suffix) {

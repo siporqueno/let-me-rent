@@ -37,7 +37,6 @@ springdoc:
   swagger-ui:
     path: /swagger-ui-custom.html
 
-
 utils:
   cart:
     prefix: LET_ME_RENT_
