@@ -34,7 +34,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $(document).ready(function() {
        $('.datepickerStart').datepicker({
           format: 'dd-mm-yyyy'
-        }).datepicker("setDate", new Date());
+        });
     });
 
     Date.prototype.addDays = function(days) {
@@ -47,7 +47,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     var myDate = currentDate.addDays(28);
            $('.datepickerEnd').datepicker({
               format: 'dd-mm-yyyy'
-            }).datepicker("setDate", myDate);
+            });
         });
 
     $scope.navToToolInfoPage = function (toolId) {
