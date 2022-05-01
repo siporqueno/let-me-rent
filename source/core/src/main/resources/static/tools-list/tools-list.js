@@ -105,7 +105,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
     $scope.putIntoCart = function (toolId) {
-        // доработать запрос по энд-поинтам после добавления логики на бэке по Redis и авторизации
         if (!$scope.filter.startDate || !$scope.filter.endDate) {
             alert("Введите даты начала и окончания аренды");
             return
