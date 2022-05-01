@@ -57,16 +57,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
 
-    $scope.tryToRent = function (toolId) {
-        //    ТУТ ЕСЛИ НЕ АВТОРИЗОВАН, ТО АЛЕРТ, ЧТО НАДО АВТОРИЗОВАТЬСЯ СНАЧАЛА, И ПЕРЕБРОСКА НА
-        // СТРАНИЦУ АВТОРИЗАЦИИ
-        // $location.path('/authorisation');
-        // А после авторизации/если авторизован, то уже формируем запрос на аренду на отдельной странице:
-        $location.path('/rent-request-page/' + toolId);
-    }
-
     $scope.putIntoCart = function (toolId) {
-        // доработать запрос по энд-поинтам после добавления логики на бэке по Redis и авторизации
         if (!$scope.filter.startDate || !$scope.filter.endDate) {
             alert("Введите даты начала и окончания аренды");
             return
