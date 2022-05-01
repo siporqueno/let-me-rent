@@ -45,16 +45,34 @@
             </div>
         </form>
     </div>
+
     <br/>
+    <br/>
+    <div class="dropdown">
+        <span style="color: darkcyan">Показывать</span>
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
+            {{pageSize}}</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><button class="dropdown-item" type="button" ng-click="loadTen()">10</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="loadTwentyFive()">25</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="loadFifty()">50</button></li>
+        </ul>
+        <span style="color: darkcyan">Элементов на странице</span>
+    </div>
+    <br/>
+    <br/>
+
     <div class="dropdown">
         <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
             Сортировка
         </button>
+        <span style="color: darkcyan">{{sortTypeInfoForUser}}</span>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><button class="dropdown-item" type="button" ng-click="loadTools(0, 'fee,asc')">По возрастанию цены аренды</button></li>
-            <li><button class="dropdown-item" type="button" ng-click="loadTools(0, 'fee,desc')">По убыванию цены аренды</button></li>
-            <li><button class="dropdown-item" type="button" ng-click="loadTools(0, 'price,asc')">По возрастанию стоимости залога</button></li>
-            <li><button class="dropdown-item" type="button" ng-click="loadTools(0, 'price,desc')">По убыванию стоимости залога</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="withoutSorting()">Без сортировки</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="sortFeeAsc()">По возрастанию цены аренды</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="sortFeeDesc()">По убыванию цены аренды</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="sortPriceAsc()">По возрастанию стоимости залога</button></li>
+            <li><button class="dropdown-item" type="button" ng-click="sortPriceDesc()">По убыванию стоимости залога</button></li>
         </ul>
     </div>
     <div class="mt-4"></div>

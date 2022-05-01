@@ -2,15 +2,19 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
+    $scope.pageSize = 10;
+    $scope.sortTypeInfoForUser = "Без сортировки";
+    $scope.sortTypeForServer = null;
 
-    $scope.loadTools = function (pageIndex = 0, sorting = null) {
+    $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
         $http({
             url: contextPath + "api/v1/instruments",
             method: 'GET',
             params: {
                 page: pageIndex,
-                sort: sorting,
+                size: $scope.pageSize,
+                sort: $scope.sortTypeForServer,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
@@ -24,6 +28,50 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         });
     };
 
+    $scope.loadTen = function () {
+        $scope.pageSize=10;
+        $scope.loadTools();
+    }
+
+    $scope.loadTwentyFive = function () {
+        $scope.pageSize=25;
+        $scope.loadTools();
+    }
+
+    $scope.loadFifty = function () {
+        $scope.pageSize=50;
+        $scope.loadTools();
+    }
+
+    $scope.sortFeeAsc = function () {
+        $scope.sortTypeForServer="'fee,asc'";
+        $scope.sortTypeInfoForUser="По возрастанию цены аренды";
+        $scope.loadTools();
+    }
+
+    $scope.sortFeeDesc = function () {
+        $scope.sortTypeForServer="'fee,desc'";
+        $scope.sortTypeInfoForUser="По убыванию цены аренды";
+        $scope.loadTools();
+    }
+
+    $scope.sortPriceAsc = function () {
+        $scope.sortTypeForServer="'price,asc'";
+        $scope.sortTypeInfoForUser="По возрастанию стоимости залога";
+        $scope.loadTools();
+    }
+
+    $scope.sortPriceDesc = function () {
+        $scope.sortTypeForServer="'price,desc'";
+        $scope.sortTypeInfoForUser="По убыванию стоимости залога";
+        $scope.loadTools();
+    }
+
+    $scope.withoutSorting = function () {
+        $scope.sortTypeForServer=null;
+        $scope.sortTypeInfoForUser="Без сортировки";
+        $scope.loadTools();
+    }
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
@@ -54,15 +102,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
-    }
-
-
-    $scope.tryToRent = function (toolId) {
-        //    ТУТ ЕСЛИ НЕ АВТОРИЗОВАН, ТО АЛЕРТ, ЧТО НАДО АВТОРИЗОВАТЬСЯ СНАЧАЛА, И ПЕРЕБРОСКА НА
-        // СТРАНИЦУ АВТОРИЗАЦИИ
-        // $location.path('/authorisation');
-        // А после авторизации/если авторизован, то уже формируем запрос на аренду на отдельной странице:
-        $location.path('/rent-request-page/' + toolId);
     }
 
     $scope.putIntoCart = function (toolId) {
