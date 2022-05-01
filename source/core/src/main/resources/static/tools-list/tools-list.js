@@ -1,11 +1,12 @@
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
-    const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
+
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
+    const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
     $scope.loadTools = function (pageIndex = 0, sorting = null) {
         currentPageIndex = pageIndex;
         $http({
-            url: contextPath,
+            url: contextPath + "api/v1/instruments",
             method: 'GET',
             params: {
                 page: pageIndex,
@@ -15,7 +16,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
                 max_fee: $scope.filter ? $scope.filter.max_fee : null,
                 startDate: $scope.filter ? $scope.filter.startDate : null,
-                finishDate: $scope.filter ? $scope.filter.finishDate : null
+                endDate: $scope.filter ? $scope.filter.endDate : null
             }
         }).then(function (response) {
             $scope.toolsPage = response.data;
@@ -32,10 +33,10 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-    $(document).ready(function () {
-        $('.datepickerStart').datepicker({
-            format: 'dd-mm-yyyy'
-        }).datepicker("setDate", new Date());
+    $(document).ready(function() {
+       $('.datepickerStart').datepicker({
+          format: 'dd-mm-yyyy'
+        });
     });
 
     Date.prototype.addDays = function (days) {
@@ -43,13 +44,13 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return this;
     };
 
-    $(document).ready(function () {
-        var currentDate = new Date();
-        var myDate = currentDate.addDays(28);
-        $('.datepickerEnd').datepicker({
-            format: 'dd-mm-yyyy'
-        }).datepicker("setDate", myDate);
-    });
+    $(document).ready(function() {
+    var currentDate = new Date();
+    var myDate = currentDate.addDays(28);
+           $('.datepickerEnd').datepicker({
+              format: 'dd-mm-yyyy'
+            });
+        });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
@@ -75,9 +76,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
-            // $location.path('/cart/'); //опционально. Я бы не стала здесь сразу перебрасывать в корзину.
         });
     }
+
 
     $scope.loadTools();
 });
