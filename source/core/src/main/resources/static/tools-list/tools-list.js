@@ -1,16 +1,16 @@
-
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
-    $scope.loadTools = function (pageIndex = 0, sorting = null) {
+    $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
         $http({
             url: contextPath + "api/v1/instruments",
             method: 'GET',
             params: {
                 page: pageIndex,
-                sort: sorting,
+                size: $scope.size,
+                sort: $scope.sort,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
@@ -33,9 +33,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-    $(document).ready(function() {
-       $('.datepickerStart').datepicker({
-          format: 'dd-mm-yyyy'
+    $(document).ready(function () {
+        $('.datepickerStart').datepicker({
+            format: 'dd-mm-yyyy'
         });
     });
 
@@ -44,13 +44,13 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return this;
     };
 
-    $(document).ready(function() {
-    var currentDate = new Date();
-    var myDate = currentDate.addDays(28);
-           $('.datepickerEnd').datepicker({
-              format: 'dd-mm-yyyy'
-            });
+    $(document).ready(function () {
+        var currentDate = new Date();
+        var myDate = currentDate.addDays(28);
+        $('.datepickerEnd').datepicker({
+            format: 'dd-mm-yyyy'
         });
+    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
