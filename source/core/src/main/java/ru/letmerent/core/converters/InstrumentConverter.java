@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.IntervalDto;
-import ru.letmerent.core.entity.Category;
-import ru.letmerent.core.entity.Instrument;
-import ru.letmerent.core.entity.Picture;
-import ru.letmerent.core.entity.User;
+import ru.letmerent.core.entity.*;
+import ru.letmerent.core.services.BrandService;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 import ru.letmerent.core.services.PictureStorageService;
@@ -17,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,6 +26,7 @@ public class InstrumentConverter {
     private final CategoryService categoryService;
     private final PictureStorageService pictureStorageService;
     private final OrderItemService orderItemService;
+    private final BrandService brandService;
 
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
@@ -52,9 +52,8 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
-        dto.setPicturesNames(instrument.getPictures().stream().map(Picture::getName).collect(toList()));
-        if (!CollectionUtils.isEmpty(instrument.getPictures())) {
-            dto.setPicturesUrls(instrument.getPictures().stream().map(Picture::getUrl).collect(toList()));
+        if (!instrument.getPictures().isEmpty()) {
+            dto.setPictures(instrument.getPictures());
         }
         dto.setBrandName(instrument.getBrand().getBrandName());
         dto.setPrice(instrument.getPrice());

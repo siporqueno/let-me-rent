@@ -43,7 +43,7 @@ public class CartService {
 
     public void addToCart(String cartKey, Long instrumentId, String startDate, String endDate) {
         execute(cartKey, c -> {
-            c.add(instrumentConverter.toListDto(instrumentService.getInstrumentById(instrumentId)),
+            c.add(instrumentConverter.toListDto(instrumentService.getInstrumentById(instrumentId).get()),
                     convertStringDateToLocalDateTime(startDate), convertStringDateToLocalDateTime(endDate));
         });
     }

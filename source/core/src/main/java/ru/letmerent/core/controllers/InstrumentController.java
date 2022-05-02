@@ -30,10 +30,17 @@ import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.PageDto;
 import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.User;
+import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.services.InstrumentService;
+import ru.letmerent.core.services.impl.UserService;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.security.Principal;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 

@@ -7,8 +7,8 @@ import ru.letmerent.core.entity.Instrument;
 import java.util.Optional;
 
 public interface InstrumentService {
+    Page<Instrument> getAllInstruments(Pageable pageable);
     
-    Page<Instrument> getAllInstruments(Pageable pageable);Instrument getInstrumentById(Long id);
     Instrument createInstrument(Instrument instrument);
     
     Optional<Instrument> getInstrumentById(Long id);
