@@ -24,16 +24,6 @@ import java.time.LocalDateTime;
 @Tag(name = "API для работы с сервисом по действиям с корзиной")
 public class CartController {
 
-//    Cart createUserCart(User user); // Я ЗАКОММИТИЛА ТЕ МЕТОДЫ, КОТОРЫЕ БЫЛИ ПРОСТО НАБРОСАНЫ В ЗАГОТОВКЕ. Их, наверное, надо вообще убрать
-//
-//    Cart getCartByUserId(Long id);
-//
-//    Cart addInstrumentInCart(Long id);
-//
-//    Cart removeInstrumentFromCart(Long id);
-//
-//    void clearCart();
-
     private final CartService cartService;
 
     @Operation(summary = "Получение корзины")
