@@ -56,7 +56,7 @@ public class OrderController {
     }
 
     @Operation(summary = "Вывод информации по всем заказам пользователя")
-    @GetMapping
+    @GetMapping("/{userId}") //Как вариант, для инфо о своих заказах, может не передавать ничего, а искать заказы по имени пользователя, которое мы возьмем просто из Principal? (можно хоть отдельный метод сделать для такого варианта поиска)
     @ApiResponse(
             responseCode = "200",
             description = "Список заказов.",
@@ -66,8 +66,8 @@ public class OrderController {
                             schema = @Schema(
                                     implementation = OrderDto.class))
             ))
-    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@RequestParam Long userId) {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);//TODO: здесь пока заглушка, надо доработать, чтобы возвращались заказы
     }
 
     @Operation(summary = "Изменение информации по заказу")

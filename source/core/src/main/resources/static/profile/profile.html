@@ -1,17 +1,20 @@
 <div class="container">
+    <div class="container1" ng-show="!isUserLoggedIn()">
+    <h1>ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</h1>
+        <button class="btn btn-info" ng-click="navToAuthPage()">Авторизоваться</button>
+</div>
+    <div class="container2" ng-show="isUserLoggedIn()">
     <p></p>
-    <h1>ЛИЧНЫЙ КАБИНЕТ (СТРАНИЦА С ИНФО О СДАННЫХ В АРЕНДУ / АРЕНДОВАННЫХ ИНСТРУМЕНТАХ)</h1>
+    <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
     <h3>Личные данные</h3>
-    <p>{{'Пользователь: ТУТ ПОДГРУЗИТСЯ username' + userProfile.userName}}</p>
-    <p>{{'Имя: ТУТ ПОДГРУЗИТСЯ firstname' + userProfile.firstName}}</p>
-    <p>{{'Имя: ТУТ ПОДГРУЗИТСЯ secondname' + userProfile.secondName}}</p>
-    <p>{{'Фамилия: ТУТ ПОДГРУЗИТСЯ lastname ' + userProfile.lastName}}</p>
-    <p>{{'E-Mail: ТУТ ПОДГРУЗИТСЯ email' + userProfile.email}}</p>
+    <p>{{'Пользователь: ' + userProfile.userName}}</p>
+    <p>{{'Имя: ' + userProfile.firstName}}</p>
+    <p>{{'Имя: ' + userProfile.secondName}}</p>
+    <p>{{'Фамилия: ' + userProfile.lastName}}</p>
+    <p>{{'E-Mail: ' + userProfile.email}}</p>
 
     <br/>
-    <!-- У меня здесь возникла проблема с этой таблицей. Нужна помощь. Не отоблажается на фронте нормально
-     Делала по аналогии со списком заказов в магазине, но что-то не срабатывает, не могу понять, может,
-     свежим взглядом будет понятно-->
+
     <h4>Список инструментов, взятых в аренду</h4>
      <table class="table align-middle">
         <thead scope="col">
@@ -21,13 +24,11 @@
             </tr>
         </thead>
         <tbody>
-<!--        <tr ng-repeat="ord in userProfile.orders">-->
-<!--Мешал отображать атрибут ng-repeat="ord in userProfile.orders", потому что он ничего не отдает пока-->
+        <tr ng-repeat="ord in orders">
         <tr>
-<!--            // код для работы с бэком-->
-<!--            <th scope="row">{{ord.id}}</th>-->
+            <th scope="row">{{ord.id}}</th>
             <!--//код для наглядности, пока бэк не подключился-->
-            <th scope="row">{{'1'}}</th>
+<!--            <th scope="row">{{'1'}}</th>-->
             <td>
                 <table class="table align-middle table-bordered">
                     <thead>
@@ -38,27 +39,32 @@
                             <th scope="col">Дата начала аренды</th>
                             <th scope="col">Дата окончания аренды</th>
                             <th scope="col">Сумма залога</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
 <!--                   // код для работы с бэком-->
-<!--                    <tr ng-repeat="i in ord.orderItems">-->
-<!--                        <td>{{i.instrument.title}}</td>-->
-<!--                        <td>{{i.instrument.brand}}</td>-->
-<!--                        <td>{{i.instrument.ownerUsername}}</td>-->
-<!--                        <td>{{i.dateStart}}</td>-->
-<!--                        <td>{{i.dateFinish}}</td>-->
-<!--                        <td>{{i.instrument.price}}</td>-->
-<!--                    </tr>-->
-                    <!--//код для наглядности, пока бэк не подключился-->
-                    <tr>
-                        <td>{{'Дрель'}}</td>
-                        <td>{{'Makita'}}</td>
-                        <td>{{'Владелец'}}</td>
-                        <td>{{'15.05.2022'}}</td>
-                        <td>{{'31.05.2022'}}</td>
-                        <td>{{'3000'}}</td>
+                    <tr ng-repeat="i in ord.orderItems">
+                        <td>{{i.instrument.title}}</td>
+                        <td>{{i.instrument.brandName}}</td>
+                        <td>{{i.instrument.ownerUsername}}</td>
+                        <td>{{i.startDate}}</td>
+                        <td>{{i.endDate}}</td>
+                        <td>{{i.instrument.price}}</td>
+                        <td>{{i.instrument.price}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="navToFeedbackPage(i.instrument.id)">Оставить отзыв</button>
+                        </td>
                     </tr>
+                    <!--//код для наглядности, пока бэк не подключился-->
+<!--                    <tr>-->
+<!--                        <td>{{'Дрель'}}</td>-->
+<!--                        <td>{{'Makita'}}</td>-->
+<!--                        <td>{{'Владелец'}}</td>-->
+<!--                        <td>{{'15.05.2022'}}</td>-->
+<!--                        <td>{{'31.05.2022'}}</td>-->
+<!--                        <td>{{'3000'}}</td>-->
+<!--                    </tr>-->
 
                     </tbody>
                 </table>
@@ -118,4 +124,5 @@
         </tbody>
     </table>
 
+</div>
 </div>
