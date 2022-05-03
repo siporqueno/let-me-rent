@@ -4,8 +4,8 @@ angular.module('tools').controller('authorisationController', function ($scope, 
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/api/v1/auth', $scope.user)
             .then(function successCallback(response) {
-                $http.defaults.headers.common.Authorization = 'Bearer ' + response.headers.Authorization;
-                    $localStorage.letMeRentUser = {username: $scope.user.username, token: response.headers.Authorization};
+                $http.defaults.headers.common.Authorization = 'Bearer ' + response.headers('Authorization');
+                    $localStorage.letMeRentUser = {username: $scope.user.username, token: response.headers('Authorization')};
 
                 $rootScope.user.username = null;
                 $rootScope.user.password = null;
