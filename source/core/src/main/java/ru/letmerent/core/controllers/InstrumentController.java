@@ -1,6 +1,10 @@
 package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -9,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,6 +34,7 @@ import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.PageDto;
+import ru.letmerent.core.dto.CriteriaSearch;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.exceptions.models.ApplicationError;
@@ -65,10 +71,10 @@ public class InstrumentController {
                     mediaType = "application/json",
                     array = @ArraySchema(
                             schema = @Schema(
-                                    implementation = InstrumentDto.class))
+                                    implementation = InstrumentForListDto.class))
             ))
-    PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable) {
-        Page<Instrument> page = instrumentService.getAllInstruments(pageable);
+    PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
+        Page<Instrument> page = instrumentService.getAllInstruments(pageable, criteriaSearch);
 
         List<InstrumentForListDto> instrumentForListDtos = page.get()
                 .map(instrumentConverter::toListDto).collect(toList());
@@ -91,7 +97,7 @@ public class InstrumentController {
             content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(
-                            implementation = InstrumentDto.class))
+                            implementation = InstrumentInfoDto.class))
     )
     ResponseEntity<Object> getInstrumentById(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
         Optional<Instrument> oInstrument = instrumentService.getInstrumentById(id);

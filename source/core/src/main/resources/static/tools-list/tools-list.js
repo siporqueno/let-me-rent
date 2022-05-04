@@ -1,4 +1,4 @@
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
@@ -9,10 +9,12 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             method: 'GET',
             params: {
                 page: pageIndex,
+                size: $scope.size,
+                sort: $scope.sort,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
-                ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
-                max_fee: $scope.filter ? $scope.filter.max_fee : null,
+                ownerName: $scope.filter ? $scope.filter.ownerUsername : null,
+                maxFee: $scope.filter ? $scope.filter.maxFee : null,
                 startDate: $scope.filter ? $scope.filter.startDate : null,
                 endDate: $scope.filter ? $scope.filter.endDate : null
             }
@@ -31,24 +33,22 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-    $(document).ready(function() {
-       $('.datepickerStart').datepicker({
-          format: 'dd-mm-yyyy'
+    $(document).ready(function () {
+        $('.datepickerStart').datepicker({
+            format: 'dd-mm-yyyy'
         });
     });
 
-    Date.prototype.addDays = function(days) {
-    this.setDate(this.getDate() + days);
-    return this;
+    Date.prototype.addDays = function (days) {
+        this.setDate(this.getDate() + days);
+        return this;
     };
 
-    $(document).ready(function() {
-    var currentDate = new Date();
-    var myDate = currentDate.addDays(28);
-           $('.datepickerEnd').datepicker({
-              format: 'dd-mm-yyyy'
-            });
+    $(document).ready(function () {
+        $('.datepickerEnd').datepicker({
+            format: 'dd-mm-yyyy'
         });
+    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
@@ -56,9 +56,13 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
 
     $scope.putIntoCart = function (toolId) {
+        if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
+            alert("Введите даты начала и окончания аренды");
+            return
+        }
         $http({
             url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
-                + toolId + '/'+ $scope.filter.startDate+ '/'+ $scope.filter.endDate,
+                + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
         });

@@ -4,15 +4,15 @@ angular.module('tools').controller('authorisationController', function ($scope, 
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/api/v1/auth', $scope.user)
             .then(function successCallback(response) {
-                $http.defaults.headers.common.Authorization = 'Bearer ' + response.headers.Authorization;
-                    $localStorage.letMeRentUser = {username: $scope.user.username, token: response.headers.Authorization};
+                $http.defaults.headers.common.Authorization = 'Bearer ' + response.headers('Authorization');
+                    $localStorage.letMeRentUser = {username: $scope.user.username, token: response.headers('Authorization')};
 
-                $rootScope.user.username = null;
-                $rootScope.user.password = null;
+                $scope.user.username = null;
+                $scope.user.password = null;
 
-                    // $http.get(contextPath + '/api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/merge')
-                    //     .then(function successCallback(response) {
-                    //     }); //это дополнительная функция для мержа корзины в Redis-надо раскоммитить, когда разберемся в корзиной в Redis
+                $http.get(contextPath + '/api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/merge')
+                    .then(function successCallback(response) {
+                    });
 
             }, function errorCallback(response) {
                 alert(response.data.userMessage);
