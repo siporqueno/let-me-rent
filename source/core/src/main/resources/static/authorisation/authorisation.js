@@ -7,8 +7,8 @@ angular.module('tools').controller('authorisationController', function ($scope, 
                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.headers('Authorization');
                     $localStorage.letMeRentUser = {username: $scope.user.username, token: response.headers('Authorization')};
 
-                $rootScope.user.username = null;
-                $rootScope.user.password = null;
+                $scope.user.username = null;
+                $scope.user.password = null;
 
                 $http.get(contextPath + '/api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/merge')
                     .then(function successCallback(response) {
