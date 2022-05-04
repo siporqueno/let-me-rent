@@ -1,4 +1,4 @@
-angular.module('tools').controller('toolsListController', function ($scope, $http, $location,$routeParams, $localStorage) {
+angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
@@ -9,6 +9,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             method: 'GET',
             params: {
                 page: pageIndex,
+                size: $scope.size,
+                sort: $scope.sort,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
                 ownerUserName: $scope.filter ? $scope.filter.ownerUserName : null,
@@ -31,24 +33,24 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         return arr;
     }
 
-    $(document).ready(function() {
-       $('.datepickerStart').datepicker({
-          format: 'dd-mm-yyyy'
+    $(document).ready(function () {
+        $('.datepickerStart').datepicker({
+            format: 'dd-mm-yyyy'
         });
     });
 
-    Date.prototype.addDays = function(days) {
-    this.setDate(this.getDate() + days);
-    return this;
+    Date.prototype.addDays = function (days) {
+        this.setDate(this.getDate() + days);
+        return this;
     };
 
-    $(document).ready(function() {
-    var currentDate = new Date();
-    var myDate = currentDate.addDays(28);
-           $('.datepickerEnd').datepicker({
-              format: 'dd-mm-yyyy'
-            });
+    $(document).ready(function () {
+        var currentDate = new Date();
+        var myDate = currentDate.addDays(28);
+        $('.datepickerEnd').datepicker({
+            format: 'dd-mm-yyyy'
         });
+    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
@@ -56,9 +58,13 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
 
     $scope.putIntoCart = function (toolId) {
+        if (!$scope.filter.startDate || !$scope.filter.endDate) {
+            alert("Введите даты начала и окончания аренды");
+            return
+        }
         $http({
-            url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
-                + toolId + '/'+ $scope.filter.startDate+ '/'+ $scope.filter.endDate,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/'
+                + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
         });
