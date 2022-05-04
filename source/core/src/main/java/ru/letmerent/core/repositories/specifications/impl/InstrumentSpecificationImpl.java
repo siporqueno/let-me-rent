@@ -110,7 +110,7 @@ public class InstrumentSpecificationImpl implements InstrumentSpecification {
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
-                .appendPattern("yyyy-MMMM-dd")
+                .appendPattern("dd-MM-yyyy")
                 .toFormatter(Locale.US);
 
         if (startDate == null) {

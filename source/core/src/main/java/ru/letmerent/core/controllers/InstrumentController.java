@@ -74,7 +74,6 @@ public class InstrumentController {
                                     implementation = InstrumentForListDto.class))
             ))
     PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
-        System.out.println(criteriaSearch);
         Page<Instrument> page = instrumentService.getAllInstruments(pageable, criteriaSearch);
 
         List<InstrumentForListDto> instrumentForListDtos = page.get()
