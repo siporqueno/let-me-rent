@@ -1,0 +1,31 @@
+<div>
+    <p></p>
+    <h2>История аренд инструмента</h2>
+    <br/>
+    <p></p>
+    <p>{{'Категория: ' + tool.categoryName}}</p>
+    <p>{{'Название инструмента: ' + tool.title}}</p>
+    <p>{{'Марка : ' + tool.brandName}}</p>
+    <p></p>
+    <table id="tool-history" class="table">
+        <thead>
+        <tr>
+            <td>Дата начала аренды</td>
+            <td>Дата окончания аренды</td>
+            <td>Арендатор</td>
+            <td>Оставить отзыв о арендаторе</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in tool.history">
+            <td>{{i.dateStart}}</td>
+            <td>{{i.dateFinish}}</td>
+            <td>{{i.user.userName}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="leaveFeedback(i.user.id)">Оставить отзыв</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

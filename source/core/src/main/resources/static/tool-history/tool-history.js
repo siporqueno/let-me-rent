@@ -1,4 +1,4 @@
-angular.module('tools').controller('toolInfoController', function ($scope, $http, $routeParams, $location) {
+angular.module('tool-history').controller('toolInfoController', function ($scope, $http, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
 
     $scope.showToolInfo = function () {
@@ -8,18 +8,10 @@ angular.module('tools').controller('toolInfoController', function ($scope, $http
             }, function failureCallback (response) {
                 // alert(response.data.messages); // это добавим, когда ошибки начнем с бэка передавать
                 alert("Пресловутое 'Что-то пошло не так :('") //это пока,потом уберем
-                $location.path('/tools-list');
+                $location.path('/tool-info');
             });
     }
 
-
-    $scope.navToToolsList = function () {
-        $location.path('/tools-list');
-    }
-
-    $scope.navToToolHistory = function (toolId) {
-            $location.path('/tool-history/' + toolId);
-    }
 
     $scope.showToolInfo();
 

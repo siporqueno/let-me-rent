@@ -46,6 +46,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/tool-history/:toolId', {
+                templateUrl: 'tool-history/tool-history.html',
+                controller: 'toolInfoController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
