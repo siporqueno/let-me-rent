@@ -45,8 +45,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     };
 
     $(document).ready(function () {
-        var currentDate = new Date();
-        var myDate = currentDate.addDays(28);
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy'
         });
@@ -58,12 +56,12 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
 
     $scope.putIntoCart = function (toolId) {
-        if (!$scope.filter.startDate || !$scope.filter.endDate) {
+        if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
             alert("Введите даты начала и окончания аренды");
             return
         }
         $http({
-            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/'
+            url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
                 + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
