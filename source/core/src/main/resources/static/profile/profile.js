@@ -1,5 +1,5 @@
-angular.module('tools').controller('profileController', function ($scope, $http) {
-     const contextPath = 'http://localhost:8890/let-me-rent/';
+angular.module('tools').controller('profileController', function ($scope, $http,  $location) {
+     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
     //
     // $scope.loadRents = function () { // здесь логика подгрузки заказов, в которых арендатор наш юзер.
     //     $http({
@@ -37,9 +37,9 @@ angular.module('tools').controller('profileController', function ($scope, $http)
                 // в какую-то архивную таблицу, наверное. Или флаг ставить в основной таблице
     //     }
 
-    $scope.navToToolInfoPage = function (toolId) {
-            $location.path('/tool-info/' + toolId);
-        }
+    $scope.navToToolHistory = function (toolId) {
+        $location.path('/tool-history/' + toolId);
+    }
 
     // $scope.loadMyProfile();
     // $scope.loadRents();

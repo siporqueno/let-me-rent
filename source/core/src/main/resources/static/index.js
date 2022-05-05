@@ -48,7 +48,7 @@
             })
             .when('/tool-history/:toolId', {
                 templateUrl: 'tool-history/tool-history.html',
-                controller: 'toolInfoController'
+                controller: 'toolHistoryController'
             })
             .otherwise({
                 redirectTo: '/'
