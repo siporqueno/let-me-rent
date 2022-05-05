@@ -80,5 +80,13 @@ angular.module('tools').controller('indexController', function ($rootScope, $sco
         }
     };
 
+    $rootScope.isUserNameEqualsTo = function(userName) {
+        if ($localStorage.letMeRentUser.username == userName) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 });
