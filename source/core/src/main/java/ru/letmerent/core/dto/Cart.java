@@ -72,7 +72,14 @@ public class Cart {
     @JsonIgnore
     public void merge(Cart another) {
         for (OrderItemDto anotherItem : another.items) {
+            boolean merged = false;
             for (OrderItemDto myItem : items) {
+                if (myItem.getInstrument().getId().equals(anotherItem.getInstrument().getId())){
+                    merged = true;
+                    break;
+                }
+            }
+            if (!merged){
                 items.add(anotherItem);
             }
         }
