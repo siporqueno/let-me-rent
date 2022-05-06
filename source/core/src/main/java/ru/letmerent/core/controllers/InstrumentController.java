@@ -1,10 +1,6 @@
 package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -13,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,20 +25,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.letmerent.core.converters.InstrumentConverter;
+import ru.letmerent.core.dto.CriteriaSearch;
 import ru.letmerent.core.dto.InstrumentDto;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
+import ru.letmerent.core.dto.InstrumentRentDto;
 import ru.letmerent.core.dto.PageDto;
-import ru.letmerent.core.dto.CriteriaSearch;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.exceptions.models.ApplicationError;
+import ru.letmerent.core.security.AuthenticationFacade;
 import ru.letmerent.core.services.InstrumentService;
 import ru.letmerent.core.services.impl.UserService;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,34 +59,61 @@ public class InstrumentController {
     private final InstrumentConverter instrumentConverter;
     private final ObjectMapper mapper;
     private final UserService userService;
-
+    private final AuthenticationFacade authenticationFacade;
+    
     @Operation(summary = "Вывод информации по всем инструментам")
     @GetMapping
     @ApiResponse(
+        responseCode = "200",
+        description = "Список инструментов.",
+        content = @Content(
+            mediaType = "application/json",
+            array = @ArraySchema(
+                schema = @Schema(
+                    implementation = InstrumentForListDto.class))
+        ))
+    PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
+        return getInstruments( pageable, criteriaSearch);
+    }
+    
+    @Operation(summary = "Вывод информации по всем инструментам пользователя")
+    @GetMapping("/lk")
+    @ApiResponse(
             responseCode = "200",
-            description = "Список инструментов.",
+            description = "Список инструментов пользователя.",
             content = @Content(
                     mediaType = "application/json",
                     array = @ArraySchema(
                             schema = @Schema(
                                     implementation = InstrumentForListDto.class))
             ))
-    PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
-        Page<Instrument> page = instrumentService.getAllInstruments(pageable, criteriaSearch);
-
-        List<InstrumentForListDto> instrumentForListDtos = page.get()
-                .map(instrumentConverter::toListDto).collect(toList());
-        PageDto<InstrumentForListDto> pageDto = new PageDto<>();
-        pageDto.setInstruments(instrumentForListDtos);
-        pageDto.setFirstPage(page.isFirst());
-        pageDto.setLastPage(page.isLast());
-        pageDto.setNumber(page.getNumber());
-        pageDto.setTotalPages(page.getTotalPages());
-        pageDto.setTotalElements(page.getTotalElements());
-
-        return pageDto;
+    PageDto<InstrumentForListDto> getAllUserInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
+        if (!authenticationFacade.isAdmin()) {
+            String username = authenticationFacade.getLogin();
+            criteriaSearch.setOwnerName(username);
+        }
+    
+        return getInstruments( pageable, criteriaSearch);
     }
-
+    
+    @Operation(summary = "Вывод информации по арендам своих инструментов")
+    @GetMapping("/rent")
+    @ApiResponse(
+        responseCode = "200",
+        description = "Список арендованных инструментов.",
+        content = @Content(
+            mediaType = "application/json",
+            array = @ArraySchema(
+                schema = @Schema(
+                    implementation = InstrumentRentDto.class))
+        ))
+    ResponseEntity<Object> getAllRentInstrument(@RequestParam("instrumentId") Long instrumentId) {
+        Long userId = userService.findByUsername(authenticationFacade.getLogin()).getId();
+        Collection<InstrumentRentDto> instrumentRents = instrumentService.getInstrumentRents(instrumentId, userId);
+        
+        return new ResponseEntity<>(instrumentRents, HttpStatus.OK);
+    }
+    
     @Operation(summary = "Информация по инструменту")
     @GetMapping("/{id}")
     @ApiResponse(
@@ -205,5 +230,21 @@ public class InstrumentController {
     ResponseEntity<InstrumentDto> changeInstrumentPrice(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id,
                                                         @RequestParam BigDecimal price) {
         return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
+    }
+    
+    private PageDto<InstrumentForListDto> getInstruments(Pageable pageable, CriteriaSearch criteriaSearch) {
+        Page<Instrument> page = instrumentService.getAllInstruments(pageable, criteriaSearch);
+        
+        List<InstrumentForListDto> instrumentForListDtos = page.get()
+            .map(instrumentConverter::toListDto).collect(toList());
+        PageDto<InstrumentForListDto> pageDto = new PageDto<>();
+        pageDto.setInstruments(instrumentForListDtos);
+        pageDto.setFirstPage(page.isFirst());
+        pageDto.setLastPage(page.isLast());
+        pageDto.setNumber(page.getNumber());
+        pageDto.setTotalPages(page.getTotalPages());
+        pageDto.setTotalElements(page.getTotalElements());
+        
+        return pageDto;
     }
 }

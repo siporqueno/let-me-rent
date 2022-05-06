@@ -4,15 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.letmerent.core.dto.CriteriaSearch;
+import ru.letmerent.core.dto.InstrumentRentDto;
 import ru.letmerent.core.entity.Instrument;
-import ru.letmerent.core.entity.User;
 import ru.letmerent.core.repositories.InstrumentRepository;
 import ru.letmerent.core.repositories.specifications.InstrumentSpecification;
 import ru.letmerent.core.services.InstrumentService;
 
-import javax.transaction.Transactional;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -37,5 +39,13 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public Instrument createInstrument(Instrument instrument) {
         return instrumentRepository.save(instrument);
+    }
+    
+    @Override
+    public Collection<InstrumentRentDto> getInstrumentRents(Long instrumentId, Long userId) {
+        LocalDateTime from = LocalDate.now().minusMonths(6).atStartOfDay();
+        LocalDateTime to = LocalDate.now().plusMonths(6).atStartOfDay();
+        
+        return instrumentRepository.getInstrumentRents(instrumentId, userId, from, to);
     }
 }
