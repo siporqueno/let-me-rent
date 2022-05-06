@@ -2,7 +2,6 @@ angular.module('tools').controller('addToolFormController', function ($scope, $h
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments';
 
     $scope.addTool = function () {
-        // $scope.new_tool.ownerUsername = $localStorage.letMeRentUser.username;
         $http.post(contextPath, $scope.new_tool)
             .then(function successCallback(response) {
                 $scope.new_tool = null;
