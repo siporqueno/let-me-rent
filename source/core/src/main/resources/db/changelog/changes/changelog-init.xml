@@ -32,4 +32,8 @@
         <sqlFile path="sql/v4_edit_picture_table.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="07_fix_sequence" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v6_fix_sequence.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
