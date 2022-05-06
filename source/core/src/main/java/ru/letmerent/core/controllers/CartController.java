@@ -12,27 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.dto.Cart;
 import ru.letmerent.core.dto.StringResponse;
-import ru.letmerent.core.dto.UserDto;
 import ru.letmerent.core.services.impl.CartService;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/carts")
 @RequiredArgsConstructor
 @Tag(name = "API для работы с сервисом по действиям с корзиной")
 public class CartController {
-
-//    Cart createUserCart(User user); // Я ЗАКОММИТИЛА ТЕ МЕТОДЫ, КОТОРЫЕ БЫЛИ ПРОСТО НАБРОСАНЫ В ЗАГОТОВКЕ. Их, наверное, надо вообще убрать
-//
-//    Cart getCartByUserId(Long id);
-//
-//    Cart addInstrumentInCart(Long id);
-//
-//    Cart removeInstrumentFromCart(Long id);
-//
-//    void clearCart();
 
     private final CartService cartService;
 
@@ -63,13 +51,14 @@ public class CartController {
     }
 
     @Operation(summary = "Добавление в корзину")
-    @GetMapping("/{uuid}/add/{instrumentId}/{startDate}/{endDate}") //TODO: с фронта из фильтров даты прилетают в виде строк. Подумать, как передовать с фронта или где-то выцеплять с бэка данные из фильтра по дате. Может, использовать IntervalDto как-то
+    @GetMapping("/{uuid}/add/{instrumentId}/{startDate}/{endDate}")
+    //TODO: с фронта из фильтров даты прилетают в виде строк. Подумать, как передовать с фронта или где-то выцеплять с бэка данные из фильтра по дате. Может, использовать IntervalDto как-то
     @ApiResponse(
             responseCode = "200",
             description = "Элемент успешно добавлен в корзину")
     public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
             , @PathVariable String startDate, @PathVariable String endDate) {
-        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId,startDate,endDate);
+        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId, startDate, endDate);
     }
 
     @Operation(summary = "Удаление из корзины")

@@ -9,6 +9,8 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель инструмента со списком")
 @ToString
-public class InstrumentForListDto extends InstrumentDto {
+public class InstrumentForListDto extends InstrumentDto implements Serializable {
 
     @Schema(description = "URL-ссылка на аватар")
     String avatarPictureUrl;

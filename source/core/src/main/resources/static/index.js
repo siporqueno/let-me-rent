@@ -61,7 +61,7 @@
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.letMeRentUser.token;
         }
         if (!$localStorage.letMeRentGuestCartId) {
-            $http.get(contextPath + '/api/v1/cart/generate')
+            $http.get(contextPath + '/api/v1/carts/generate')
                 .then(function successCallback(response) {
                     $localStorage.letMeRentGuestCartId = response.data.value;
                 });
