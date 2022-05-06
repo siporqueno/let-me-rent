@@ -1,14 +1,14 @@
 angular.module('tools').controller('profileController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
-    $scope.loadRents = function () {
-        $http({
-            url: contextPath + 'api/v1/orders/' +$scope.userProfile.id, //TODO: если на бэке поменяется энд-поинт, надо будет изменить. Написала предложение по его смене в OrderController
-            method: 'GET'
-        }).then(function (response) {
-            $scope.orders = response.data;
-        });
-    };
+    // $scope.loadRents = function () {
+    //     $http({
+    //         url: contextPath + 'api/v1/orders/' +$scope.userProfile.id, //TODO: если на бэке поменяется энд-поинт, надо будет изменить. Написала предложение по его смене в OrderController
+    //         method: 'GET'
+    //     }).then(function (response) {
+    //         $scope.orders = response.data;
+    //     });
+    // };
 
     // $scope.loadTools = function () {
     //     $http({
@@ -21,7 +21,7 @@ angular.module('tools').controller('profileController', function ($scope, $http,
 
     $scope.loadMyProfile = function () {
         $http({
-            url: contextPath + '/api/v1/users',
+            url: contextPath + 'api/v1/users/myUserInfo',
             method: 'GET'
         }).then(function (response) {
             $scope.userProfile = response.data;
@@ -46,6 +46,6 @@ angular.module('tools').controller('profileController', function ($scope, $http,
     }
 
     $scope.loadMyProfile();
-    $scope.loadRents();
+    // $scope.loadRents();
     // $scope.loadTools();
 });

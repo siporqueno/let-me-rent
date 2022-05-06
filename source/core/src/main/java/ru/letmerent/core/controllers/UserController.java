@@ -84,7 +84,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "Пользователь не найден",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ApplicationError.class)))
-    @GetMapping
+    @GetMapping("/myUserInfo")
     public UserDto getSelfUserInfo(Principal principal) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
     }

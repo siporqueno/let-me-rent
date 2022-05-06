@@ -1,37 +1,38 @@
 <div class="container">
-    <div class="container1" ng-show="!isUserLoggedIn()">
-    <h1>ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</h1>
+    <div class="container" ng-show="!isUserLoggedIn()">
+        <h1>ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</h1>
         <button class="btn btn-info" ng-click="navToAuthPage()">Авторизоваться</button>
-</div>
-    <div class="container2" ng-show="isUserLoggedIn()">
-    <p></p>
-    <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
-    <h3>Личные данные</h3>
-    <p>{{'Пользователь: ' + userProfile.userName}}</p>
-    <p>{{'Имя: ' + userProfile.firstName}}</p>
-    <p>{{'Имя: ' + userProfile.secondName}}</p>
-    <p>{{'Фамилия: ' + userProfile.lastName}}</p>
-    <p>{{'E-Mail: ' + userProfile.email}}</p>
+    </div>
+    <div class="container" ng-show="isUserLoggedIn()">
+        <p></p>
+        <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
+        <h3>Личные данные</h3>
+        <p>{{'Пользователь: ' + userProfile.userName}}</p>
+        <p>{{'Имя: ' + userProfile.firstName}}</p>
+        <p>{{'Имя: ' + userProfile.secondName}}</p>
+        <p>{{'Фамилия: ' + userProfile.lastName}}</p>
+        <p>{{'E-Mail: ' + userProfile.email}}</p>
 
-    <br/>
+        <br/>
 
-    <h4>Список инструментов, взятых в аренду</h4>
-     <table class="table align-middle">
-        <thead scope="col">
+        <h4>Список инструментов, взятых в аренду</h4>
+        <table class="table align-middle">
+            <thead scope="col">
             <tr>
                 <th scope="col">Номер заказа</th>
                 <th scope="col">Список инструментов</th>
             </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="ord in orders">
-        <tr>
-            <th scope="row">{{ord.id}}</th>
-            <!--//код для наглядности, пока бэк не подключился-->
-<!--            <th scope="row">{{'1'}}</th>-->
-            <td>
-                <table class="table align-middle table-bordered">
-                    <thead>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ord in orders">
+            <tr>
+                <!--                   // код для работы с бэком-->
+                <!--                <th scope="row">{{ord.id}}</th>-->
+                <!--//код для наглядности, пока бэк не подключился-->
+                <th scope="row">{{'1'}}</th>
+                <td>
+                    <table class="table align-middle table-bordered">
+                        <thead>
                         <tr>
                             <th scope="col">Название инструмента</th>
                             <th scope="col">Марка инструмента</th>
@@ -41,88 +42,95 @@
                             <th scope="col">Сумма залога</th>
                             <th scope="col"></th>
                         </tr>
-                    </thead>
-                    <tbody>
-<!--                   // код для работы с бэком-->
-                    <tr ng-repeat="i in ord.orderItems">
-                        <td>{{i.instrument.title}}</td>
-                        <td>{{i.instrument.brandName}}</td>
-                        <td>{{i.instrument.ownerUsername}}</td>
-                        <td>{{i.startDate}}</td>
-                        <td>{{i.endDate}}</td>
-                        <td>{{i.instrument.price}}</td>
-                        <td>{{i.instrument.price}}</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="navToFeedbackPage(i.instrument.id)">Оставить отзыв</button>
-                        </td>
-                    </tr>
-                    <!--//код для наглядности, пока бэк не подключился-->
-<!--                    <tr>-->
-<!--                        <td>{{'Дрель'}}</td>-->
-<!--                        <td>{{'Makita'}}</td>-->
-<!--                        <td>{{'Владелец'}}</td>-->
-<!--                        <td>{{'15.05.2022'}}</td>-->
-<!--                        <td>{{'31.05.2022'}}</td>-->
-<!--                        <td>{{'3000'}}</td>-->
-<!--                    </tr>-->
+                        </thead>
+                        <tbody>
+                        <!--                   // код для работы с бэком-->
+                        <!--                        <tr ng-repeat="i in ord.orderItems">-->
+                        <!--                            <td>{{i.instrument.title}}</td>-->
+                        <!--                            <td>{{i.instrument.brandName}}</td>-->
+                        <!--                            <td>{{i.instrument.ownerUsername}}</td>-->
+                        <!--                            <td>{{i.startDate}}</td>-->
+                        <!--                            <td>{{i.endDate}}</td>-->
+                        <!--                            <td>{{i.instrument.price}}</td>-->
+                        <!--                            <td>{{i.instrument.price}}</td>-->
+                        <!--                            <td>-->
+                        <!--                                <button class="btn btn-primary" ng-click="navToFeedbackPage(i.instrument.id)">Оставить-->
+                        <!--                                    отзыв-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--//код для наглядности, пока бэк не подключился-->
+                        <tr>
+                            <td>{{'Дрель'}}</td>
+                            <td>{{'Makita'}}</td>
+                            <td>{{'Владелец'}}</td>
+                            <td>{{'15.05.2022'}}</td>
+                            <td>{{'31.05.2022'}}</td>
+                            <td>{{'3000'}}</td>
+                            <td>
+                                <button class="btn btn-primary" ng-click="navToFeedbackPage(i.instrument.id)">Оставить
+                                    отзыв
+                                </button>
+                            </td>
+                        </tr>
 
-                    </tbody>
-                </table>
-            </td>
-         </tr>
-        </tbody>
-    </table>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-<br/>
+        <br/>
 
-    <h4>Список инструментов, выставленных на сайте для передачи в аренду</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <td>Название инструмента</td>
-            <td>Марка</td>
-            <td>Пользователь/арендатор</td>
-            <td>Дата начала аренды</td> <!-- Здесь надо будет доработать, когда будет несколько периодов аренды? -->
-            <td>Дата окончания аренды</td>
-            <td>Сумма залога</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <!--//Код для работы с бэком.
-        Сюда прилетает список инструментов, отобранный по userName пльзователя (username можем взять из localStorage)-->
-        <!--                <tr ng-repeat="t in tools">-->
-        <!--                    <td>{{t.title}}</td>-->
-        <!--                    <td>{{t.brand}}</td>-->
-        <!--                    <td>{{t.ownerUsername}}</td>-->
-        <!--                     <td>{{t.orderItems.dateFinish}}</td> -->
-        <!--                     <td>{{t.orderItems.dateStart}}</td> -->
-        <!--                    <td>{{t.price}}</td>-->
-        <!--        <td>-->
-        <!--            <button class="btn btn-primary" ng-click="changeTool(t.id)">изменить</button>-->
-        <!--        </td>-->
-        <!--        <td>-->
-        <!--            <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>-->
-        <!--        </td>-->
-        <!--                </tr>-->
+        <h4>Список инструментов, выставленных на сайте для передачи в аренду</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Название инструмента</td>
+                <td>Марка</td>
+                <td>Пользователь/арендатор</td>
+                <td>Дата начала аренды</td> <!-- Здесь надо будет доработать, когда будет несколько периодов аренды? -->
+                <td>Дата окончания аренды</td>
+                <td>Сумма залога</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <!--//Код для работы с бэком.
+            Сюда прилетает список инструментов, отобранный по userName пльзователя (username можем взять из localStorage)-->
+            <!--                <tr ng-repeat="t in tools">-->
+            <!--                    <td>{{t.title}}</td>-->
+            <!--                    <td>{{t.brand}}</td>-->
+            <!--                    <td>{{t.ownerUsername}}</td>-->
+            <!--                     <td>{{t.orderItems.dateFinish}}</td> -->
+            <!--                     <td>{{t.orderItems.dateStart}}</td> -->
+            <!--                    <td>{{t.price}}</td>-->
+            <!--        <td>-->
+            <!--            <button class="btn btn-primary" ng-click="changeTool(t.id)">изменить</button>-->
+            <!--        </td>-->
+            <!--        <td>-->
+            <!--            <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>-->
+            <!--        </td>-->
+            <!--                </tr>-->
 
-        <!--//код для наглядности, пока бэк не подключился-->
-        <tr>
-            <td>{{'Дрель'}}</td>
-            <td>{{'Makita'}}</td>
-            <td>{{'Арендатор'}}</td>
-            <td>{{'15.05.2022'}}</td>
-            <td>{{'31.05.2022'}}</td>
-            <td>{{'3000'}}</td>
-            <td>
-                <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>
-            </td>
-            <td>
-                <button class="btn btn-danger" ng-click="deleteTool(1)">Удалить</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <!--//код для наглядности, пока бэк не подключился-->
+            <tr>
+                <td>{{'Дрель'}}</td>
+                <td>{{'Makita'}}</td>
+                <td>{{'Арендатор'}}</td>
+                <td>{{'15.05.2022'}}</td>
+                <td>{{'31.05.2022'}}</td>
+                <td>{{'3000'}}</td>
+                <td>
+                    <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteTool(1)">Удалить</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-</div>
+    </div>
 </div>
