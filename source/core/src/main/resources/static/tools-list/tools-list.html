@@ -137,8 +137,11 @@
                         <button class="page-link" ng-click="loadTools(toolsPage.number - 1)"><<</button>
                     </li>
                     <li ng-show="toolsPage.totalElements > 0"
-                        ng-repeat="pageIndex in paginationArray" ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3" >
-                        <button class="page-link" ng-click="loadTools(pageIndex - 1)">{{pageIndex}}</button>
+                        ng-repeat="pageIndex in paginationArray"
+                        ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3">
+                        <button class="page-link"
+                                ng-style="{'font-weight': (pageIndex == toolsPage.number+1) ? 'bold' : ''}"
+                                ng-click="loadTools(pageIndex - 1)">{{pageIndex}}</button>
                     </li>
                     <li ng-show="!toolsPage.lastPage">
                         <button class="page-link" ng-click="loadTools(toolsPage.number + 1)">>></button>
