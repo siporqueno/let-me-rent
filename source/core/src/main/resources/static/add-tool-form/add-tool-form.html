@@ -2,7 +2,7 @@
     <p></p>
     <h1>ФОРМА ДОБАВЛЕНИЯ СВОЕГО ИНСТРУМЕНТА В БАЗУ САЙТА</h1>
     <span ng-show="!isUserLoggedIn()">Функция добавления инструмента доступна только для зарегистрированных пользователей. Пройдите авторизацию</span>
-    <form novalidate ng-show="isUserLoggedIn()" ng-submit="addTool()">
+    <form novalidate ng-show="isUserLoggedIn()" ng-submit="addTool()" enctype="multipart/form-data">
         <input class="form-control" type="text" placeholder="Название инструмента" ng-model="new_tool.title">
         <p></p>
         <input class="form-control" type="text" placeholder="Марка" ng-model="new_tool.brandName">
@@ -17,8 +17,10 @@
                ng-model="new_tool.description">
         <p></p>
         <!--        с добавлением фото пока не знаю, как корректно сделать - должна быть возможность сюда несколько фоток добавить-->
-        <input class="form-control" type="text" placeholder="Фото" ng-model="new_tool.picturesUrls">
+        <input class="form-control" type="file" placeholder="Фото" files-model="pictures" multiple>
         <p></p>
         <button type="submit" class="btn btn-primary">Разместить в базе инструментов</button>
     </form>
+
+<!--    <img ng-repeat="p in pictures" ng-src="{{p}}" class="img-responsive "/>-->
 </div>
