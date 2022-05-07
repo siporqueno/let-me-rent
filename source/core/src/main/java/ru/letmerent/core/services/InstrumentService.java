@@ -18,4 +18,6 @@ public interface InstrumentService {
     Optional<Instrument> getInstrumentById(Long id);
     
     Collection<InstrumentRentDto> getInstrumentRents(Long userId, Long instrumentId);
+    
+    void remove(Long instrumentId);
 }

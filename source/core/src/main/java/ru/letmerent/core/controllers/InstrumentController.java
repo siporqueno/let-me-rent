@@ -187,20 +187,19 @@ public class InstrumentController {
     @DeleteMapping("/{id}")
     @ApiResponse(
             responseCode = "200",
-            description = "Пользователь успешно удалён."
+            description = "Инструмент успешно удалён."
     )
-    ResponseEntity<Boolean> deleteInstrument(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
-        return new ResponseEntity<>(true, HttpStatus.OK);
-    }
-
-    @Operation(summary = "Удаление инструмента")
-    @DeleteMapping()
-    @ApiResponse(
-            responseCode = "200",
-            description = "Пользователь успешно удалён."
-    )
-    ResponseEntity<Boolean> deleteInstrument(@RequestBody InstrumentDto instrument) {
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    ResponseEntity<Object> deleteInstrument(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
+        if(authenticationFacade.isAdmin()){
+            instrumentService.remove(id);
+            return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
+        }else
+            return ResponseEntity.badRequest()
+            .body(mapper.valueToTree(ApplicationError.builder()
+                .errorCode(HttpStatus.BAD_REQUEST.value())
+                .userMessage("only admin can delete instruments")
+                .date(new Date())
+                .build()));
     }
 
     @Operation(summary = "Изменение информации по инструменту")

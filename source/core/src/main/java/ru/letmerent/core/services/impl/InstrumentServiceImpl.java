@@ -48,4 +48,9 @@ public class InstrumentServiceImpl implements InstrumentService {
         
         return instrumentRepository.getInstrumentRents(instrumentId, userId, from, to);
     }
+    
+    @Override
+    public void remove(Long instrumentId) {
+        instrumentRepository.deleteById(instrumentId);
+    }
 }
