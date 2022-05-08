@@ -28,4 +28,8 @@
         <sqlFile path="sql/v5_add_data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="06_add_comments_tables" author="artem.smirnov" failOnError="true">
+        <sqlFile path="sql/v1_add_comments_tables.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
