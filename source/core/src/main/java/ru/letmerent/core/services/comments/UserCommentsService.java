@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.converters.CommentConverter;
 import ru.letmerent.core.dto.comments.UserCommentDto;
-import ru.letmerent.core.entity.comments.AboutUserComment;
 import ru.letmerent.core.repositories.comments.UserCommentsRepository;
 
 import java.util.Collection;
@@ -21,8 +20,9 @@ public class UserCommentsService {
     }
 
     public Collection<UserCommentDto> getCommentsAboutUser(Long userId) {
-        Collection<AboutUserComment> comments = commentsRepository.findAllByAboutUserId(userId);
-        return comments.stream().map(converter::fromAboutUserCommentToDto).collect(Collectors.toList());
+        return commentsRepository.findAllByAboutUserId(userId).stream()
+                .map(converter::fromAboutUserCommentToDto)
+                .collect(Collectors.toList());
     }
 
     public double getUserGrade(Long userId) {
