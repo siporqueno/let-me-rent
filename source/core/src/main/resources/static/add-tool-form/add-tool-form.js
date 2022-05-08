@@ -1,39 +1,41 @@
-angular.module('tools').controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
-    const contextPath = 'http://localhost:8890/let-me-rent';
+angular
+    .module('tools')
+    .controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
+        const contextPath = 'http://localhost:8890/let-me-rent';
 
-    $scope.addTool = function () {
-        $http.post(contextPath + '/api/v1/instruments', $scope.new_tool)
-            .then(function successCallback(response) {
-                $scope.new_tool = null;
-                $scope.created_tool = response.data;
-                console.log('Инструмент без фото успешно добавлен в базу');
-                let formData = new FormData();
-                console.log($scope.pictures);
-                for (let i = 0; i < $scope.pictures.length; i++) {
-                    formData.set('picture', $scope.pictures[i], $scope.pictures[i].name);
-                    console.log('File name: ' + $scope.pictures[i].name + ', size: ' + $scope.pictures[i].size)
-                    $http({
-                        url: contextPath + "/api/v1/pictures/upload",
-                        method: 'POST',
-                        headers: {'Content-Type': undefined},
-                        params: {
-                            instrumentId: $scope.created_tool.id
-                        },
-                        data: formData
-                    }).then(function successCallback(response) {
-                        console.log('Added picture: ' + $scope.pictures[i].name + ' for instrument with id ' + $scope.created_tool.id);
-                    }, function failureCallback(response) {
-                        alert(response.data.messages);
-                    });
-                }
+        $scope.addTool = function () {
+            $http.post(contextPath + '/api/v1/instruments', $scope.new_tool)
+                .then(function successCallback(response) {
+                    $scope.new_tool = null;
+                    $scope.created_tool = response.data;
+                    console.log('Инструмент без фото успешно добавлен в базу');
+                    let formData = new FormData();
+                    console.log($scope.pictures);
+                    for (let i = 0; i < $scope.pictures.length; i++) {
+                        formData.set('picture', $scope.pictures[i], $scope.pictures[i].name);
+                        console.log('File name: ' + $scope.pictures[i].name + ', size: ' + $scope.pictures[i].size)
+                        $http({
+                            url: contextPath + "/api/v1/pictures/upload",
+                            method: 'POST',
+                            headers: {'Content-Type': undefined},
+                            params: {
+                                instrumentId: $scope.created_tool.id
+                            },
+                            data: formData
+                        }).then(function successCallback(response) {
+                            console.log('Added picture: ' + $scope.pictures[i].name + ' for instrument with id ' + $scope.created_tool.id);
+                        }, function failureCallback(response) {
+                            alert(response.data.messages);
+                        });
+                    }
 
-                $location.path('/tools-list');
-            }, function failureCallback(response) {
-                alert(response.data.messages);
-            });
-    };
+                    $location.path('/tools-list');
+                }, function failureCallback(response) {
+                    alert(response.data.messages);
+                });
+        };
 
-})
+    })
     .directive('filesModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
