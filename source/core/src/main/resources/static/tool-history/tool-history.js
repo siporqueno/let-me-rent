@@ -12,7 +12,18 @@ angular.module('tools').controller('toolHistoryController', function ($scope, $h
             });
     }
 
+    $scope.showToolHistory = function () {
+            $http.get(contextPath + 'rent?instrumentId=' + $routeParams.toolId)
+                .then(function successCallback (response) {
+                    $scope.tool_history = response.data;
+                }, function failureCallback (response) {
+                    alert(response.data.messages);
+                    $location.path('/tool-info');
+                });
+        }
+
 
     $scope.showToolInfo();
+    $scope.showToolHistory();
 
 });
