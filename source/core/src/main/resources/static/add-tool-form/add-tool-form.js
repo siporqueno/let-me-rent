@@ -6,7 +6,7 @@ angular.module('tools').controller('addToolFormController', function ($scope, $h
             .then(function successCallback(response) {
                 $scope.new_tool = null;
                 alert('Инструмент успешно добавлен в базу');
-                $location.path('/tools-list');
+                $location.path('/profile');
             }, function failureCallback(response) {
                 alert(response.data.messages);
             });
