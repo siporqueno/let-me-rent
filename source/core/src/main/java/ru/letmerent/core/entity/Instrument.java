@@ -56,6 +56,9 @@ public class Instrument {
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
     private Collection<Picture> pictures;
     
+    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
+    private Collection<OrderItem> orderItems;
+    
     @ManyToOne
     @JoinColumn(name = "brand_brand_id")
     private Brand brand;
