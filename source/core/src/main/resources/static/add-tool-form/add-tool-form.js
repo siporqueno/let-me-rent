@@ -1,5 +1,4 @@
-angular.module('tools')
-    .controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
+angular.module('tools').controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
         const contextPath = 'http://localhost:8890/let-me-rent';
 
         $scope.addTool = function () {
@@ -9,42 +8,35 @@ angular.module('tools')
                     $scope.created_tool = response.data;
                     alert('Инструмент без фото успешно добавлен в базу');
 
-                    for (let i = 0; i < $scope.pictures.length; i++) {
+                    let formData = new FormData();
+                    formData.append('picture', $scope.pictures, $scope.pictures.name);
+                    // for (let i = 0; i < $scope.fileList.length; i++) {
+                    //     console.log($scope.pictures.length);
+                    //     console.log(i);
+                        console.log($scope.pictures)
+                        // console.log($scope.fileList.size)
                         $http({
                             url: contextPath + "/api/v1/pictures/upload",
                             method: 'POST',
-                            headers: {'Content-Type': 'multipart/form-data'},
+                            headers: {'Content-Type': undefined},
                             params: {
-                                picture: $scope.pictures[i],
                                 instrumentId: $scope.created_tool.id
                             },
-                            // data: {'file': new FormData($scope.pictures[i])}
+                            data: formData
                         }).then(function successCallback(response) {
-                            console.log("Added picture: " + i);
+                            console.log("Added picture: " + $scope.pictures.name);
                         }, function failureCallback(response) {
                             alert(response.data.messages);
                         });
-                    }
+                    // }
 
                     $location.path('/tools-list');
                 }, function failureCallback(response) {
                     alert(response.data.messages);
                 });
-        }
+        };
 
     })
-    // .directive('filesModel', function () {
-    //     return {
-    //         restrict: 'A',
-    //         controller: function ($parse, $element, $attrs, $scope) {
-    //             var exp = $parse($attrs.filesModel);
-    //             $element.on('change', function () {
-    //                 exp.assign($scope, this.files);
-    //                 $scope.$apply();
-    //             })
-    //         }
-    //     }
-    // })
     .directive('filesModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -54,11 +46,11 @@ angular.module('tools')
 
                 element.bind('change', function () {
                     scope.$apply(function () {
-                        modelSetter(scope, element[0].files);
-                    })
-                })
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
             }
-        }
+        };
     }]);
 
 
