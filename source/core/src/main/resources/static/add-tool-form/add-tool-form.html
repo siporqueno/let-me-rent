@@ -16,14 +16,14 @@
         <input class="form-control" type="text" placeholder="Инструкции, дополнительная информация"
                ng-model="new_tool.description">
         <p></p>
-        <!--        с добавлением фото пока не знаю, как корректно сделать - должна быть возможность сюда несколько фоток добавить-->
-        <input class="form-control" type="file" placeholder="Фото" files-model="pictures">
+        <input class="form-control" type="file" placeholder="Фото" files-model="pictures" multiple>
         <p></p>
         <button type="submit" class="btn btn-primary">Разместить в базе инструментов</button>
     </form>
-
-    <div>
-        {{pictures.name}}
-        {{pictures.size}}
+<br>
+    <h3>Добавляемые фото:</h3>
+    <div ng-repeat="p in pictures">
+        {{p.name}}
+        {{p.size}}
     </div>
 </div>
