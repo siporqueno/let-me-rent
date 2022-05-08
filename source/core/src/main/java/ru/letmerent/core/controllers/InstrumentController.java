@@ -190,7 +190,7 @@ public class InstrumentController {
             description = "Инструмент успешно удалён."
     )
     ResponseEntity<Object> deleteInstrument(@Parameter(description = "Идентификатор инструмента", required = true) @PathVariable Long id) {
-        if(authenticationFacade.isAdmin()){
+        if(authenticationFacade.isAdmin()){//TODO: тут, как мне видится, должна быть проверка не только на роль админа, но и на то, что пользователь является вледельцем инструмента? Иначе функционал удаления своих инструментов из ЛК не сработает
             instrumentService.remove(id);
             return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
         }else

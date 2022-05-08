@@ -10,14 +10,14 @@ angular.module('tools').controller('profileController', function ($scope, $http,
     //     });
     // };
 
-    // $scope.loadTools = function () {
-    //     $http({
-    //         url: contextPath + 'НАШ ЭНД ПОИНТ',
-    //         method: 'GET'
-    //     }).then(function (response) {
-    //         $scope.tools= response.data;
-    //     });
-    // };
+    $scope.loadMyTools = function () {
+        $http({
+            url: contextPath + 'api/v1/instruments/lk',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.tools= response.data;
+        });
+    };
 
     $scope.loadMyProfile = function () {
         $http({
@@ -28,14 +28,18 @@ angular.module('tools').controller('profileController', function ($scope, $http,
         });
     };
 
-    // $scope.changeTool = function (toolId) {
-    //         $location.path('/edit-tool/' + toolId);
-    //     }
+    $scope.changeTool = function (toolId) {
+            $location.path('/edit-tool/' + toolId);
+        }
 
-    // $scope.deleteTool = function (toolId) {
-    //         //здесь логика по удалению инструмента из базы доступных для аренды: по идее, надо перемещать
-                // в какую-то архивную таблицу, наверное. Или флаг ставить в основной таблице
-    //     }
+    $scope.deleteTool = function (toolId) {
+        $http({
+            url: contextPath + 'api/v1/instruments/' + toolId,
+            method: 'DELETE'
+        }).then(function (response) {
+            alert("Инструмент успешно удален из базы");
+        });
+    };
 
     $scope.navToAuthPage = function () {
         $location.path('/authorisation');
@@ -47,5 +51,5 @@ angular.module('tools').controller('profileController', function ($scope, $http,
 
     $scope.loadMyProfile();
     // $scope.loadRents();
-    // $scope.loadTools();
+    $scope.loadMyTools();
 });
