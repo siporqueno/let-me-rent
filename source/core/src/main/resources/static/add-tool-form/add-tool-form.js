@@ -1,3 +1,4 @@
+
 angular
     .module('tools')
     .controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
@@ -29,7 +30,7 @@ angular
                         });
                     }
 
-                    $location.path('/tools-list');
+                    $location.path('/profile');
                 }, function failureCallback(response) {
                     alert(response.data.messages);
                 });
@@ -54,7 +55,4 @@ angular
 
 // If you want to add just one file use in the above directive: modelSetter(scope, element[0].files[0]);
 // The idea of directive is taken from https://www.tutorialspoint.com/angularjs/angularjs_upload_file.htm
-
-
-
 
