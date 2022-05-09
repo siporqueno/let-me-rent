@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель инструмента со списком")
 public class InstrumentRentDto extends IntervalDto {
+
+    //TODO: поскольку с фронта мы из списка аренд можем отправить отзыв, а для этого отзыва нужен id арендатора, надо в эту DTO-шку добавить еще поле userId
     
     @Schema(description = "Логин пользователя, оформившего аренду")
     String username;

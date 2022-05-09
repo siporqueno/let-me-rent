@@ -13,7 +13,7 @@ angular.module('tools').controller('toolHistoryController', function ($scope, $h
     }
 
     $scope.showToolHistory = function () {
-            $http.get(contextPath + 'rent?instrumentId=' + $routeParams.toolId)
+            $http.get(contextPath + 'rent?instrumentId=' + $routeParams.toolId)//для меня непривычная форма отправки на бэк в методе GET RequestParam. К Татьяне, как автору,  вопрос про работоспособность (я не тестила)
                 .then(function successCallback (response) {
                     $scope.tool_history = response.data;
                 }, function failureCallback (response) {
@@ -21,6 +21,10 @@ angular.module('tools').controller('toolHistoryController', function ($scope, $h
                     $location.path('/tool-info');
                 });
         }
+
+    $scope.navToFeedbackAboutRenter = function (renterId, renterUsername) {
+        $location.path('/feedback-about-renter-page/' + renterId + '/'+ renterUsername);
+    }
 
 
     $scope.showToolInfo();
