@@ -105,6 +105,9 @@
                 <td>{{t.fee}}</td>
                 <td>{{t.price}}</td>
                 <td>
+                    <button class = "btn btn-primary" ng-click="navToToolHistory(t.id)">История&nbsp;аренд</button>
+                </td>
+                <td>
                     <button class="btn btn-primary" ng-click="changeTool(t.id)">Изменить</button>
                 </td>
                 <td>
@@ -115,12 +118,16 @@
                 </td>
             </tr>
 
-            <!--//код для наглядности, пока бэк не подключился. Уберу после проверки работоспособности-->
+              <!--//код для наглядности, пока бэк не подключился. Уберу после проверки работоспособности-->
 <!--            <tr>-->
 <!--                <td>{{'Дрель'}}</td>-->
 <!--                <td>{{'Makita'}}</td>-->
 <!--                <td>{{'300'}}</td>-->
 <!--                <td>{{'3000'}}</td>-->
+<!--                     <td> -->
+                    <!--заменить на tool.id-->
+<!--                     <button class = "btn btn-primary" ng-click="navToToolHistory(1)">История&nbsp;аренд</button>
+                    </td> -->
 <!--                <td>-->
 <!--                    <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>-->
 <!--                </td>-->
@@ -130,6 +137,7 @@
 <!--            </tr>-->
             </tbody>
         </table>
+
 
     </div>
 </div>
