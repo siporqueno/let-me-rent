@@ -1,5 +1,6 @@
 package ru.letmerent.core.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,17 +29,22 @@ public class CommentController {
 
     private final InstrumentCommentService instrumentCommentService;
     private final UserCommentsService userCommentsService;
+    private final ObjectMapper mapper;
 
-    @PostMapping("/user")
-    public ResponseEntity<?> addCommentAboutUser(@RequestBody UserCommentDto commentDto) {
-        userCommentsService.addNewComment(commentDto);
-        return ResponseEntity.accepted().build();
-    }
-
-    @PostMapping("/instrument")
-    public ResponseEntity<?> addCommentAboutInstrument(@RequestBody InstrumentCommentDto commentDto) {
-        instrumentCommentService.addNewComment(commentDto);
-        return ResponseEntity.accepted().build();
+    @PostMapping
+    public ResponseEntity<?> addNewComment(@NotNull @RequestHeader("about") String about,
+                                           @RequestBody Object commentDto) {
+        switch (about) {
+            case USER:
+                UserCommentDto userCommentDto = mapper.convertValue(commentDto, UserCommentDto.class);
+                userCommentsService.addNewComment(userCommentDto);
+                return ResponseEntity.accepted().build();
+            case INSTR:
+                InstrumentCommentDto instrumentCommentDto = mapper.convertValue(commentDto, InstrumentCommentDto.class);
+                instrumentCommentService.addNewComment(instrumentCommentDto);
+                return ResponseEntity.accepted().build();
+        }
+        return generateError();
     }
 
     @GetMapping
