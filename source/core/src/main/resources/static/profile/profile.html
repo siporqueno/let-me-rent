@@ -89,46 +89,40 @@
             <tr>
                 <td>Название инструмента</td>
                 <td>Марка</td>
-                <td>Пользователь/арендатор</td>
-                <td>Дата начала аренды</td> <!-- Здесь надо будет доработать, когда будет несколько периодов аренды? -->
-                <td>Дата окончания аренды</td>
+                <td>Цена аренды</td>
                 <td>Сумма залога</td>
                 <td></td>
             </tr>
             </thead>
             <tbody>
-            <!--//Код для работы с бэком.
-            Сюда прилетает список инструментов, отобранный по userName пльзователя (username можем взять из localStorage)-->
-            <!--                <tr ng-repeat="t in tools">-->
-            <!--                    <td>{{t.title}}</td>-->
-            <!--                    <td>{{t.brand}}</td>-->
-            <!--                    <td>{{t.ownerUsername}}</td>-->
-            <!--                     <td>{{t.orderItems.dateFinish}}</td> -->
-            <!--                     <td>{{t.orderItems.dateStart}}</td> -->
-            <!--                    <td>{{t.price}}</td>-->
-            <!--        <td>-->
-            <!--            <button class="btn btn-primary" ng-click="changeTool(t.id)">изменить</button>-->
-            <!--        </td>-->
-            <!--        <td>-->
-            <!--            <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>-->
-            <!--        </td>-->
-            <!--                </tr>-->
+            <!--//Код для работы с бэком.-->
 
-            <!--//код для наглядности, пока бэк не подключился-->
-            <tr>
-                <td>{{'Дрель'}}</td>
-                <td>{{'Makita'}}</td>
-                <td>{{'Арендатор'}}</td>
-                <td>{{'15.05.2022'}}</td>
-                <td>{{'31.05.2022'}}</td>
-                <td>{{'3000'}}</td>
+            <tr ng-repeat="t in tools.instruments">
+                <td>{{t.title}}</td>
+                <td>{{t.brandName}}</td>
+                <td>{{t.fee}}</td>
+                <td>{{t.price}}</td>
                 <td>
-                    <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>
+                    <button class="btn btn-primary" ng-click="changeTool(t.id)">Изменить</button>
                 </td>
                 <td>
-                    <button class="btn btn-danger" ng-click="deleteTool(1)">Удалить</button>
+                    <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>
                 </td>
             </tr>
+
+            <!--//код для наглядности, пока бэк не подключился. Уберу после проверки работоспособности-->
+<!--            <tr>-->
+<!--                <td>{{'Дрель'}}</td>-->
+<!--                <td>{{'Makita'}}</td>-->
+<!--                <td>{{'300'}}</td>-->
+<!--                <td>{{'3000'}}</td>-->
+<!--                <td>-->
+<!--                    <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <button class="btn btn-danger" ng-click="deleteTool(1)">Удалить</button>-->
+<!--                </td>-->
+<!--            </tr>-->
             </tbody>
         </table>
 
