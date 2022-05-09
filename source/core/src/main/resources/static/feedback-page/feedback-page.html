@@ -2,7 +2,7 @@
     <p></p>
     <h2>Вы попали на страницу, где можете оставить свой отзыв</h2>
     <br/>
-    <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
+    <button class="btn btn-primary" ng-click="navToProfile()">Вернуться в профиль</button>
     <br/>
     <p></p>
     <h3>Сведения об инструменте, о котором вы пожелали оставить отзыв</h3>
@@ -20,22 +20,37 @@
 
     <h3>Форма для отправки отзыва об инструменте</h3>
     <br/>
-    <form novalidate ng-submit="toolFeedback(tool.id)">
-        <input class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте"
-               ng-model="toolFeedback.value">
+    <form novalidate ng-submit="sendToolFeedback()">
+        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="tool_comment.userId">
         <p></p>
-        <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+        <input class="form-control" type="number" hidden placeholder="ID инструмента" ng-model="tool_comment.instrumentId">
+        <p></p>
+        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте"
+                  ng-model="tool_comment.description"></textarea>
+        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале" ng-model="tool_comment.grade">
+        <p></p>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Отправить только отзыв об инструменте</button>
     </form>
     <br/>
     <br/>
     <h3>Форма для отправки отзыва о владельце инструмента</h3>
     <br/>
-    <form novalidate ng-submit="ownerFeedback(tool.ownerUsername)">
-        <input class="form-control" type="text" placeholder="Поле для ввода отзыва о владельце инструмента"
-               ng-model="toolFeedback.value">
+    <form novalidate ng-submit="sendOwnerFeedback(tool.ownerUsername)">
+        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="owner_comment.userId">
         <p></p>
-        <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+        <input class="form-control" type="number" hidden placeholder="ID владельца инструмента" ng-model="owner_comment.aboutUserId">
+        <p></p>
+        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва о владельце инструмента"
+                   ng-model="owner_comment.description"></textarea>
+        <p></p>
+        <input class="form-control" type="number" hidden placeholder="Введите оценку по 5-бальной шкале" ng-model="owner_comment.grade">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Отправить только отзыв о владельце инструмента</button>
     </form>
+    <br/>
+    <button class="btn btn-warning" ng-click="sendBothFeedbacks()">Отправить оба отзыва</button>
+
 
 
 </div>
