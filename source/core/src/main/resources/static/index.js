@@ -54,6 +54,10 @@
                 templateUrl: 'tool-history/tool-history.html',
                 controller: 'toolHistoryController'
             })
+            .when('/feedback-about-renter-page/:renterId/:renterUsername', {
+                templateUrl: 'feedback-about-renter-page/feedback-about-renter-page.html',
+                controller: 'feedbackAboutRenterController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
