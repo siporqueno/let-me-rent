@@ -14,9 +14,10 @@ public interface UserCommentsRepository extends JpaRepository<AboutUserComment, 
         Collection<AboutUserComment> aboutUserComments = findAllByAboutUserId(userId);
         if (!aboutUserComments.isEmpty()) {
             aboutUserComments.stream()
+                    .filter(c -> c.getGrade() != null)
                     .mapToInt(AboutUserComment::getGrade)
                     .average()
-                    .orElse(0);
+                    .orElse(0.0);
         }
         return 0;
     }

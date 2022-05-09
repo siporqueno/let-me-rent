@@ -14,9 +14,10 @@ public interface InstrumentCommentsRepository extends JpaRepository<AboutInstrum
         Collection<AboutInstrumentComment> aboutInstrumentComments = findAllByInstrumentId(instrumentId);
         if (!aboutInstrumentComments.isEmpty()) {
             return aboutInstrumentComments.stream()
+                    .filter(c -> c.getGrade() != null)
                     .mapToInt(AboutInstrumentComment::getGrade)
                     .average()
-                    .orElse(0);
+                    .orElse(0.0);
         }
         return 0;
     }

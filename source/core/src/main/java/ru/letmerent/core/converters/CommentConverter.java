@@ -14,6 +14,7 @@ public class CommentConverter {
                 .userId(commentDto.getUserId())
                 .aboutUserId(commentDto.getAboutUserId())
                 .description(commentDto.getDescription())
+                .grade(commentDto.getGrade())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class CommentConverter {
                 .userId(comment.getUserId())
                 .aboutUserId(comment.getAboutUserId())
                 .description(comment.getDescription())
+                .grade(comment.getGrade())
                 .startDate(comment.getStartDate())
                 .updateDate(comment.getUpdateDate())
                 .build();
@@ -33,6 +35,7 @@ public class CommentConverter {
                 .userId(commentDto.getUserId())
                 .instrumentId(commentDto.getInstrumentId())
                 .description(commentDto.getDescription())
+                .grade(commentDto.getGrade())
                 .build();
     }
 
@@ -42,6 +45,7 @@ public class CommentConverter {
                 .userId(comment.getUserId())
                 .instrumentId(comment.getInstrumentId())
                 .description(comment.getDescription())
+                .grade(comment.getGrade())
                 .startDate(comment.getStartDate())
                 .updateDate(comment.getUpdateDate())
                 .build();

@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Data
@@ -21,6 +24,9 @@ public class UserCommentDto {
 
     private String description;
 
+    @Nullable
+    @Min(0)
+    @Max(5)
     private Integer grade;
 
     private Date startDate;
