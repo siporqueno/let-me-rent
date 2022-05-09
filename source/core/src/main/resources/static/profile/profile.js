@@ -1,4 +1,4 @@
-angular.module('tools').controller('profileController', function ($scope, $http,  $location) {
+angular.module('tools').controller('profileController', function ($scope,rootScope, $http,  $location) {
      const contextPath = 'http://localhost:8890/let-me-rent/api/v1/instruments/';
 
 
@@ -26,6 +26,7 @@ angular.module('tools').controller('profileController', function ($scope, $http,
             method: 'GET'
         }).then(function (response) {
             $scope.userProfile = response.data;
+            $rootScope.myUserIdFromProfile = response.data.id;
         });
     };
 
