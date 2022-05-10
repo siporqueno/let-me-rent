@@ -16,6 +16,7 @@ import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.services.impl.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Date;
 
 @RestController
@@ -75,6 +76,18 @@ public class UserController {
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
     } //TODO: А, может, дополнить контроллер еще методом поиска юзера по его ID?
+
+    @Operation(summary = "Получение информации о себе как пользователе")
+    @ApiResponse(responseCode = "200", description = "Информация о пользователе",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserDto.class)))
+    @ApiResponse(responseCode = "404", description = "Пользователь не найден",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
+    @GetMapping("/myUserInfo")
+    public UserDto getSelfUserInfo(Principal principal) {
+        return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
+    }
 
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")

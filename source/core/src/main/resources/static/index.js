@@ -1,4 +1,6 @@
 (function () {
+    'use strict';
+
     angular
         .module('tools', ['ngRoute', 'ngStorage'])
         .config(config)
@@ -46,6 +48,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/feedback-page/:toolId', {
+                templateUrl: 'feedback-page/feedback-page.html',
+                controller: 'feedbackController'
+
             .when('/tool-history/:toolId', {
                 templateUrl: 'tool-history/tool-history.html',
                 controller: 'toolHistoryController'
