@@ -90,9 +90,9 @@ public class CommentController {
                                       @NotNull @RequestParam("id") Long id) {
         switch (about) {
             case USER:
-                return ResponseEntity.ok("grade: " + userCommentsService.getUserGrade(id));
+                return ResponseEntity.ok(mapper.valueToTree(userCommentsService.getUserGrade(id)));
             case INSTR:
-                return ResponseEntity.ok("grade: " + instrumentCommentService.getInstrumentGrade(id));
+                return ResponseEntity.ok(mapper.valueToTree(instrumentCommentService.getInstrumentGrade(id)));
         }
         return generateError();
     }
