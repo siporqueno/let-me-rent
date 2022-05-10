@@ -23,9 +23,9 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
             url: contextPath + 'api/v1/comments',
             method: 'POST',
             headers: {
-                "about": "INSTR"
+                "about": "instrument"
             },
-            param: $scope.tool_comment
+            data: $scope.tool_comment
         }).then(function successCallback(response) {
             $scope.tool_comment = null;
             alert('Ваш отзыв об инструменте успешно сохранен');
@@ -40,9 +40,9 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
             url: contextPath + 'api/v1/comments',
             method: 'POST',
             headers: {
-                "about": "USER"
+                "about": "user"
             },
-            param: $scope.owner_comment
+            data: $scope.owner_comment
         }).then(function successCallback(response) {
             $scope.owner_comment = null;
             alert('Ваш отзыв о владельце успешно сохранен');
@@ -71,8 +71,6 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
     $scope.navToProfile = function () {
         $location.path('/profile');
     }
-
-
 
     $scope.showToolInfo();
 
