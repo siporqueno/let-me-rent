@@ -44,4 +44,7 @@ public class InstrumentDto implements Serializable {
     
     @Schema(description = "список картинок")
     Collection<Picture> pictures;
+
+    //TODO нужно добавить объект с историей аренд инструмента, в котором будут даты аренд инструмента и арендатор
+    //Collection<History> history;
 }

@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Table(name = "instruments")
@@ -54,7 +55,10 @@ public class Instrument {
     private User user;
     
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
-    private Collection<Picture> pictures;
+    private Collection<Picture> pictures = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL)
+    private Collection<OrderItem> orderItems;
     
     @ManyToOne
     @JoinColumn(name = "brand_brand_id")
@@ -80,7 +84,7 @@ public class Instrument {
         this.endDate = endDate;
         this.categoryId = categoryId;
         this.user = user;
-        this.pictures = pictures;
+        this.pictures.addAll(pictures);
         this.brand = brand;
     }
 }
