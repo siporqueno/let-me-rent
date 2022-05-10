@@ -1,4 +1,4 @@
-angular.module('tools').controller('profileController', function ($scope, $http, $location) {
+angular.module('tools').controller('profileController', function ($scope, $rootScope, $http, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
 

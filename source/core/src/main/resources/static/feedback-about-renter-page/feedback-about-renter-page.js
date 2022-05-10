@@ -9,9 +9,9 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
             url: contextPath + '/api/v1/comments',
             method: 'POST',
             headers: {
-                "about": "USER"
+                "about": "user"
             },
-            param: $scope.renter_comment
+            data: $scope.renter_comment
         }).then(function successCallback(response) {
             $scope.renter_comment = null;
             alert('Ваш отзыв успешно сохранен');
