@@ -5,6 +5,7 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
     $scope.renter_comment.userId = $rootScope.myUserIdFromProfile;
 
     $scope.sendFeedbackAboutRenter = function () {
+        console.log("Метод отправки отзыва при нажатии на кнопку срабоатл")
         $http({
             url: contextPath + '/api/v1/comments',
             method: 'POST',
