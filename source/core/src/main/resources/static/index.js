@@ -1,4 +1,6 @@
 (function () {
+    'use strict';
+
     angular
         .module('tools', ['ngRoute', 'ngStorage'])
         .config(config)
