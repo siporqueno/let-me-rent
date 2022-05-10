@@ -20,7 +20,7 @@ angular.module('tools').controller('cartConfirmationController', function ($scop
              method: 'POST',
              data: $scope.period
          }).then(function (response) {
-             alert('Инструменты успешно забронированы');
+             alert('Инструменты успешно арендованы');
              $location.path('/profile');
          });
      };
