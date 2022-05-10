@@ -1,4 +1,4 @@
-angular.module('tools').controller('cartConfirmationController', function ($scope, $http, $location, $localStorage) {
+angular.module('tools').controller('orderConfirmationController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
     $scope.loadCart = function () {
