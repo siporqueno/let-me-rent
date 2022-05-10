@@ -9,7 +9,7 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
             url: contextPath + '/api/v1/comments',
             method: 'POST',
             headers: {
-                "about": "USER"
+                "about": "user"
             },
             param: $scope.renter_comment
         }).then(function successCallback(response) {
