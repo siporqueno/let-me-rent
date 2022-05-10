@@ -1,6 +1,11 @@
 package ru.letmerent.core.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +26,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
+@Tag(name = "API для работы с сервисов комментариев")
 @RequestMapping("/api/v1/comments")
 public class CommentController {
     private static final String HEADER = "about";
@@ -31,8 +37,14 @@ public class CommentController {
     private final UserCommentsService userCommentsService;
     private final ObjectMapper mapper;
 
+    @Operation(summary = "Добавление нового комментария")
     @PostMapping
+    @ApiResponse(responseCode = "202", description = "Успешное добавление нового комментария")
+    @ApiResponse(responseCode = "400", description = "Ошибка выполнения запроса",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     public ResponseEntity<?> addNewComment(@NotNull @RequestHeader("about") String about,
+                                           @Schema(oneOf = {InstrumentCommentDto.class, UserCommentDto.class})
                                            @RequestBody Object commentDto) {
         switch (about) {
             case USER:
@@ -47,7 +59,14 @@ public class CommentController {
         return generateError();
     }
 
+    @Operation(summary = "Запрос комментариев")
     @GetMapping
+    @ApiResponse(responseCode = "200", description = "Список комментариев",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(oneOf = {InstrumentCommentDto.class, UserCommentDto.class})))
+    @ApiResponse(responseCode = "400", description = "Ошибка выполнения запроса",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     public ResponseEntity<?> getComments(@RequestHeader(HEADER) String about,
                                          @NotNull @RequestParam("id") Long id) {
         switch (about) {
@@ -59,14 +78,21 @@ public class CommentController {
         return generateError();
     }
 
+    @Operation(summary = "Запрос грейда")
     @GetMapping("/grade")
+    @ApiResponse(responseCode = "200", description = "Грейд",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Double.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка выполнения запроса",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ApplicationError.class)))
     public ResponseEntity<?> getGrade(@RequestHeader(HEADER) String about,
                                       @NotNull @RequestParam("id") Long id) {
         switch (about) {
             case USER:
-                return ResponseEntity.ok(userCommentsService.getUserGrade(id));
+                return ResponseEntity.ok("grade: " + userCommentsService.getUserGrade(id));
             case INSTR:
-                return ResponseEntity.ok(instrumentCommentService.getInstrumentGrade(id));
+                return ResponseEntity.ok("grade: " + instrumentCommentService.getInstrumentGrade(id));
         }
         return generateError();
     }
