@@ -1,18 +1,20 @@
 angular.module('tools').controller('feedbackController', function ($scope, $http,$rootScope, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
-    $scope.tool_comment.userId = $rootScope.myUserIdFromProfile;
-    $scope.tool_comment.instrumentId = $routeParams.toolId;
-    $scope.owner_comment.userId = $rootScope.myUserIdFromProfile;
-    $scope.owner_comment.aboutUserId = $scope.tool.ownerId; //TODO: ожидаем, что это поле появится в InstrumentInfoDto
+    // $scope.tool_comment.userId = $rootScope.myUserIdFromProfile;
+    // $scope.tool_comment.instrumentId = $routeParams.toolId;
+    // $scope.owner_comment.userId = $rootScope.myUserIdFromProfile;
+    // $scope.owner_comment.aboutUserId = $scope.tool.ownerId; //TODO: ожидаем, что это поле появится в InstrumentInfoDto
+
+    $scope.tool_comment={userId: "1", instrumentId: "2"}; //временно для тестирования отправки отзывов
+    $scope.owner_comment={userId: "1", aboutUserId: "2"}; //временно для тестирования отправки отзывов
 
     $scope.showToolInfo = function () {
         $http.get(contextPath + 'api/v1/instruments/' +$routeParams.toolId)
             .then(function successCallback (response) {
                 $scope.tool = response.data;
             }, function failureCallback (response) {
-                // alert(response.data.messages); // это добавим, когда ошибки начнем с бэка передавать
-                alert("Пресловутое 'Что-то пошло не так :('") //это пока,потом уберем
+                alert(response.data.messages);
                 $location.path('/tools-list');
             });
     }

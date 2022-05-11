@@ -21,10 +21,10 @@
     <h3>Форма для отправки отзыва об инструменте</h3>
     <br/>
     <form novalidate ng-submit="sendToolFeedback()">
-        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="tool_comment.userId">
-        <p></p>
-        <input class="form-control" type="number" hidden placeholder="ID инструмента" ng-model="tool_comment.instrumentId">
-        <p></p>
+<!--        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="tool_comment.userId">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="number" hidden placeholder="ID инструмента" ng-model="tool_comment.instrumentId">-->
+<!--        <p></p>-->
         <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте"
                   ng-model="tool_comment.description"></textarea>
         <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале" ng-model="tool_comment.grade">
@@ -37,10 +37,10 @@
     <h3>Форма для отправки отзыва о владельце инструмента</h3>
     <br/>
     <form novalidate ng-submit="sendOwnerFeedback(tool.ownerUsername)">
-        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="owner_comment.userId">
-        <p></p>
-        <input class="form-control" type="number" hidden placeholder="ID владельца инструмента" ng-model="owner_comment.aboutUserId">
-        <p></p>
+<!--        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="owner_comment.userId">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="number" hidden placeholder="ID владельца инструмента" ng-model="owner_comment.aboutUserId">-->
+<!--        <p></p>-->
         <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва о владельце инструмента"
                    ng-model="owner_comment.description"></textarea>
         <p></p>
