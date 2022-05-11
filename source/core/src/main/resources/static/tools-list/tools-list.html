@@ -25,7 +25,8 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.maxFee">
+                        <input class="form-control border" type="search" value="" id="filterMaxFee"
+                               placeholder="максимальная цена" ng-model="filter.maxFee">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -36,7 +37,8 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate" placeholder="дата окончания аренды" ng-model="filter.endDate">
+                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate"
+                               placeholder="дата окончания аренды" ng-model="filter.endDate">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -102,7 +104,10 @@
                     <td>{{t.categoryName}}</td>
                     <td>{{t.title}}</td>
                     <td>{{t.brandName}}</td>
-                    <td>{{t.avatarPictureUrl}}</td>
+                    <td>
+                        <img ng-if='t.avatarPictureUrl'
+                             ng-src='http://localhost:8890/let-me-rent/api/v1/pictures/{{t.avatarPictureUrl}}'>
+                    </td>
                     <td>{{t.ownerUsername}}</td>
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>

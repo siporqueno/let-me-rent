@@ -37,7 +37,7 @@ public class InstrumentConverter {
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());
         dto.setOwnerUsername(instrument.getUser().getUserName());
-        dto.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrument.getId()));
+//        dto.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrument.getId()));
 
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
