@@ -1,11 +1,12 @@
 angular.module('tools').controller('feedbackAboutRenterController', function ($scope,$routeParams, $rootScope, $http,  $location) {
     const contextPath = 'http://localhost:8890/let-me-rent'
 
-    $scope.renter_comment.aboutUserId = $routeParams.renterId;
-    $scope.renter_comment.userId = $rootScope.myUserIdFromProfile;
+    // $scope.renter_comment.aboutUserId = $routeParams.renterId;
+    // $scope.renter_comment.userId = $rootScope.myUserIdFromProfile;
+
+    $scope.renter_comment= {userId: "1", aboutUserId: "2"};
 
     $scope.sendFeedbackAboutRenter = function () {
-        console.log("Метод отправки отзыва при нажатии на кнопку срабоатл")
         $http({
             url: contextPath + '/api/v1/comments',
             method: 'POST',

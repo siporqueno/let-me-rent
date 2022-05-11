@@ -1,15 +1,15 @@
 <div>
     <p></p>
     <h3>Здесь вы можете оставить отзыв об арендаторе вашего инструмента:</h3>
-    <p>{{'Арендатор (или логин грузим): ТУТ ПОДГРУЗИТСЯ username' + renterInfo.userName}}</p>
-    <p>{{'ФИО (или ФИО грузим): ТУТ ПОДГРУЗИТСЯ ФИО ' + renterInfo.lastName + ' ' + renterInfo.firstName + ' ' + renterInfo.secondName}}</p>
+    <p>{{'Арендатор: ' + renterInfo.userName}}</p>
+    <p>{{'ФИО: ' + renterInfo.lastName + ' ' + renterInfo.firstName + ' ' + renterInfo.secondName}}</p>
 
 
     <form novalidate ng-submit="sendFeedbackAboutRenter()">
-        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="renter_comment.userId">
-        <p></p>
-        <input class="form-control" type="number" hidden placeholder="ID арендатора" ng-model="renter_comment.aboutUserId">
-        <p></p>
+<!--        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="renter_comment.userId">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="number" hidden placeholder="ID арендатора" ng-model="renter_comment.aboutUserId">-->
+<!--        <p></p>-->
         <textarea class="form-control" type="text" placeholder="Напишите свой отзыв" ng-model="renter_comment.description">
         </textarea>
         <p></p>
