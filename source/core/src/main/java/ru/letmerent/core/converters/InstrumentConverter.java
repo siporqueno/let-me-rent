@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -52,15 +53,19 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
+//        if (!instrument.getPictures().isEmpty()) {
+//            dto.setPictures(instrument.getPictures());
+//        }
         if (!instrument.getPictures().isEmpty()) {
-            dto.setPictures(instrument.getPictures());
+            dto.setPictureUrls(instrument.getPictures().stream().map(Picture::getName).collect(Collectors.toList()));
         }
+
         dto.setBrandName(instrument.getBrand().getBrandName());
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());
         dto.setDescription(instrument.getDescription());
         dto.setIntervals(initNoRentIntervals(instrument));
-        
+
         User owner = instrument.getUser();
         dto.setOwnerUsername(owner.getUserName());
         dto.setOwnerEmail(owner.getEmail());
@@ -82,7 +87,7 @@ public class InstrumentConverter {
 
         Optional<Category> category = categoryService.findCategoryByName(instrumentDto.getCategoryName());
         if (category.isEmpty()) {
-            category = Optional.of(categoryService.createCategory(new Category(instrumentDto.getCategoryName(),null, LocalDateTime.now(), null)));
+            category = Optional.of(categoryService.createCategory(new Category(instrumentDto.getCategoryName(), null, LocalDateTime.now(), null)));
         }
 
         Instrument instrument = new Instrument();
@@ -100,11 +105,11 @@ public class InstrumentConverter {
     private List<IntervalDto> initNoRentIntervals(Instrument instrument) {
         List<IntervalDto> noRentIntervals = new ArrayList<>();
         List<IntervalDto> rentIntervals = orderItemService.findAllByInstrumentId(instrument.getId())
-            .stream()
-            .map(orderItem -> new IntervalDto(orderItem.getStartDate(), orderItem.getEndDate()))
-            .sorted(Comparator.comparing(IntervalDto::getDateStart))
-            .collect(toList());
-        
+                .stream()
+                .map(orderItem -> new IntervalDto(orderItem.getStartDate(), orderItem.getEndDate()))
+                .sorted(Comparator.comparing(IntervalDto::getDateStart))
+                .collect(toList());
+
         LocalDateTime startFreeInterval = instrument.getStartDate();
         LocalDateTime endFreeInterval;
         for (int i = 0; i < rentIntervals.size(); i++) {
@@ -114,18 +119,18 @@ public class InstrumentConverter {
                 startFreeInterval = rentIntervals.get(i).getDateFinish().plusSeconds(1);
                 continue;
             }
-            
+
             addIfValid(noRentIntervals, new IntervalDto(startFreeInterval, endFreeInterval));
-            
+
             startFreeInterval = rentIntervals.get(i).getDateFinish().plusSeconds(1);
             if (i == rentIntervals.size() - 1 && rentIntervals.get(i).getDateFinish() != instrument.getEndDate()) {
                 addIfValid(noRentIntervals, new IntervalDto(startFreeInterval, instrument.getEndDate()));
             }
         }
-        
+
         return noRentIntervals.stream().sorted(Comparator.comparing(IntervalDto::getDateStart).reversed()).collect(toList());
     }
-    
+
     private void addIfValid(List<IntervalDto> noRentIntervals, IntervalDto intervalDto) {
         if (intervalDto.getDateStart().isBefore(intervalDto.getDateFinish())) {
             noRentIntervals.add(intervalDto);

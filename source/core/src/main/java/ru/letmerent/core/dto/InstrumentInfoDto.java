@@ -7,7 +7,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import ru.letmerent.core.entity.Picture;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -35,4 +37,7 @@ public class InstrumentInfoDto extends InstrumentDto {
 
     @Schema(description = "Интервалы доступности")
     List<IntervalDto> intervals;
+
+    @Schema(description = "список URL картинок")
+    Collection<String> pictureUrls;
 }
