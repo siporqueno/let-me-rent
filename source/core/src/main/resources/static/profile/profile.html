@@ -47,14 +47,14 @@
                         </thead>
                         <tbody>
                         <!--                   // код для работы с бэком-->
-                        <!--                        <tr ng-repeat="i in ord.orderItems">-->
-                        <!--                            <td>{{i.instrument.title}}</td>-->
-                        <!--                            <td>{{i.instrument.brandName}}</td>-->
-                        <!--                            <td>{{i.instrument.ownerUsername}}</td>-->
-                        <!--                            <td>{{i.startDate}}</td>-->
-                        <!--                            <td>{{i.endDate}}</td>-->
-                        <!--                            <td>{{i.instrument.price}}</td>-->
-                        <!--                            <td>{{i.instrument.price}}</td>-->
+                        <!--                        <tr ng-repeat="oi in ord.orderItems">-->
+                        <!--                            <td>{{oi.instrument.title}}</td>-->
+                        <!--                            <td>{{oi.instrument.brandName}}</td>-->
+                        <!--                            <td>{{oi.instrument.ownerUsername}}</td>-->
+                        <!--                            <td>{{oi.startDate}}</td>-->
+                        <!--                            <td>{{oi.endDate}}</td>-->
+                        <!--                            <td>{{oi.instrument.price}}</td>-->
+                        <!--                            <td>{{oi.instrument.price}}</td>-->
                         <!--                            <td>-->
                         <!--                                <button class="btn btn-primary" ng-click="navToFeedbackPage(i.instrument.id)">Оставить-->
                         <!--                                    отзыв-->
@@ -70,7 +70,7 @@
                             <td>{{'31.05.2022'}}</td>
                             <td>{{'3000'}}</td>
                             <td>
-                                <button class="btn btn-primary" ng-click="navToFeedbackPage(1)">Оставить
+                                <button class="btn btn-primary" ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить
                                     отзыв
                                 </button>
                             </td>

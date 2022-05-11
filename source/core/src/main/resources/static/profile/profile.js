@@ -56,8 +56,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/feedback-page/' + toolId);
     }
 
-    $scope.navToToolHistory = function (toolId) {
-        $location.path('/tool-history/' + toolId);
+    $scope.navToToolHistory = function (toolId, ownerId) {
+        $location.path('/tool-history/');
+        $rootScope.toolIdFromProfile = toolId;
+        $rootScope.ownerIdFromProfile = ownerId;
     }
 
     $scope.loadMyProfile();
