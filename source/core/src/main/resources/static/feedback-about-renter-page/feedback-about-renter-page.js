@@ -5,13 +5,14 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
     $scope.renter_comment.userId = $rootScope.myUserIdFromProfile;
 
     $scope.sendFeedbackAboutRenter = function () {
+        console.log("Метод отправки отзыва при нажатии на кнопку срабоатл")
         $http({
             url: contextPath + '/api/v1/comments',
             method: 'POST',
             headers: {
-                "about": "USER"
+                "about": "user"
             },
-            param: $scope.renter_comment
+            data: $scope.renter_comment
         }).then(function successCallback(response) {
             $scope.renter_comment = null;
             alert('Ваш отзыв успешно сохранен');

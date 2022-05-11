@@ -1,12 +1,18 @@
 <div class="container">
-    <p></p>
-    <h1>ЛИЧНЫЙ КАБИНЕТ (СТРАНИЦА С ИНФО О СДАННЫХ В АРЕНДУ / АРЕНДОВАННЫХ ИНСТРУМЕНТАХ)</h1>
-    <h3>Личные данные</h3>
-    <p>{{'Пользователь: ТУТ ПОДГРУЗИТСЯ username' + userProfile.userName}}</p>
-    <p>{{'Имя: ТУТ ПОДГРУЗИТСЯ firstname' + userProfile.firstName}}</p>
-    <p>{{'Имя: ТУТ ПОДГРУЗИТСЯ secondname' + userProfile.secondName}}</p>
-    <p>{{'Фамилия: ТУТ ПОДГРУЗИТСЯ lastname ' + userProfile.lastName}}</p>
-    <p>{{'E-Mail: ТУТ ПОДГРУЗИТСЯ email' + userProfile.email}}</p>
+
+    <div class="container" ng-show="!isUserLoggedIn()">
+        <h1>ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</h1>
+        <button class="btn btn-info" ng-click="navToAuthPage()">Авторизоваться</button>
+    </div>
+    <div class="container" ng-show="isUserLoggedIn()">
+        <p></p>
+        <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
+        <h3>Личные данные</h3>
+        <p>{{'Пользователь: ' + userProfile.userName}}</p>
+        <p>{{'Имя: ' + userProfile.firstName}}</p>
+        <p>{{'Имя: ' + userProfile.secondName}}</p>
+        <p>{{'Фамилия: ' + userProfile.lastName}}</p>
+        <p>{{'E-Mail: ' + userProfile.email}}</p>
 
         <br/>
 
@@ -79,36 +85,21 @@
 
         <br/>
 
-    <h4>Список инструментов, выставленных на сайте для передачи в аренду</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <td>Название инструмента</td>
-            <td>Марка</td>
-            <td>Пользователь/арендатор</td>
-            <td>Дата начала аренды</td> <!-- Здесь надо будет доработать, когда будет несколько периодов аренды? -->
-            <td>Дата окончания аренды</td>
-            <td>Сумма залога</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <!--//Код для работы с бэком.
-        Сюда прилетает список инструментов, отобранный по userName пльзователя (username можем взять из localStorage)-->
-        <!--                <tr ng-repeat="t in tools">-->
-        <!--                    <td>{{t.title}}</td>-->
-        <!--                    <td>{{t.brand}}</td>-->
-        <!--                    <td>{{t.ownerUsername}}</td>-->
-        <!--                     <td>{{t.orderItems.dateFinish}}</td> -->
-        <!--                     <td>{{t.orderItems.dateStart}}</td> -->
-        <!--                    <td>{{t.price}}</td>-->
-        <!--        <td>-->
-        <!--            <button class="btn btn-primary" ng-click="changeTool(t.id)">изменить</button>-->
-        <!--        </td>-->
-        <!--        <td>-->
-        <!--            <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>-->
-        <!--        </td>-->
-        <!--                </tr>-->
+        <h4>Список инструментов, выставленных на сайте для передачи в аренду</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Название инструмента</td>
+                <td>Марка</td>
+                <td>Цена аренды</td>
+                <td>Сумма залога</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <!--//Код для работы с бэком.-->
 
             <tr ng-repeat="t in tools.instruments">
                 <td>{{t.title}}</td>
