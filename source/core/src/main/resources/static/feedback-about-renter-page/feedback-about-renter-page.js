@@ -4,6 +4,7 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
     // $scope.renter_comment.aboutUserId = $routeParams.renterId;
     // $scope.renter_comment.userId = $rootScope.myUserIdFromProfile;
 
+
     $scope.renter_comment={userId: "1", aboutUserId: "2"}; // временное решение для тестирования самой отправки отзыва
 
     $scope.sendFeedbackAboutRenter = function () {
