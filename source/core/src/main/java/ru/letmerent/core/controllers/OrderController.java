@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.letmerent.core.converters.OrderConverter;
 import ru.letmerent.core.dto.OrderDto;
+import ru.letmerent.core.entity.Order;
+import ru.letmerent.core.services.OrderService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +29,12 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/v1/orders")
 @Tag(name = "API для работы с заказом")
+@AllArgsConstructor
 public class OrderController {
+
+    private final OrderService orderService;
+
+    private final OrderConverter orderConverter;
 
     @Operation(summary = "Создание заказа")
     @PostMapping
@@ -37,7 +46,8 @@ public class OrderController {
                     schema = @Schema(implementation = OrderDto.class)
             ))
     ResponseEntity<OrderDto> addNewOrder(OrderDto orderDto) {
-        return new ResponseEntity<>(new OrderDto(), HttpStatus.CREATED);
+        Order order = orderService.createOrder(orderConverter.convertToOrder(orderDto));
+        return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Информация по заказу")
