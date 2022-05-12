@@ -28,7 +28,7 @@ angular.module('tools').controller('cartController', function ($scope, $http, $l
     }
 
     $scope.confirmOrder = function () {
-        $location.path('/cart-confirmation');
+        $location.path('/order-confirmation');
     }
 
     $scope.disabledCreateOrder = function () {

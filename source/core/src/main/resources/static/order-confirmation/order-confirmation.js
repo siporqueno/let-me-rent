@@ -16,12 +16,22 @@ angular.module('tools').controller('orderConfirmationController', function ($sco
 
      $scope.processOrder = function () {
          $http({
-             url: contextPath + 'api/v1/orders',
-             method: 'POST',
-             data: $scope.period
+             url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/order/',
+             method: 'GET'
          }).then(function (response) {
-             alert('Инструменты успешно арендованы');
-             $location.path('/profile');
+             $http({
+                url: contextPath + 'api/v1/orders/',
+                method: 'POST',
+                data: response
+             }).then(function (response) {
+                $http({
+                    url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/clear/',
+                    method: 'GET'
+                }).then(function (response) {
+                    alert('Инструменты успешно арендованы');
+                    $location.path('/profile');
+                });
+             });
          });
      };
 
