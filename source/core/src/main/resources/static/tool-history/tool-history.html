@@ -20,9 +20,9 @@
         <tr ng-repeat="i in tool_history">
             <td>{{i.dateStart}}</td>
             <td>{{i.dateFinish}}</td>
-            <td>{{i.username}}</td>
+            <td>{{i.renterName}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="navToFeedbackAboutRenter(i.userId,i.username)">Оставить отзыв</button>
+                <button class="btn btn-primary" ng-click="navToFeedbackAboutRenter(i.renterId,i.renterName)">Оставить отзыв</button>
             </td>
         </tr>
         </tbody>
