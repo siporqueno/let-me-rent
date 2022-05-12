@@ -16,13 +16,15 @@ import java.time.LocalDateTime;
 @Schema(description = "Модель инструмента со списком")
 public class InstrumentRentDto extends IntervalDto {
 
-    //TODO: поскольку с фронта мы из списка аренд можем отправить отзыв, а для этого отзыва нужен id арендатора, надо в эту DTO-шку добавить еще поле userId
-    
     @Schema(description = "Логин пользователя, оформившего аренду")
-    String username;
+    String renterName;
     
-    public InstrumentRentDto(LocalDateTime dateStart, LocalDateTime dateFinish, String username) {
+    @Schema(description = "Id пользователя, оформившего аренду")
+    Long renterId;
+    
+    public InstrumentRentDto(LocalDateTime dateStart, LocalDateTime dateFinish, String renterName, Long renterId) {
        super(dateStart,dateFinish);
-        this.username = username;
+        this.renterName = renterName;
+        this.renterId = renterId;
     }
 }
