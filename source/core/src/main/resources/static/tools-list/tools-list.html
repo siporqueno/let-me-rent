@@ -64,6 +64,8 @@
     <label for="sortSelect">Сортировка</label>
     <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="sort"
             ng-change="loadTools()">
+        <option value="">Без сортировки
+        </option>
         <option value="fee,asc">По возрастанию цены
             аренды
         </option>

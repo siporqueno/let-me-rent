@@ -4,6 +4,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
+        if ($localStorage.currentFilters != null){
+            $scope.filter = $localStorage.currentFilters;
+        }
         $http({
             url: contextPath + "api/v1/instruments",
             method: 'GET',
@@ -21,6 +24,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         }).then(function (response) {
             $scope.toolsPage = response.data;
             $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.toolsPage.totalPages);
+            $localStorage.currentFilters = $scope.filter;
         });
     };
 
