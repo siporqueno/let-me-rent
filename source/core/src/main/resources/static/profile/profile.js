@@ -16,7 +16,7 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
             url: contextPath + 'api/v1/instruments/lk',
             method: 'GET'
         }).then(function (response) {
-            $scope.tools= response.data;
+            $scope.tools = response.data;
         });
     };
 
@@ -31,16 +31,16 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
     };
 
     $scope.changeTool = function (toolId) {
-            $location.path('/edit-tool/' + toolId);
-        }
+        $location.path('/edit-tool/' + toolId);
+    }
 
     $scope.deleteTool = function (toolId) {
-    // Здесь в дальнейшем надо будет прописать логику отправки запроса администратору а удаление инструмента из базы
+        // Здесь в дальнейшем надо будет прописать логику отправки запроса администратору а удаление инструмента из базы
         //либо чтобы у этого инструмента в базе ставился какой-то флаг, что владелец хочет удалить.
     };
 
     $scope.stopRentSuggestion = function (toolId) {
- // здесь у меня два варианта, как это сделать:
+        // здесь у меня два варианта, как это сделать:
         //1. или мы отправляем с фронта запрос на модификацию инструмента, где с фронта прилети инструмент, в котором
         //   дата окончания возможной аренды в инструменте будет сегодняшняя
         //2. или сделаем на бэке отедельный метод в контроллере (в который прилетит айдишник инструмента)
@@ -52,11 +52,17 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/authorisation');
     }
 
-    $scope.navToFeedbackPage = function (toolId) {
+    $scope.navToFeedbackPage = function (toolId, ownerId) {
+        console.log(toolId);
+        console.log(ownerId);
+        $rootScope.toolIdFromProfile = toolId;
+        $rootScope.ownerIdFromProfile = ownerId;
         $location.path('/feedback-page/' + toolId);
     }
 
-    $scope.navToToolHistory = function (toolId) {
+    $scope.navToToolHistory = function (toolId, ownerId) {
+        $rootScope.toolIdFromProfile = toolId;
+        $rootScope.ownerIdFromProfile = ownerId;
         $location.path('/tool-history/' + toolId);
     }
 
