@@ -1,26 +1,28 @@
-angular.module('tools').controller('feedbackController', function ($scope, $http,$rootScope, $routeParams, $location) {
+angular.module('tools').controller('feedbackController', function ($scope, $http, $rootScope, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
-    $scope.tool_comment.userId = $rootScope.myUserIdFromProfile;
-    $scope.tool_comment.instrumentId = $rootScope.toolIdFromProfile;
-    $scope.owner_comment.userId = $rootScope.myUserIdFromProfile;
-    $scope.owner_comment.aboutUserId = $scope.tool.ownerIdFromProfile; //TODO: ожидаем, что это поле появится в InstrumentInfoDto
-
-    // $scope.tool_comment={userId: "1", instrumentId: "2"}; //временно для тестирования отправки отзывов
-    // $scope.owner_comment={userId: "1", aboutUserId: "2"}; //временно для тестирования отправки отзывов
+    $scope.tool_comment = {
+        userId: $rootScope.myUserIdFromProfile,
+        instrumentId: $rootScope.toolIdFromProfile
+    };
+    $scope.owner_comment = {
+        userId: $rootScope.myUserIdFromProfile,
+        aboutUserId: $rootScope.ownerIdFromProfile //TODO: ожидаем, что это поле появится в InstrumentInfoDto
+    };
 
     $scope.showToolInfo = function () {
-        $http.get(contextPath + 'api/v1/instruments/' +$routeParams.toolId)
-            .then(function successCallback (response) {
+        $http.get(contextPath + 'api/v1/instruments/' + $routeParams.toolId)
+            .then(function successCallback(response) {
                 $scope.tool = response.data;
-            }, function failureCallback (response) {
+            }, function failureCallback(response) {
                 alert(response.data.messages);
                 $location.path('/tools-list');
             });
     }
 
 
-    $scope.aboutToolFeedback = function () { // Обязательно её в $scope? Она же локально в контроллере используется?
+    $scope.aboutToolFeedback = function () {
+        console.log($scope.tool_comment);
         $http({
             url: contextPath + 'api/v1/comments',
             method: 'POST',
@@ -37,7 +39,8 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
     };
 
 
-    $scope.aboutOwnerFeedback = function () { // Обязательно её в $scope? Она же локально в контроллере используется?
+    $scope.aboutOwnerFeedback = function () {
+        console.log($scope.owner_comment);
         $http({
             url: contextPath + 'api/v1/comments',
             method: 'POST',
