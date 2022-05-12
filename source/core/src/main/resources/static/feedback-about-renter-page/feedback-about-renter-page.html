@@ -6,13 +6,11 @@
 
 
     <form novalidate ng-submit="sendFeedbackAboutRenter()">
-<!--        <input class="form-control" type="number" hidden placeholder="ID автора отзыва" ng-model="renter_comment.userId">-->
-<!--        <p></p>-->
-<!--        <input class="form-control" type="number" hidden placeholder="ID арендатора" ng-model="renter_comment.aboutUserId">-->
-<!--        <p></p>-->
-        <textarea class="form-control" type="text" placeholder="Напишите свой отзыв" ng-model="renter_comment.description">
+        <textarea class="form-control" type="text" placeholder="Напишите свой отзыв"
+                  ng-model="renter_comment.description">
         </textarea>
-        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале" ng-model="renter_comment.grade">
+        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале"
+               ng-model="renter_comment.grade">
         <p></p>
         <p></p>
         <button type="submit" class="btn btn-primary">Отправить отзыв об арендаторе</button>

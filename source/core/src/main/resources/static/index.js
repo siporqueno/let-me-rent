@@ -48,15 +48,15 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
-            .when('/feedback-page/:toolId', {
+            .when('/feedback-page', {
                 templateUrl: 'feedback-page/feedback-page.html',
                 controller: 'feedbackController'
             })
-            .when('/tool-history/:toolId', {
+            .when('/tool-history', {
                 templateUrl: 'tool-history/tool-history.html',
                 controller: 'toolHistoryController'
             })
-            .when('/feedback-about-renter-page/:renterId/:renterUsername', {
+            .when('/feedback-about-renter-page/:renterUsername', {
                 templateUrl: 'feedback-about-renter-page/feedback-about-renter-page.html',
                 controller: 'feedbackAboutRenterController'
             })
@@ -90,7 +90,7 @@ angular.module('tools').controller('indexController', function ($rootScope, $sco
         }
     };
 
-    $rootScope.isUserNameEqualsTo = function(userName) {
+    $rootScope.isUserNameEqualsTo = function (userName) {
         if ($localStorage.letMeRentUser.username == userName) {
             return true;
         } else {

@@ -23,18 +23,18 @@
                 <th scope="col">Номер заказа</th>
                 <th scope="col">Список инструментов</th>
             </tr>
-        </thead>
-        <tbody>
-<!--        <tr ng-repeat="ord in userProfile.orders">-->
-<!--Мешал отображать атрибут ng-repeat="ord in userProfile.orders", потому что он ничего не отдает пока-->
-        <tr>
-<!--            // код для работы с бэком-->
-<!--            <th scope="row">{{ord.id}}</th>-->
-            <!--//код для наглядности, пока бэк не подключился-->
-            <th scope="row">{{'1'}}</th>
-            <td>
-                <table class="table align-middle table-bordered">
-                    <thead>
+            </thead>
+            <tbody>
+            <!--        <tr ng-repeat="ord in userProfile.orders">-->
+            <!--Мешал отображать атрибут ng-repeat="ord in userProfile.orders", потому что он ничего не отдает пока-->
+            <tr>
+                <!--            // код для работы с бэком-->
+                <!--            <th scope="row">{{ord.id}}</th>-->
+                <!--//код для наглядности, пока бэк не подключился-->
+                <th scope="row">{{'1'}}</th>
+                <td>
+                    <table class="table align-middle table-bordered">
+                        <thead>
                         <tr>
                             <th scope="col">Название инструмента</th>
                             <th scope="col">Марка инструмента</th>
@@ -56,7 +56,7 @@
                         <!--                            <td>{{oi.instrument.price}}</td>-->
                         <!--                            <td>{{oi.instrument.price}}</td>-->
                         <!--                            <td>-->
-                        <!--                                <button class="btn btn-primary" ng-click="navToFeedbackPage(oi.instrument.id)">Оставить-->
+                        <!--                                <button class="btn btn-primary" ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить-->
                         <!--                                    отзыв-->
                         <!--                                </button>-->
                         <!--                            </td>-->
@@ -70,7 +70,6 @@
                             <td>{{'31.05.2022'}}</td>
                             <td>{{'3000'}}</td>
                             <td>
-<!--                                <button class="btn btn-primary" ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить-->
                                 <button class="btn btn-primary" ng-click="navToFeedbackPage(1, 1)">Оставить
                                     отзыв
                                 </button>
@@ -100,7 +99,6 @@
             </tr>
             </thead>
             <tbody>
-            <!--//Код для работы с бэком.-->
 
             <tr ng-repeat="t in tools.instruments">
                 <td>{{t.title}}</td>
@@ -108,7 +106,7 @@
                 <td>{{t.fee}}</td>
                 <td>{{t.price}}</td>
                 <td>
-                    <button class = "btn btn-primary" ng-click="navToToolHistory(t.id)">История&nbsp;аренд</button>
+                    <button class="btn btn-primary" ng-click="navToToolHistory(t.id)">История&nbsp;аренд</button>
                 </td>
                 <td>
                     <button class="btn btn-primary" ng-click="changeTool(t.id)">Изменить</button>
@@ -120,24 +118,6 @@
                     <button class="btn btn-danger" ng-click="stopRentSuggestion(t.id)">Снять с аренды</button>
                 </td>
             </tr>
-
-              <!--//код для наглядности, пока бэк не подключился. Уберу после проверки работоспособности-->
-<!--            <tr>-->
-<!--                <td>{{'Дрель'}}</td>-->
-<!--                <td>{{'Makita'}}</td>-->
-<!--                <td>{{'300'}}</td>-->
-<!--                <td>{{'3000'}}</td>-->
-<!--                     <td> -->
-                    <!--заменить на tool.id-->
-<!--                     <button class = "btn btn-primary" ng-click="navToToolHistory(1)">История&nbsp;аренд</button>
-                    </td> -->
-<!--                <td>-->
-<!--                    <button class="btn btn-primary" ng-click="changeTool(1)">Изменить</button>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <button class="btn btn-danger" ng-click="deleteTool(1)">Удалить</button>-->
-<!--                </td>-->
-<!--            </tr>-->
             </tbody>
         </table>
 
