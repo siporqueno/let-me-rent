@@ -21,8 +21,8 @@
         <button type="submit" class="btn btn-primary">Разместить в базе инструментов</button>
     </form>
 <br>
-    <h3>Добавляемые фото:</h3>
-    <div ng-repeat="p in pictures">
+    <h3 ng-show="isUserLoggedIn()">Добавляемые фото:</h3>
+    <div ng-show="isUserLoggedIn()" ng-repeat="p in pictures">
         {{p.name}}
         {{p.size}}
     </div>

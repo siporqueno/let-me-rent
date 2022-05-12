@@ -18,7 +18,8 @@ import java.util.List;
 @ToString
 public class InstrumentInfoDto extends InstrumentDto {
 
-    //TODO: давайте добавим сюда еще поле ownerId (с адишником владельца) - оно прям надо для отправки отзывов с фронта
+    @Schema(description = "Id владельца", example = "1")
+    Long ownerId;
 
     @Schema(description = "Имя владельца", example = "Александр")
     String ownerFirstName;
