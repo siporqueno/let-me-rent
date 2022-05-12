@@ -6,7 +6,6 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
 
     $scope.renter_comment={userId: "1", aboutUserId: "2"}; // временное решение для тестирования самой отправки отзыва
 
-
     $scope.sendFeedbackAboutRenter = function () {
         $http({
             url: contextPath + '/api/v1/comments',
