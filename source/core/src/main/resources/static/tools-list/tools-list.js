@@ -65,6 +65,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         });
     }
 

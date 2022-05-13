@@ -51,7 +51,7 @@
             .when('/order-confirmation', {
                 templateUrl: 'order-confirmation/order-confirmation.html',
                 controller: 'orderConfirmationController'
-        })
+            })
             .when('/feedback-page/:toolId', {
                 templateUrl: 'feedback-page/feedback-page.html',
                 controller: 'feedbackController'
