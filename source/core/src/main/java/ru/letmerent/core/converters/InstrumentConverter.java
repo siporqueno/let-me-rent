@@ -62,6 +62,7 @@ public class InstrumentConverter {
         dto.setIntervals(initNoRentIntervals(instrument));
         
         User owner = instrument.getUser();
+        dto.setOwnerId(owner.getId());
         dto.setOwnerUsername(owner.getUserName());
         dto.setOwnerEmail(owner.getEmail());
         dto.setOwnerFirstName(owner.getFirstName());

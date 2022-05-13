@@ -56,7 +56,7 @@ public class OrderController {
     }
 
     @Operation(summary = "Вывод информации по всем заказам пользователя")
-    @GetMapping
+    @GetMapping("/{userId}") //TODO: Смущает при таком варианте конфликт, что у нас два метода GET, в которые передается айдишник в Pathvariable(в одном случае это айдишник заказа, в другом - юзера). Как вариант, для инфо о своих заказах, может не передавать ничего, а искать заказы по имени пользователя, которое мы возьмем просто из Principal? (т.е. просто энд-поинт дописать какой-то типа "/myOrders"). Или оставить передачу айдишника юзера в RequestParam, нотогда надо будет метод GET Заменить на POST (чтобы тело передавать) - уязвимое решение в том плане, что по функционалу-то мы именно просим, чтобы нам дали с бэка инфо, т.е. типа GET
     @ApiResponse(
             responseCode = "200",
             description = "Список заказов.",
@@ -66,8 +66,8 @@ public class OrderController {
                             schema = @Schema(
                                     implementation = OrderDto.class))
             ))
-    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@RequestParam Long userId) {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);//TODO: здесь пока заглушка, надо доработать, чтобы возвращались заказы
     }
 
     @Operation(summary = "Изменение информации по заказу")

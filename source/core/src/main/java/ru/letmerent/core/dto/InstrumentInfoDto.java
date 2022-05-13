@@ -18,6 +18,9 @@ import java.util.List;
 @ToString
 public class InstrumentInfoDto extends InstrumentDto {
 
+    @Schema(description = "Id владельца", example = "1")
+    Long ownerId;
+
     @Schema(description = "Имя владельца", example = "Александр")
     String ownerFirstName;
 

@@ -24,6 +24,7 @@ import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.services.InstrumentService;
 import ru.letmerent.core.services.PictureStorageService;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +53,26 @@ public class PictureController {
                 return getErrorResponse(COULD_NOT_FIND_INSTRUMENT + instrumentId);
             }
             storageService.save(file, oInstrument.get());
+            
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return getErrorResponse(e.getMessage());
+        }
+    }
+    
+    @Operation(summary = "Загрузка массива картинок")
+    @PostMapping("/uploads")
+    @ApiResponse(responseCode = "200", description = "Картинки успешно загружены.")
+    @ApiResponse(responseCode = "404", description = "Не корректные параметры запроса",
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class)))
+    public ResponseEntity<Object> uploadPictures(@RequestParam("pictures") MultipartFile[] files, @RequestParam("instrumentId") Long instrumentId) {
+        try {
+            Optional<Instrument> oInstrument = instrumentService.getInstrumentById(instrumentId);
+            if (oInstrument.isEmpty()) {
+                
+                return getErrorResponse(COULD_NOT_FIND_INSTRUMENT + instrumentId);
+            }
+            Arrays.stream(files).forEach(file -> storageService.save(file, oInstrument.get()));
             
             return ResponseEntity.ok().build();
         } catch (Exception e) {
