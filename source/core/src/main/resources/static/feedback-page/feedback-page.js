@@ -57,20 +57,32 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
     }
 
     $scope.sendOwnerFeedback = function () {
+        if (typeof $scope.owner_comment.description === 'undefined' || typeof $scope.owner_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutOwnerFeedback();
         $location.path('/profile');
     };
 
     $scope.sendToolFeedback = function () {
+        if (typeof $scope.tool_comment.description === 'undefined' || typeof $scope.tool_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutToolFeedback();
         $location.path('/profile');
     };
 
     $scope.sendBothFeedbacks = function () {
+        if (typeof $scope.owner_comment.description === 'undefined' || typeof $scope.owner_comment.grade === 'undefined' || typeof $scope.tool_comment.description === 'undefined' || typeof $scope.tool_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutOwnerFeedback();
         $scope.aboutToolFeedback();
         $location.path('/profile');
-    }
+    };
 
     $scope.navToProfile = function () {
         $location.path('/profile');
