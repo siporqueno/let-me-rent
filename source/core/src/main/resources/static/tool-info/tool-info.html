@@ -41,4 +41,24 @@
     <p>{{tool.description}}</p>
     <p>Здесь еще, может, сделаем подгрузку фото с инструкцией (на будущее, пока нигде нет функционала)</p>
 
+    <br/>
+    <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
+    <br/>
+    <br/>
+    <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента:  '+ tool_grade + '  баллов по 5-бальной шкале'}}</span>
+    <br/>
+    <div ng-repeat="tc in tool_comments">
+        <textarea cols="170" rows="3">{{tc.description}}</textarea>
+    </div>
+
+    <br/>
+    <button class="btn btn-warning" ng-click="showOwnerComments()">Показать отзывы о владельце инструмента</button>
+    <br/>
+    <br/>
+    <span style="color: mediumblue" ng-show="ascOwnerGrade">{{'Рейтинг владельца инструмента:  '+ owner_grade + '  баллов по 5-бальной шкале'}}</span>
+    <br/>
+    <div ng-repeat="oc in owner_comments">
+        <textarea cols="170" rows="3">{{oc.description}}</textarea>
+    </div>
+
 </div>
