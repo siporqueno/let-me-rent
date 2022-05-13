@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.converters.InstrumentConverter;
+import ru.letmerent.core.converters.UserConverter;
 import ru.letmerent.core.dto.Cart;
+import ru.letmerent.core.dto.OrderDto;
+import ru.letmerent.core.dto.OrderItemDto;
+import ru.letmerent.core.dto.UserDto;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -20,6 +25,8 @@ public class CartService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final InstrumentServiceImpl instrumentService;
     private final InstrumentConverter instrumentConverter;
+    private final UserService userService;
+    private final UserConverter userConverter;
     private final ObjectMapper objectMapper;
 
     @Value("${properties.cart.prefix}")
@@ -81,6 +88,28 @@ public class CartService {
 
     public void updateCart(String cartKey, Cart cart) {
         redisTemplate.opsForValue().set(cartKey, cart);
+    }
+
+    public OrderDto convertCartToOrder(Principal principal, String userCartKey){
+        Cart cart = getCurrentCart(userCartKey);
+        //FIXME предполагаем что все даты одинаковые
+        LocalDateTime startDate = cart.getItems()
+                .stream()
+                .map(OrderItemDto::getStartDate)
+                .findFirst()
+                .orElseThrow();
+        LocalDateTime endDate = cart.getItems()
+                .stream()
+                .map(OrderItemDto::getStartDate)
+                .findFirst()
+                .orElseThrow();
+        UserDto user = userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
+        OrderDto orderDto = new OrderDto();
+        orderDto.setDateStart(startDate);
+        orderDto.setDateFinish(endDate);
+        orderDto.setRenter(user);
+        orderDto.setOrderItems(cart.getItems());
+        return orderDto;
     }
 
 }
