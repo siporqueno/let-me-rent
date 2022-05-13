@@ -7,11 +7,11 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
     };
     $scope.owner_comment = {
         userId: $rootScope.myUserIdFromProfile,
-        aboutUserId: $rootScope.ownerIdFromProfile //TODO: ожидаем, что это поле появится в InstrumentInfoDto
+        aboutUserId: $rootScope.ownerIdFromProfile
     };
 
     $scope.showToolInfo = function () {
-        $http.get(contextPath + 'api/v1/instruments/' + $routeParams.toolId)
+        $http.get(contextPath + 'api/v1/instruments/' + $rootScope.toolIdFromProfile)
             .then(function successCallback(response) {
                 $scope.tool = response.data;
             }, function failureCallback(response) {
@@ -33,7 +33,7 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
         }).then(function successCallback(response) {
             $scope.tool_comment = null;
             alert('Ваш отзыв об инструменте успешно сохранен');
-        },function failureCallback (response) {
+        }, function failureCallback(response) {
             alert(response.data.messages);
         });
     };
@@ -51,27 +51,38 @@ angular.module('tools').controller('feedbackController', function ($scope, $http
         }).then(function successCallback(response) {
             $scope.owner_comment = null;
             alert('Ваш отзыв о владельце успешно сохранен');
-        },function failureCallback (response) {
+        }, function failureCallback(response) {
             alert(response.data.messages);
         });
-        //TODO: Написала в InstrumentInfoDto просьбу добавить еще поле ownerId (с id владельца). Он нам нужен для формирования отзыва (в отзыве одно из полей именно айдишник)
     }
 
     $scope.sendOwnerFeedback = function () {
+        if (typeof $scope.owner_comment.description === 'undefined' || typeof $scope.owner_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutOwnerFeedback();
         $location.path('/profile');
     };
 
     $scope.sendToolFeedback = function () {
+        if (typeof $scope.tool_comment.description === 'undefined' || typeof $scope.tool_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutToolFeedback();
         $location.path('/profile');
     };
 
     $scope.sendBothFeedbacks = function () {
+        if (typeof $scope.owner_comment.description === 'undefined' || typeof $scope.owner_comment.grade === 'undefined' || typeof $scope.tool_comment.description === 'undefined' || typeof $scope.tool_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $scope.aboutOwnerFeedback();
         $scope.aboutToolFeedback();
         $location.path('/profile');
-    }
+    };
 
     $scope.navToProfile = function () {
         $location.path('/profile');

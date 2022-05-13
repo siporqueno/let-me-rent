@@ -53,21 +53,29 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
     }
 
     $scope.navToFeedbackPage = function (toolId, ownerId) {
-        console.log(toolId);
-        console.log(ownerId);
         $rootScope.toolIdFromProfile = toolId;
         $rootScope.ownerIdFromProfile = ownerId;
-        $location.path('/feedback-page/' + toolId);
+        $location.path('/feedback-page');
     }
 
-    $scope.navToToolHistory = function (toolId, ownerId) {
-        $rootScope.toolIdFromProfile = toolId;
-        $rootScope.ownerIdFromProfile = ownerId;
-        $location.path('/tool-history/' + toolId);
+    $scope.failedNavToFeedbackPage = function () {
+        alert("Владелец не может оставлять отзывы о своем инструменте :)");
+    }
+
+    $scope.renterIsOwner = function (ownerId){
+        if(ownerId === $rootScope.myUserIdFromProfile){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    $scope.navToToolHistory = function (toolId) {
+        $rootScope.myToolIdFromProfile = toolId;
+        $location.path('/tool-history');
     }
 
     $scope.loadMyProfile();
-
     // $scope.loadRents();
     $scope.loadMyTools();
 });
