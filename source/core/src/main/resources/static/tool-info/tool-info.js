@@ -60,46 +60,6 @@ angular.module('tools').controller('toolInfoController', function ($scope, $http
         $scope.ascToolGrade = true;
     }
 
-    $scope.ownerComments = function (){
-        $http({
-            url: contextPath + '/api/v1/comments',
-            method: 'GET',
-            headers: {
-                "about": "user"
-            },
-            params: {
-                id: $scope.tool.ownerId
-            }
-        }).then(function successCallback(response) {
-            $scope.owner_comments = response.data;
-        }, function failureCallback(response) {
-            alert(response.data.messages);
-        });
-    }
-
-    $scope.ownerGrade = function (){
-        $http({
-            url: contextPath + '/api/v1/comments/grade',
-            method: 'GET',
-            headers: {
-                "about": "user"
-            },
-            params: {
-                id: $scope.tool.ownerId
-            }
-        }).then(function successCallback(response) {
-            $scope.owner_grade = response.data;
-        }, function failureCallback(response) {
-            alert(response.data.messages);
-        });
-    }
-
-    $scope.showOwnerComments = function () {
-        $scope.ownerComments();
-        $scope.ownerGrade();
-        $scope.ascOwnerGrade = true;
-    }
-
     $scope.showToolInfo();
 
 });

@@ -51,14 +51,4 @@
         <textarea cols="170" rows="3">{{tc.description}}</textarea>
     </div>
 
-    <br/>
-    <button class="btn btn-warning" ng-click="showOwnerComments()">Показать отзывы о владельце инструмента</button>
-    <br/>
-    <br/>
-    <span style="color: mediumblue" ng-show="ascOwnerGrade">{{'Рейтинг владельца инструмента:  '+ owner_grade + '  баллов по 5-бальной шкале'}}</span>
-    <br/>
-    <div ng-repeat="oc in owner_comments">
-        <textarea cols="170" rows="3">{{oc.description}}</textarea>
-    </div>
-
 </div>
