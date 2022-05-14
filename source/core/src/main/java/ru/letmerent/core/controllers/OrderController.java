@@ -37,6 +37,7 @@ public class OrderController {
                     schema = @Schema(implementation = OrderDto.class)
             ))
     ResponseEntity<OrderDto> addNewOrder(OrderDto orderDto) {
+        //TODO добавить имплементацию
         return new ResponseEntity<>(new OrderDto(), HttpStatus.CREATED);
     }
 

@@ -45,15 +45,14 @@
                     <span class="input-group-btn" style="width:0; margin-top:10px;">
                         <button class="btn btn-outline-warning btn-default"
                                 type="submit">Применить&nbsp;фильтрацию</button>
-                        <!--                        <span class="material-icons" type="submit">filter_alt</span>-->
-                        <!--                        <span class="material-icons" type="submit">filter_list</span>-->
-                    </span>
+                        </span>
                 </div>
             </div>
         </form>
     </div>
 
     <br/>
+
     <label for="sizeSelectTest">Кол-во элементов на странице</label>
     <select id="sizeSelectTest" class="form-select" ng-model="size_data.model" ng-change="loadTools()">
         <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
@@ -72,6 +71,27 @@
     </select>
 
     <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <select id="sizeSelect" class="form-select" aria-label="Default select example" ng-model="size"
+                    ng-change="loadTools()">
+                <option value="" disabled selected>Количество элементов на странице</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="sort"
+                    ng-change="loadTools()">
+                <option value="" disabled selected>Сортировка</option>
+                <option value="fee,asc">По возрастанию цены аренды</option>
+                <option value="fee,desc">По убыванию цены аренды</option>
+                <option value="price,asc">По возрастанию стоимости залога</option>
+                <option value="price,desc">По убыванию стоимости залога</option>
+            </select>
+        </div>
+    </div>
     <div class="mt-4"></div>
     <div class="container">
         <div>
@@ -130,8 +150,11 @@
                         <button class="page-link" ng-click="loadTools(toolsPage.number - 1)"><<</button>
                     </li>
                     <li ng-show="toolsPage.totalElements > 0"
-                        ng-repeat="pageIndex in paginationArray">
-                        <button class="page-link" ng-click="loadTools(pageIndex - 1)">{{pageIndex}}</button>
+                        ng-repeat="pageIndex in paginationArray"
+                        ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3">
+                        <button class="page-link"
+                                ng-style="{'font-weight': (pageIndex == toolsPage.number+1) ? 'bold' : ''}"
+                                ng-click="loadTools(pageIndex - 1)">{{pageIndex}}</button>
                     </li>
                     <li ng-show="!toolsPage.lastPage">
                         <button class="page-link" ng-click="loadTools(toolsPage.number + 1)">>></button>
