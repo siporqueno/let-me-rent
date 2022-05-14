@@ -27,17 +27,9 @@ angular.module('tools').controller('cartController', function ($scope, $http, $l
         $location.path('/tools-list');
     }
 
-    // $scope.createOrder = function () {
-    //     //доработать код заказа после того, как проработаем на бэке. Бэк должен получить информацию
-    //     $http({
-    //         url: contextPath + 'api/v1/orders',
-    //         method: 'POST',
-    //         data: $scope.period
-    //     }).then(function (response) {
-    //         alert('Инструменты успешно забронированы');
-    //         $location.path('/profile');
-    //     });
-    // };
+    $scope.confirmOrder = function () {
+        $location.path('/order-confirmation');
+    }
 
     $scope.disabledCreateOrder = function () {
         alert("Для оформления заказа необходимо авторизоваться");

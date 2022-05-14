@@ -52,6 +52,10 @@
                 templateUrl: 'feedback-page/feedback-page.html',
                 controller: 'feedbackController'
             })
+            .when('/order-confirmation', {
+                templateUrl: 'order-confirmation/order-confirmation.html',
+                controller: 'orderConfirmationController'
+            })
             .when('/tool-history', {
                 templateUrl: 'tool-history/tool-history.html',
                 controller: 'toolHistoryController'

@@ -32,13 +32,6 @@
                     <td>{{i.instrument.fee + '*' + i.rentLength + '=' + i.rentPrice}}</td>
                     <td>{{i.instrument.price}}</td>
 
-        <!--//код для наглядности пока-->
-<!--        <tr>-->
-<!--            <td>{{'Дрель'}}</td>-->
-<!--            <td>{{'Макита'}}</td>-->
-<!--            <td>{{'Владелец'}}</td>-->
-<!--            <td>{{'10'}}</td>-->
-<!--            <td>{{'100'}}</td>-->
             <td>
                 <button class = "btn">
                     <i class="material-icons" ng-click="deleteItem(i.instrument.id)" title = "Удалить из корзины">close</i>
@@ -62,7 +55,7 @@
         </tbody>
     </table>
     <br/>
-    <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
-    <button class="btn btn-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-primary" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
+    <button class="btn btn-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
 
 </div>
