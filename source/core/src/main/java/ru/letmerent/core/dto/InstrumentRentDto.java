@@ -15,12 +15,16 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель инструмента со списком")
 public class InstrumentRentDto extends IntervalDto {
-    
+
     @Schema(description = "Логин пользователя, оформившего аренду")
-    String username;
+    String renterName;
     
-    public InstrumentRentDto(LocalDateTime dateStart, LocalDateTime dateFinish, String username) {
+    @Schema(description = "Id пользователя, оформившего аренду")
+    Long renterId;
+    
+    public InstrumentRentDto(LocalDateTime dateStart, LocalDateTime dateFinish, String renterName, Long renterId) {
        super(dateStart,dateFinish);
-        this.username = username;
+        this.renterName = renterName;
+        this.renterId = renterId;
     }
 }

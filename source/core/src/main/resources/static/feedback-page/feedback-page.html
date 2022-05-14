@@ -2,7 +2,7 @@
     <p></p>
     <h2>Вы попали на страницу, где можете оставить свой отзыв</h2>
     <br/>
-    <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
+    <button class="btn btn-primary" ng-click="navToProfile()">Вернуться в профиль</button>
     <br/>
     <p></p>
     <h3>Сведения об инструменте, о котором вы пожелали оставить отзыв</h3>
@@ -20,22 +20,23 @@
 
     <h3>Форма для отправки отзыва об инструменте</h3>
     <br/>
-    <form novalidate ng-submit="toolFeedback(tool.id)">
-        <input class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте"
-               ng-model="toolFeedback.value">
+    <form novalidate ng-submit="sendToolFeedback()">
+        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте. Здесь рукомендуется дать комментарий по состоянию инструмента, удобству его использования, а также можно нписать отзыв о владельце инструмента"
+                  ng-model="tool_comment.description"></textarea>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Рейтинг (выберите оценку)</label>
+            <select class="form-select" id="inputGroupSelect01" ng-model="tool_comment.grade">
+                <option selected></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <p></p>
         <p></p>
         <button type="submit" class="btn btn-primary">Отправить отзыв</button>
     </form>
-    <br/>
-    <br/>
-    <h3>Форма для отправки отзыва о владельце инструмента</h3>
-    <br/>
-    <form novalidate ng-submit="ownerFeedback(tool.ownerUsername)">
-        <input class="form-control" type="text" placeholder="Поле для ввода отзыва о владельце инструмента"
-               ng-model="toolFeedback.value">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Отправить отзыв</button>
-    </form>
-
 
 </div>

@@ -12,7 +12,7 @@ import java.util.Collection;
 
 @Repository
 public interface InstrumentRepository extends JpaRepository<Instrument, Long>, JpaSpecificationExecutor<Instrument> {
-@Query(value = "select new ru.letmerent.core.dto.InstrumentRentDto(oi.startDate, oi.endDate, u.userName) from OrderItem oi " +
+@Query(value = "select new ru.letmerent.core.dto.InstrumentRentDto(oi.startDate, oi.endDate, u.userName, u.id) from OrderItem oi " +
     "join Instrument i on i.id = oi.instrument.id " +
     "join Order o on o.id = oi.order.id " +
     "join User u on u.id = o.user.id " +

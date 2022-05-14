@@ -1,26 +1,44 @@
-angular.module('tools').controller('feedbackController', function ($scope, $http, $routeParams, $location) {
+angular.module('tools').controller('feedbackController', function ($scope, $http, $rootScope, $routeParams, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
+    $scope.tool_comment = {
+        userId: $rootScope.myUserIdFromProfile,
+        instrumentId: $rootScope.toolIdFromProfile
+    };
+
     $scope.showToolInfo = function () {
-        $http.get(contextPath + 'api/v1/instruments/' +$routeParams.toolId)
-            .then(function successCallback (response) {
+        $http.get(contextPath + 'api/v1/instruments/' + $rootScope.toolIdFromProfile)
+            .then(function successCallback(response) {
                 $scope.tool = response.data;
-            }, function failureCallback (response) {
-                // alert(response.data.messages); // это добавим, когда ошибки начнем с бэка передавать
-                alert("Пресловутое 'Что-то пошло не так :('") //это пока,потом уберем
+            }, function failureCallback(response) {
+                alert(response.data.messages);
                 $location.path('/tools-list');
             });
     }
 
+    $scope.sendToolFeedback = function () {
+        if (typeof $scope.tool_comment.description === 'undefined' || typeof $scope.tool_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
+        $http({
+            url: contextPath + 'api/v1/comments',
+            method: 'POST',
+            headers: {
+                "about": "instrument"
+            },
+            data: $scope.tool_comment
+        }).then(function successCallback(response) {
+            $scope.tool_comment = null;
+            alert('Ваш отзыв об инструменте успешно сохранен');
+            $location.path('/profile');
+        }, function failureCallback(response) {
+            alert(response.data.messages);
+        });
+    };
 
-    $scope.toolFeedback = function (toolId) {
-       //добавить код , когда будет готов бэк для приема отзывов
-    }
-
-
-    $scope.ownerFeedback = function (ownerUsername) {
-        //добавить код , когда будет готов бэк для приема отзывов
-        //TODO: я бы предложила в InstrumentInfoDto добавить еще поле с id владельца. И тогда в этот метод можно будет передавать айдишник владельца, а не имя. Это будет удобнее дальше на бэке обрабтывать.
+    $scope.navToProfile = function () {
+        $location.path('/profile');
     }
 
     $scope.showToolInfo();
