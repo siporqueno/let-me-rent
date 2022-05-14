@@ -1,8 +1,7 @@
 package ru.letmerent.core.entity;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,8 +21,7 @@ import java.util.Collection;
 @Table(name = "instruments")
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Instrument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

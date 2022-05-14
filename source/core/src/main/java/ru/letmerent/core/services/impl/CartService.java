@@ -48,6 +48,13 @@ public class CartService {
         return objectMapper.convertValue(redisTemplate.opsForValue().get(cartKey), Cart.class);
     }
 
+    public String getCurrentCartUuid(Principal principal, String uuid) {
+        if (principal != null) {
+            return getCartUuidFromSuffix(principal.getName());
+        }
+        return getCartUuidFromSuffix(uuid);
+    }
+
     public void addToCart(String cartKey, Long instrumentId, String startDate, String endDate) {
         execute(cartKey, c -> {
             c.add(instrumentConverter.toListDto(instrumentService.getInstrumentById(instrumentId).get()),
@@ -89,27 +96,4 @@ public class CartService {
     public void updateCart(String cartKey, Cart cart) {
         redisTemplate.opsForValue().set(cartKey, cart);
     }
-
-    public OrderDto convertCartToOrder(Principal principal, String userCartKey){
-        Cart cart = getCurrentCart(userCartKey);
-        //FIXME предполагаем что все даты одинаковые
-        LocalDateTime startDate = cart.getItems()
-                .stream()
-                .map(OrderItemDto::getStartDate)
-                .findFirst()
-                .orElseThrow();
-        LocalDateTime endDate = cart.getItems()
-                .stream()
-                .map(OrderItemDto::getStartDate)
-                .findFirst()
-                .orElseThrow();
-        UserDto user = userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
-        OrderDto orderDto = new OrderDto();
-        orderDto.setDateStart(startDate);
-        orderDto.setDateFinish(endDate);
-        orderDto.setRenter(user);
-        orderDto.setOrderItems(cart.getItems());
-        return orderDto;
-    }
-
 }
