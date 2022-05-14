@@ -21,38 +21,11 @@
     <h3>Форма для отправки отзыва об инструменте</h3>
     <br/>
     <form novalidate ng-submit="sendToolFeedback()">
-        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте"
+        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте. Здесь рукомендуется дать комментарий по состоянию инструмента, удобству его использования, а также можно нписать отзыв о владельце инструмента"
                   ng-model="tool_comment.description"></textarea>
-<!--        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале"-->
-<!--               ng-model="tool_comment.grade"> //ЗАМЕНИЛА НА SELECT, ЧТОБЫ ОЦЕНКИ БЫЛИ СТРОГО ОТ 1 до 5-->
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Рейтинг (выберите оценку)</label>
             <select class="form-select" id="inputGroupSelect01" ng-model="tool_comment.grade">
-                <option selected></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="3">4</option>
-                <option value="3">5</option>
-            </select>
-        </div>
-        <p></p>
-        <p></p>
-        <button type="submit" class="btn btn-primary">Отправить только отзыв об инструменте</button>
-    </form>
-    <br/>
-    <br/>
-    <h3>Форма для отправки отзыва о владельце инструмента</h3>
-    <br/>
-    <form novalidate ng-submit="sendOwnerFeedback(tool.ownerUsername)">
-        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва о владельце инструмента"
-                  ng-model="owner_comment.description"></textarea>
-        <p></p>
-<!--        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале"-->
-<!--               ng-model="owner_comment.grade"> //ЗАМЕНИЛА НА SELECT, ЧТОБЫ ОЦЕНКИ БЫЛИ СТРОГО ОТ 1 до 5-->
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Рейтинг (выберите оценку)</label>
-            <select class="form-select" id="inputGroupSelect02" ng-model="owner_comment.grade">
                 <option selected></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -63,10 +36,7 @@
         </div>
         <p></p>
         <p></p>
-        <button type="submit" class="btn btn-primary">Отправить только отзыв о владельце инструмента</button>
+        <button type="submit" class="btn btn-primary">Отправить отзыв</button>
     </form>
-    <br/>
-    <button class="btn btn-warning" ng-click="sendBothFeedbacks()">Отправить оба отзыва</button>
-
 
 </div>
