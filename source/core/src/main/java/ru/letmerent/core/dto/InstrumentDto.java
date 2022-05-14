@@ -42,8 +42,8 @@ public class InstrumentDto implements Serializable {
     @Schema(description = "Название категории", example = "Дрели")
     String categoryName; // в профиле пока не фигурирует, но, может, добавим
     
-    @Schema(description = "список картинок")
-    Collection<Picture> pictures;
+//    @Schema(description = "список картинок")
+//    Collection<Picture> pictures;
 
     //TODO нужно добавить объект с историей аренд инструмента, в котором будут даты аренд инструмента и арендатор
     //Collection<History> history;
