@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.dto.Cart;
+import ru.letmerent.core.dto.OrderDto;
 import ru.letmerent.core.dto.StringResponse;
+import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.impl.CartService;
 
 import java.security.Principal;
@@ -89,6 +91,16 @@ public class CartController {
                 getCurrentCartUuid(principal, null),
                 getCurrentCartUuid(null, uuid)
         );
+    }
+
+    @Operation(summary = "Получение OrderDto из Cart")
+    @GetMapping("/{uuid}/order")
+    @ApiResponse(
+            responseCode = "200",
+            description = "")
+    public OrderDto getOrderDto(Principal principal, @PathVariable String uuid) {
+        String cartUuid = getCurrentCartUuid(principal, uuid);
+        return cartService.convertCartToOrder(principal, cartUuid);
     }
 
     private String getCurrentCartUuid(Principal principal, String uuid) {

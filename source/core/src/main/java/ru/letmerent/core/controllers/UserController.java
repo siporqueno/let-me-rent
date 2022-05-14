@@ -75,7 +75,7 @@ public class UserController {
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
-    }
+    } //TODO: А давайте дополним контроллер еще методом поиска юзера по его ID?
 
     @Operation(summary = "Получение информации о себе как пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",

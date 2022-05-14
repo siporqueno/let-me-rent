@@ -1,0 +1,18 @@
+<div>
+    <p></p>
+    <h3>Здесь вы можете оставить отзыв об арендаторе вашего инструмента:</h3>
+    <p>{{'Арендатор: ' + renterInfo.userName}}</p>
+    <p>{{'ФИО : ' + renterInfo.lastName + ' ' + renterInfo.firstName + ' ' + renterInfo.secondName}}</p>
+
+
+    <form novalidate ng-submit="sendFeedbackAboutRenter()">
+        <textarea class="form-control" type="text" placeholder="Напишите свой отзыв"
+                  ng-model="renter_comment.description">
+        </textarea>
+        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале"
+               ng-model="renter_comment.grade">
+        <p></p>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Отправить отзыв об арендаторе</button>
+    </form>
+</div>
