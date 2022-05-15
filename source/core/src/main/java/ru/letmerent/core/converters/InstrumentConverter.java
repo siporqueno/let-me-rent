@@ -1,16 +1,23 @@
 package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.letmerent.core.dto.InstrumentForListDto;
 import ru.letmerent.core.dto.InstrumentInfoDto;
 import ru.letmerent.core.dto.IntervalDto;
-import ru.letmerent.core.entity.*;
+import ru.letmerent.core.entity.Brand;
+import ru.letmerent.core.entity.Category;
+import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.Picture;
+import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.BrandService;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 import ru.letmerent.core.services.PictureStorageService;
 
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,12 +30,16 @@ import static java.util.stream.Collectors.toList;
 @Component
 @RequiredArgsConstructor
 public class InstrumentConverter {
-
+    @Value("${server.port}")
+    private int port;
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+    
     private final CategoryService categoryService;
     private final PictureStorageService pictureStorageService;
     private final OrderItemService orderItemService;
     private final BrandService brandService;
-
+    
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
 
@@ -38,12 +49,14 @@ public class InstrumentConverter {
         dto.setPrice(instrument.getPrice());
         dto.setFee(instrument.getFee());
         dto.setOwnerUsername(instrument.getUser().getUserName());
-//        dto.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrument.getId()));
 
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
-        dto.setAvatarPictureUrl(instrument.getPictures().stream().findFirst().map(Picture::getName).orElse(null));
+        dto.setAvatarPictureUrl(instrument.getPictures().stream()
+            .findFirst()
+            .map(p->getUrl(p.getName()))
+            .orElse(null));
 
         return dto;
     }
@@ -53,11 +66,12 @@ public class InstrumentConverter {
 
         dto.setId(instrument.getId());
         dto.setTitle(instrument.getTitle());
-//        if (!instrument.getPictures().isEmpty()) {
-//            dto.setPictures(instrument.getPictures());
-//        }
-        if (!instrument.getPictures().isEmpty()) {
-            dto.setPictureUrls(instrument.getPictures().stream().map(Picture::getName).collect(Collectors.toList()));
+    
+        List<Picture> instrumentPictures = pictureStorageService.findAllPictureByInstrumentId(instrument.getId());
+        if (!instrumentPictures.isEmpty()) {
+            dto.setPictureUrls(instrumentPictures.stream()
+                .map(p->getUrl(p.getName()))
+                .collect(Collectors.toList()));
         }
 
         dto.setBrandName(instrument.getBrand().getBrandName());
@@ -101,7 +115,15 @@ public class InstrumentConverter {
         instrument.setStartDate(LocalDateTime.now());
         return instrument;
     }
-
+    
+    @SneakyThrows
+    private String getUrl(String pictureName) {
+        String localHost = InetAddress.getLocalHost().getHostAddress();
+        String pictureRequestMapping = "api/v1/pictures";
+        
+        return String.format("http://%s:%s%s/%s/%s", localHost, port, contextPath, pictureRequestMapping, pictureName);
+    }
+    
     private List<IntervalDto> initNoRentIntervals(Instrument instrument) {
         List<IntervalDto> noRentIntervals = new ArrayList<>();
         List<IntervalDto> rentIntervals = orderItemService.findAllByInstrumentId(instrument.getId())
