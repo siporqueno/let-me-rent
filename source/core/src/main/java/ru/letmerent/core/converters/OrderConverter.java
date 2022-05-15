@@ -6,7 +6,6 @@ import ru.letmerent.core.dto.Cart;
 import ru.letmerent.core.dto.OrderDto;
 import ru.letmerent.core.dto.OrderItemDto;
 import ru.letmerent.core.dto.UserDto;
-import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Order;
 import ru.letmerent.core.entity.OrderItem;
 import ru.letmerent.core.entity.User;
@@ -16,9 +15,6 @@ import ru.letmerent.core.services.impl.UserService;
 
 import java.math.BigDecimal;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.stream.Collectors.toList;
