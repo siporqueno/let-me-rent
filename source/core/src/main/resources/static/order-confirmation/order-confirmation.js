@@ -14,26 +14,40 @@ angular.module('tools').controller('orderConfirmationController', function ($sco
         $location.path('/cart');
     }
 
-     $scope.processOrder = function () {
-         $http({
-             url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/order/',
-             method: 'GET'
-         }).then(function (response) {
-             $http({
-                url: contextPath + 'api/v1/orders/',
-                method: 'POST',
-                data: response
-             }).then(function (response) {
-                $http({
-                    url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/clear/',
-                    method: 'GET'
-                }).then(function (response) {
-                    alert('Инструменты успешно арендованы');
-                    $location.path('/profile');
-                });
-             });
-         });
-     };
+     // $scope.processOrder = function () {
+     //     $http({
+     //         url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/order/',
+     //         method: 'GET'
+     //     }).then(function (response) {
+     //         $http({
+     //            url: contextPath + 'api/v1/orders/',
+     //            method: 'POST',
+     //            data: response
+     //         }).then(function (response) {
+     //            $http({
+     //                url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartI + '/clear/',
+     //                method: 'GET'
+     //            }).then(function (response) {
+     //                alert('Инструменты успешно арендованы');
+     //                $location.path('/profile');
+     //            });
+     //         });
+     //     });
+     // };
+    $scope.processOrder = function (response) {
+        $http({
+            url: contextPath + 'api/v1/orders/' + $localStorage.letMeRentGuestCartId,
+            method: 'POST'
+        }).then(function (response) {
+            $http({
+                url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/clear/',
+                method: 'GET'
+            }).then(function (response) {
+                alert('Инструменты успешно арендованы');
+                $location.path('/profile');
+            });
+        });
+    };
 
     $scope.loadCart();
 

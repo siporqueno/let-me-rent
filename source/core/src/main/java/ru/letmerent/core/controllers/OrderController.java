@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +16,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.letmerent.core.converters.OrderConverter;
 import ru.letmerent.core.dto.OrderDto;
+import ru.letmerent.core.entity.Order;
+import ru.letmerent.core.services.OrderService;
+import ru.letmerent.core.services.impl.CartService;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/v1/orders")
 @Tag(name = "API для работы с заказом")
+@AllArgsConstructor
 public class OrderController {
 
+    private final OrderService orderService;
+
+    private final OrderConverter orderConverter;
+
+    private final CartService cartService;
+
     @Operation(summary = "Создание заказа")
-    @PostMapping
+    @PostMapping("/{uuid}")
     @ApiResponse(
             responseCode = "201",
             description = "Заказ успешно создан.",
@@ -36,9 +48,11 @@ public class OrderController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = OrderDto.class)
             ))
-    ResponseEntity<OrderDto> addNewOrder(OrderDto orderDto) {
-        //TODO добавить имплементацию
-        return new ResponseEntity<>(new OrderDto(), HttpStatus.CREATED);
+    ResponseEntity<OrderDto> addNewOrder(Principal principal, @PathVariable String uuid) {
+        String cartUuid = cartService.getCurrentCartUuid(principal, uuid);
+        OrderDto orderDto = orderConverter.convertCartToOrder(principal, cartUuid);
+        Order order = orderService.createOrder(orderConverter.convertToOrder(orderDto));
+        return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Информация по заказу")
