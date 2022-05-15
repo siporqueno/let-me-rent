@@ -2,14 +2,14 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
     const contextPath = 'http://localhost:8890/let-me-rent/';
 
 
-    // $scope.loadRents = function () {
-    //     $http({
-    //         url: contextPath + 'api/v1/orders/' +$scope.userProfile.id, //TODO: если на бэке поменяется энд-поинт, надо будет изменить. Написала предложение по его смене в OrderController
-    //         method: 'GET'
-    //     }).then(function (response) {
-    //         $scope.orders = response.data;
-    //     });
-    // };
+    $scope.loadRents = function () {
+        $http({
+            url: contextPath + 'api/v1/orders',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.orders = response.data;
+        });
+    };
 
     $scope.loadMyTools = function () {
         $http({
@@ -76,6 +76,6 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
     }
 
     $scope.loadMyProfile();
-    // $scope.loadRents();
+    $scope.loadRents();
     $scope.loadMyTools();
 });
