@@ -45,7 +45,7 @@
     <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
     <br/>
     <br/>
-    <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента:  '+ tool_grade + '  баллов по 5-бальной шкале'}}</span>
+    <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
     <br/>
     <div ng-repeat="tc in tool_comments">
         <textarea cols="170" rows="3">{{tc.description}}</textarea>

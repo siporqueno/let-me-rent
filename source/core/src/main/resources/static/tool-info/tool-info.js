@@ -48,7 +48,11 @@ angular.module('tools').controller('toolInfoController', function ($scope, $http
                 id: $routeParams.toolId
             }
         }).then(function successCallback(response) {
-            $scope.tool_grade = response.data;
+            if(response.data != 0){
+                $scope.tool_grade = response.data;
+            }else {
+                $scope.tool_grade = "На настоящий момент никто из пользователь не выставлял оценки для расчета рейтинга";
+            }
         }, function failureCallback(response) {
             alert(response.data.messages);
         });
