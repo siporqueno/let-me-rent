@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 
 import static java.math.BigDecimal.ZERO;
+import static java.time.Duration.between;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -81,6 +82,7 @@ public class OrderConverter {
         orderItemDto.setRentPrice(orderItem.getRentPrice());
         orderItemDto.setStartDate(orderItem.getStartDate());
         orderItemDto.setEndDate(orderItem.getEndDate());
+        orderItemDto.setRentLength(between(orderItemDto.getStartDate(), orderItemDto.getEndDate()).toDays());
 
         return orderItemDto;
     }
