@@ -22,10 +22,12 @@ import ru.letmerent.core.dto.OrderDto;
 import ru.letmerent.core.entity.Order;
 import ru.letmerent.core.services.OrderService;
 import ru.letmerent.core.services.impl.CartService;
+import ru.letmerent.core.services.impl.UserService;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Collections;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -38,6 +40,8 @@ public class OrderController {
     private final OrderConverter orderConverter;
 
     private final CartService cartService;
+
+    private final UserService userService;
 
     @Operation(summary = "Создание заказа")
     @PostMapping("/{uuid}")
@@ -66,11 +70,12 @@ public class OrderController {
                             implementation = OrderDto.class))
     )
     ResponseEntity<OrderDto> getOrderById(@Parameter(description = "Идентификатор заказа") @PathVariable Long id) {
-        return new ResponseEntity<>(new OrderDto(), HttpStatus.OK);
+        Order order = orderService.findOrderById(id).orElseThrow(() -> new RuntimeException("Заказ с id " + id + " не найден!"));
+        return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.OK);
     }
 
     @Operation(summary = "Вывод информации по всем заказам пользователя")
-    @GetMapping("/{userId}") //TODO: Смущает при таком варианте конфликт, что у нас два метода GET, в которые передается айдишник в Pathvariable(в одном случае это айдишник заказа, в другом - юзера). Как вариант, для инфо о своих заказах, может не передавать ничего, а искать заказы по имени пользователя, которое мы возьмем просто из Principal? (т.е. просто энд-поинт дописать какой-то типа "/myOrders"). Или оставить передачу айдишника юзера в RequestParam, нотогда надо будет метод GET Заменить на POST (чтобы тело передавать) - уязвимое решение в том плане, что по функционалу-то мы именно просим, чтобы нам дали с бэка инфо, т.е. типа GET
+    @GetMapping
     @ApiResponse(
             responseCode = "200",
             description = "Список заказов.",
@@ -80,8 +85,9 @@ public class OrderController {
                             schema = @Schema(
                                     implementation = OrderDto.class))
             ))
-    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);//TODO: здесь пока заглушка, надо доработать, чтобы возвращались заказы
+    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(Principal principal) {
+        Collection<OrderDto> result = orderService.findOrdersByUserName(principal.getName()).stream().map(orderConverter::convertToOrderDto).collect(toList());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Operation(summary = "Изменение информации по заказу")
