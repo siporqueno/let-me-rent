@@ -24,6 +24,11 @@ spring:
     default-property-inclusion: NON_NULL
   main:
     allow-bean-definition-overriding: true
+  mail:
+    host: smtp.gmail.com
+    user: letmerent2022
+    password: Ferdinand447!
+    port: 587
 
 swagger:
   title: CoreService
