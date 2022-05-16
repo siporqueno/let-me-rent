@@ -25,13 +25,8 @@
             </tr>
             </thead>
             <tbody>
-            <!--        <tr ng-repeat="ord in userProfile.orders">-->
-            <!--Мешал отображать атрибут ng-repeat="ord in userProfile.orders", потому что он ничего не отдает пока-->
-            <tr>
-                <!--            // код для работы с бэком-->
-                <!--            <th scope="row">{{ord.id}}</th>-->
-                <!--//код для наглядности, пока бэк не подключился-->
-                <th scope="row">{{'1'}}</th>
+            <tr ng-repeat="ord in orders">
+                <th scope="row">{{ord.id}}</th>
                 <td>
                     <table class="table align-middle table-bordered">
                         <thead>
@@ -46,64 +41,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--                   // код для работы с бэком-->
-                        <!--                        <tr ng-repeat="oi in ord.orderItems">-->
-                        <!--                            <td>{{oi.instrument.title}}</td>-->
-                        <!--                            <td>{{oi.instrument.brandName}}</td>-->
-                        <!--                            <td>{{oi.instrument.ownerUsername}}</td>-->
-                        <!--                            <td>{{oi.startDate}}</td>-->
-                        <!--                            <td>{{oi.endDate}}</td>-->
-                        <!--                            <td>{{oi.instrument.price}}</td>-->
-                        <!--                            <td>{{oi.instrument.price}}</td>-->
-                        <!--                            <td>-->
-                        <!--                                <button class="btn btn-primary" ng-show="!renterIsOwner(oi.instrument.ownerId)" ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить-->
-                        <!--                                    отзыв-->
-                        <!--                                </button>-->
-                        <!--                                <button class="btn btn-secondary" ng-show="renterIsOwner(oi.instrument.ownerId)"ng-click="failedNavToFeedbackPage()">Оставить-->
-                        <!--                                    отзыв-->
-                        <!--                                </button>-->
-                        <!--                            </td>-->
-                        <!--                        </tr>-->
-                        <!--//код для наглядности, пока бэк не подключился-->
-
-                        <tr>
-                            <td>{{'Дрель владельца с id=1'}}</td>
-                            <td>{{'Makita'}}</td>
-                            <td>{{'Владелец'}}</td>
-                            <td>{{'15.05.2022'}}</td>
-                            <td>{{'31.05.2022'}}</td>
-                            <td>{{'3000'}}</td>
+                        <tr ng-repeat="oi in ord.orderItems">
+                            <td>{{oi.instrument.title}}</td>
+                            <td>{{oi.instrument.brandName}}</td>
+                            <td>{{oi.instrument.ownerUsername}}</td>
+                            <td>{{oi.startDate}}</td>
+                            <td>{{oi.endDate}}</td>
+                            <td>{{oi.instrument.price}}</td>
+                            <td>{{oi.instrument.price}}</td>
                             <td>
-                                <button class="btn btn-primary" ng-show="!renterIsOwner(1)"
-                                        ng-click="navToFeedbackPage(1, 1)">Оставить
+                                <button class="btn btn-primary" ng-show="!renterIsOwner(oi.instrument.ownerId)"
+                                        ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить
                                     отзыв
                                 </button>
-                                <button class="btn btn-secondary" ng-show="renterIsOwner(1)"
+                                <button class="btn btn-secondary" ng-show="renterIsOwner(oi.instrument.ownerId)"
                                         ng-click="failedNavToFeedbackPage()">Оставить
                                     отзыв
                                 </button>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>{{'Дрель владельца с id=2'}}</td>
-                            <td>{{'Makita'}}</td>
-                            <td>{{'Владелец'}}</td>
-                            <td>{{'15.05.2022'}}</td>
-                            <td>{{'31.05.2022'}}</td>
-                            <td>{{'3000'}}</td>
-                            <td>
-                                <button class="btn btn-primary" ng-show="!renterIsOwner(2)"
-                                        ng-click="navToFeedbackPage(1, 2)">Оставить
-                                    отзыв
-                                </button>
-                                <button class="btn btn-secondary" ng-show="renterIsOwner(2)"
-                                        ng-click="failedNavToFeedbackPage()">Оставить
-                                    отзыв
-                                </button>
-                            </td>
-                        </tr>
-
                         </tbody>
                     </table>
                 </td>
