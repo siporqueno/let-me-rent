@@ -115,7 +115,10 @@
                     <td>{{t.categoryName}}</td>
                     <td>{{t.title}}</td>
                     <td>{{t.brandName}}</td>
-                    <td>{{t.avatarPictureUrl}}</td>
+                    <td>
+                        <img ng-if='t.avatarPictureUrl'
+                             ng-src='{{t.avatarPictureUrl}}'>
+                    </td>
                     <td>{{t.ownerUsername}}</td>
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>

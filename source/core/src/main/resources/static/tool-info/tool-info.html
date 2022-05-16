@@ -3,13 +3,16 @@
     <h2>Информация об инструменте</h2>
     <br/>
     <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
-    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)" ng-click="navToToolHistory(tool.id)">История аренд инструмента</button>
+    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"
+            ng-click="navToToolHistory(tool.id)">История аренд инструмента
+    </button>
     <br/>
     <p></p>
     <p>{{'Категория: ' + tool.categoryName}}</p>
     <p>{{'Название инструмента: ' + tool.title}}</p>
     <p>{{'Марка : ' + tool.brandName}}</p>
-    <p>{{'Фотографии: пока не отображаются, т.к. недоработан функционал' + tool.picturesUrls}}</p> <!--    вот здесь видимо, какой-то сделать ng-repeat и показать несколько фото-->
+    <p ng-if='tool.pictureUrls'>Фотографии</p>
+    <img ng-repeat='url in tool.pictureUrls' ng-src='{{url}}'>
     <p></p>
     <h3>Владелец инструмента:</h3>
     <p>{{'Имя пользователя на сайте: ' + tool.ownerUsername}}</p>
@@ -30,10 +33,10 @@
         </tr>
         </thead>
         <tbody>
-                        <tr ng-repeat="i in tool.intervals">
-                            <td>{{i.dateStart}}</td>
-                            <td>{{i.dateFinish}}</td>
-                        </tr>
+        <tr ng-repeat="i in tool.intervals">
+            <td>{{i.dateStart}}</td>
+            <td>{{i.dateFinish}}</td>
+        </tr>
         </tbody>
     </table>
     <p></p>
