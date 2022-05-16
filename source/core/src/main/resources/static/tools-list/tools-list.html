@@ -25,7 +25,8 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border" type="search" value="" id="filterMaxFee" placeholder="максимальная цена" ng-model="filter.maxFee">
+                        <input class="form-control border" type="search" value="" id="filterMaxFee"
+                               placeholder="максимальная цена" ng-model="filter.maxFee">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -36,7 +37,8 @@
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
-                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate" placeholder="дата окончания аренды" ng-model="filter.endDate">
+                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate"
+                               placeholder="дата окончания аренды" ng-model="filter.endDate">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -48,7 +50,26 @@
             </div>
         </form>
     </div>
+
     <br/>
+
+    <label for="sizeSelectTest">Кол-во элементов на странице</label>
+    <select id="sizeSelectTest" class="form-select" ng-model="size_data.model" ng-change="loadTools()">
+        <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
+            {{option.pageSize}}
+        </option>
+    </select>
+
+    <br/>
+    <br/>
+    <label for="sortSelectTest">Сортировка</label>
+    <select id="sortSelectTest" class="form-select" ng-model="sort_data.model"
+            ng-change="loadTools()">
+        <option ng-repeat='option in sort_data.availableSortOptions' value='{{option.sort}}'>
+            {{option.title}}
+        </option>
+    </select>
+
     <br/>
     <div class="row">
         <div class="col-md-6">
@@ -94,7 +115,10 @@
                     <td>{{t.categoryName}}</td>
                     <td>{{t.title}}</td>
                     <td>{{t.brandName}}</td>
-                    <td>{{t.avatarPictureUrl}}</td>
+                    <td>
+                        <img ng-if='t.avatarPictureUrl'
+                             ng-src='{{t.avatarPictureUrl}}'>
+                    </td>
                     <td>{{t.ownerUsername}}</td>
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>

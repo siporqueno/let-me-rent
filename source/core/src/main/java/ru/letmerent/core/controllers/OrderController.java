@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +16,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.letmerent.core.converters.OrderConverter;
 import ru.letmerent.core.dto.OrderDto;
+import ru.letmerent.core.entity.Order;
+import ru.letmerent.core.services.OrderService;
+import ru.letmerent.core.services.impl.CartService;
+import ru.letmerent.core.services.impl.UserService;
 
+import java.security.Principal;
 import java.util.Collection;
-import java.util.Collections;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/orders")
 @Tag(name = "API для работы с заказом")
+@AllArgsConstructor
 public class OrderController {
 
+    private final OrderService orderService;
+
+    private final OrderConverter orderConverter;
+
+    private final CartService cartService;
+
+    private final UserService userService;
+
     @Operation(summary = "Создание заказа")
-    @PostMapping
+    @PostMapping("/{uuid}")
     @ApiResponse(
             responseCode = "201",
             description = "Заказ успешно создан.",
@@ -36,9 +52,11 @@ public class OrderController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = OrderDto.class)
             ))
-    ResponseEntity<OrderDto> addNewOrder(OrderDto orderDto) {
-        //TODO добавить имплементацию
-        return new ResponseEntity<>(new OrderDto(), HttpStatus.CREATED);
+    ResponseEntity<OrderDto> addNewOrder(Principal principal, @PathVariable String uuid) {
+        String cartUuid = cartService.getCurrentCartUuid(principal, uuid);
+        OrderDto orderDto = orderConverter.convertCartToOrder(principal, cartUuid);
+        Order order = orderService.createOrder(orderConverter.convertToOrder(orderDto));
+        return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Информация по заказу")
@@ -52,11 +70,12 @@ public class OrderController {
                             implementation = OrderDto.class))
     )
     ResponseEntity<OrderDto> getOrderById(@Parameter(description = "Идентификатор заказа") @PathVariable Long id) {
-        return new ResponseEntity<>(new OrderDto(), HttpStatus.OK);
+        Order order = orderService.findOrderById(id).orElseThrow(() -> new RuntimeException("Заказ с id " + id + " не найден!"));
+        return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.OK);
     }
 
     @Operation(summary = "Вывод информации по всем заказам пользователя")
-    @GetMapping("/{userId}") //TODO: Смущает при таком варианте конфликт, что у нас два метода GET, в которые передается айдишник в Pathvariable(в одном случае это айдишник заказа, в другом - юзера). Как вариант, для инфо о своих заказах, может не передавать ничего, а искать заказы по имени пользователя, которое мы возьмем просто из Principal? (т.е. просто энд-поинт дописать какой-то типа "/myOrders"). Или оставить передачу айдишника юзера в RequestParam, нотогда надо будет метод GET Заменить на POST (чтобы тело передавать) - уязвимое решение в том плане, что по функционалу-то мы именно просим, чтобы нам дали с бэка инфо, т.е. типа GET
+    @GetMapping
     @ApiResponse(
             responseCode = "200",
             description = "Список заказов.",
@@ -66,8 +85,9 @@ public class OrderController {
                             schema = @Schema(
                                     implementation = OrderDto.class))
             ))
-    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);//TODO: здесь пока заглушка, надо доработать, чтобы возвращались заказы
+    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(Principal principal) {
+        Collection<OrderDto> result = orderService.findOrdersByUserName(principal.getName()).stream().map(orderConverter::convertToOrderDto).collect(toList());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Operation(summary = "Изменение информации по заказу")

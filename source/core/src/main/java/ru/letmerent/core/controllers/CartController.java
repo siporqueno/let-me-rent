@@ -36,7 +36,7 @@ public class CartController {
                     schema = @Schema(implementation = Cart.class)
             ))
     public Cart getCart(Principal principal, @PathVariable String uuid) {
-        return cartService.getCurrentCart(getCurrentCartUuid(principal, uuid));
+        return cartService.getCurrentCart(cartService.getCurrentCartUuid(principal, uuid));
     }
 
     @Operation(summary = "Получение uuid корзины")
@@ -60,7 +60,7 @@ public class CartController {
             description = "Элемент успешно добавлен в корзину")
     public void add(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId
             , @PathVariable String startDate, @PathVariable String endDate) {
-        cartService.addToCart(getCurrentCartUuid(principal, uuid), instrumentId, startDate, endDate);
+        cartService.addToCart(cartService.getCurrentCartUuid(principal, uuid), instrumentId, startDate, endDate);
     }
 
     @Operation(summary = "Удаление из корзины")
@@ -69,7 +69,7 @@ public class CartController {
             responseCode = "200",
             description = "Элемент успешно удален из корзины")
     public void remove(Principal principal, @PathVariable String uuid, @PathVariable Long instrumentId) {
-        cartService.removeItemFromCart(getCurrentCartUuid(principal, uuid), instrumentId);
+        cartService.removeItemFromCart(cartService.getCurrentCartUuid(principal, uuid), instrumentId);
     }
 
     @Operation(summary = "Чистка корзины")
@@ -78,7 +78,7 @@ public class CartController {
             responseCode = "200",
             description = "Корзина очищена")
     public void clear(Principal principal, @PathVariable String uuid) {
-        cartService.clearCart(getCurrentCartUuid(principal, uuid));
+        cartService.clearCart(cartService.getCurrentCartUuid(principal, uuid));
     }
 
     @Operation(summary = "Слияние корзины незарегестрированного пользователя с его корзиной после регистрации/аутентификации")
@@ -88,26 +88,18 @@ public class CartController {
             description = "Слияние корзин произведено успешно")
     public void merge(Principal principal, @PathVariable String uuid) {
         cartService.merge(
-                getCurrentCartUuid(principal, null),
-                getCurrentCartUuid(null, uuid)
+                cartService.getCurrentCartUuid(principal, null),
+                cartService.getCurrentCartUuid(null, uuid)
         );
     }
 
-    @Operation(summary = "Получение OrderDto из Cart")
-    @GetMapping("/{uuid}/order")
-    @ApiResponse(
-            responseCode = "200",
-            description = "")
-    public OrderDto getOrderDto(Principal principal, @PathVariable String uuid) {
-        String cartUuid = getCurrentCartUuid(principal, uuid);
-        return cartService.convertCartToOrder(principal, cartUuid);
-    }
-
-    private String getCurrentCartUuid(Principal principal, String uuid) {
-        if (principal != null) {
-            return cartService.getCartUuidFromSuffix(principal.getName());
-        }
-        return cartService.getCartUuidFromSuffix(uuid);
-    }
-
+//    @Operation(summary = "Получение OrderDto из Cart")
+//    @GetMapping("/{uuid}/order")
+//    @ApiResponse(
+//            responseCode = "200",
+//            description = "")
+//    public OrderDto getOrderDto(Principal principal, @PathVariable String uuid) {
+//        String cartUuid = cartService.getCurrentCartUuid(principal, uuid);
+//        return cartService.convertCartToOrder(principal, cartUuid);
+//    }
 }

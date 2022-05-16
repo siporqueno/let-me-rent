@@ -2,15 +2,45 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
 
+    $scope.size_data = {
+        availablePageSizeOptions: [
+            {pageSize: '10'},
+            {pageSize: '25'},
+            {pageSize: '50'}
+        ]
+    };
+
+    if ($localStorage.currentSize != null) {
+        $scope.size_data.model = $localStorage.currentSize;
+    } else $scope.size_data.model = '10';
+
+    $scope.sort_data = {
+        availableSortOptions: [
+            {sort: '', title: 'Без сортировки'},
+            {sort: 'fee,asc', title: 'По возрастанию цены аренды'},
+            {sort: 'fee,desc', title: 'По убыванию цены аренды'},
+            {sort: 'price,asc', title: 'По возрастанию стоимости залога'},
+            {sort: 'price,desc', title: 'По убыванию стоимости залога'}
+        ]
+    };
+
+    if ($localStorage.currentSort != null) {
+        $scope.sort_data.model = $localStorage.currentSort;
+    } else $scope.sort_data.model = '';
+
     $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
+        if ($localStorage.currentFilters != null) {
+            $scope.filter = $localStorage.currentFilters;
+        }
+
         $http({
             url: contextPath + "api/v1/instruments",
             method: 'GET',
             params: {
                 page: pageIndex,
-                size: $scope.size,
-                sort: $scope.sort,
+                size: $scope.size_data.model,
+                sort: $scope.sort_data.model,
                 title: $scope.filter ? $scope.filter.title : null,
                 categoryName: $scope.filter ? $scope.filter.categoryName : null,
                 ownerName: $scope.filter ? $scope.filter.ownerUsername : null,
@@ -21,6 +51,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         }).then(function (response) {
             $scope.toolsPage = response.data;
             $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.toolsPage.totalPages);
+            $localStorage.currentFilters = $scope.filter;
+            $localStorage.currentSize = $scope.size_data.model;
+            $localStorage.currentSort = $scope.sort_data.model;
         });
     };
 

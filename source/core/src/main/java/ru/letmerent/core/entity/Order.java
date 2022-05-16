@@ -23,7 +23,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Data
 @Check(constraints = "date_start < date_end")
-public class Order implements IOrder{
+public class Order implements IOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
