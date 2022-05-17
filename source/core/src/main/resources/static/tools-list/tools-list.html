@@ -64,7 +64,6 @@
         <div class="col-md-6">
             <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="size_data.model"
                     ng-change="loadTools()">
-<!--                <option value="" disabled selected>Количество элементов на странице</option>-->
                 <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
                     Элементов: {{option.pageSize}}
                 </option>
