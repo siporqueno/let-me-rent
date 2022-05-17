@@ -75,7 +75,7 @@ public class UserController {
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
-    } //TODO: А давайте дополним контроллер еще методом поиска юзера по его ID?
+    }
 
     @Operation(summary = "Получение информации о себе как пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",
@@ -106,7 +106,13 @@ public class UserController {
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    } //TODO: Вопрос: этот метод, видимо надо модифицирвоать?:
+    // Когда мы отправляем с фронта сюда запрос на модификацию пользователя,
+    // то сюда в составе DTO прилетает тот айдишник, Username, которые мы получили с бэка для формы
+    //  ввода изменений (паролей тут нет !!). А вот ФИО и Email могут поменяться.
+    //т.е. валидируем совпадение тех полей, которые мы с бэка и отправляли правильными (пароль и подтверждение)
+    // При этом при модификации хорошо бы проверить, не совпадает ли новый адрес эл.почты
+    // с каким-то еще в базе. Такая должна быть валидацая, а не на совпадение пароля и подтверждения.
 
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "пользователь успешно удален")
