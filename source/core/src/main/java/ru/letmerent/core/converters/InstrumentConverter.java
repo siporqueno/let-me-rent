@@ -91,6 +91,9 @@ public class InstrumentConverter {
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
+        dto.setStartDate(instrument.getStartDate());
+        dto.setEndDate(instrument.getEndDate());
+
         return dto;
     }
 
@@ -113,7 +116,8 @@ public class InstrumentConverter {
         instrument.setUser(user);
         instrument.setBrand(brand.get());
         instrument.setCategoryId(category.get().getId());
-        instrument.setStartDate(LocalDateTime.now());
+        instrument.setStartDate(instrumentDto.getStartDate());
+        instrument.setEndDate(instrumentDto.getEndDate());
         return instrument;
     }
     

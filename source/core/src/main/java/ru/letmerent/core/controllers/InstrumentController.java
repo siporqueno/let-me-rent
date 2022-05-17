@@ -41,6 +41,7 @@ import ru.letmerent.core.services.impl.UserService;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -153,6 +154,8 @@ public class InstrumentController {
     @PostMapping
     @Transactional
     ResponseEntity<InstrumentInfoDto> addNewInstrument(@RequestBody InstrumentInfoDto instrumentDto, Principal principal, UriComponentsBuilder uriComponentsBuilder) {
+        instrumentDto.setStartDate(LocalDateTime.now());
+
         User user = userService.findByUsername(principal.getName());
 
         Instrument instrument = instrumentConverter.toInstrument(instrumentDto, user);
@@ -160,11 +163,6 @@ public class InstrumentController {
         Instrument newInstrument = instrumentService.createInstrument(instrument);
 
         InstrumentInfoDto instrumentInfoDto = instrumentConverter.toInstrumentInfoDto(newInstrument);
-
-//        Optional<InstrumentInfoDto> instrument = Optional.of(instrumentDto)
-//                .map(item -> instrumentConverter.toInstrument(item, user))
-//                .map(instrumentService::createInstrument)
-//                .map(instrumentConverter::toInstrumentInfoDto);
 
         return new ResponseEntity<>(instrumentInfoDto, HttpStatus.CREATED);
     }
@@ -212,8 +210,10 @@ public class InstrumentController {
                     schema = @Schema(
                             implementation = InstrumentDto.class))
     )
-    ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentDto instrument) {
-        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK); // TODO: да, здесь заглушка, нужен метод рабочий
+    ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentInfoDto instrumentInfoDto) {
+        User user = userService.findByUsername(instrumentInfoDto.getOwnerUsername());
+        Instrument instrument = instrumentConverter.toInstrument(instrumentInfoDto, user);
+        return new ResponseEntity<>(instrumentConverter.toInstrumentInfoDto(instrumentService.updateInstrument(instrument)), HttpStatus.OK);
     }
 
     @Operation(summary = "Изменение цены инструмента")
