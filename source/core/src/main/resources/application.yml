@@ -27,7 +27,8 @@ spring:
   mail:
     host: smtp.gmail.com
     user: letmerent2022
-    password: Ferdinand447!
+    password: voV+AH/ubnxt9/V/lBc90g==:+QIa+eExuwgRaZHYv0NJ2Q==
+    secret: tJoXMms389FTuw6IciAZXg==:8QpKFE6rno70D+BP+BgwLw==
     port: 587
 
 swagger:

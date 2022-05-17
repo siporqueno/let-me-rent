@@ -1,13 +1,16 @@
 package ru.letmerent.core.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.entity.Order;
 import ru.letmerent.core.entity.OrderItem;
+import ru.letmerent.core.services.DecryptService;
 import ru.letmerent.core.services.EmailService;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static java.util.Objects.nonNull;
+
 @Service
 @Slf4j
 public class EmailServiceImpl implements EmailService {
@@ -35,28 +40,49 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.port}")
     private int port;
     
+    @Autowired
+    private DecryptService decryptService;
+    
     private Transport transport;
     private Session session;
     
     @PostConstruct
-    private void initProps() throws MessagingException {
-        Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", mailHost);
-        props.put("mail.smtp.user", user);
-        props.put("mail.smtp.password", password);
-        props.put("mail.smtp.port", port);
-        props.put("mail.smtp.auth", true);
-        
-        session = Session.getInstance(props, null);
-        transport = session.getTransport("smtp");
-        transport.connect(mailHost, user, password);
-        
+    private void init() {
+        try {
+            String decryptPassword = decryptService.decryptPassword(password);
+            
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", mailHost);
+            props.put("mail.smtp.user", user);
+            props.put("mail.smtp.password", decryptPassword);
+            props.put("mail.smtp.port", port);
+            props.put("mail.smtp.auth", true);
+            
+            session = Session.getInstance(props, null);
+            transport = session.getTransport("smtp");
+            transport.connect(mailHost, user, decryptPassword);
+        } catch (MessagingException e) {
+            log.error("Can't init credentials {}", e.getMessage());
+            close();
+        }
     }
+    
+    @PreDestroy
+    private void close() {
+        try {
+            if (nonNull(transport)) {
+                transport.close();
+            }
+        } catch (MessagingException e) {
+            log.error("Can't close {}", e.getMessage());
+        }
+    }
+    
     @Override
-    public void sendNotification(Order order){
+    public void sendNotification(Order order) {
         sendRecipientMessage(order);
-       sendRenterMessage(order);
+        sendRenterMessage(order);
     }
     
     private void sendRecipientMessage(Order order) {
@@ -92,6 +118,7 @@ public class EmailServiceImpl implements EmailService {
             transport.sendMessage(message, message.getAllRecipients());
         } catch (MessagingException e) {
             log.error("Can't send email {}", e.getMessage());
+            close();
         }
     }
     
