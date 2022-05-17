@@ -44,4 +44,14 @@
     <p>{{tool.description}}</p>
     <p>Здесь еще, может, сделаем подгрузку фото с инструкцией (на будущее, пока нигде нет функционала)</p>
 
+    <br/>
+    <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
+    <br/>
+    <br/>
+    <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
+    <br/>
+    <div ng-repeat="tc in tool_comments">
+        <textarea cols="170" rows="3" readonly>{{tc.description}}</textarea>
+    </div>
+
 </div>
