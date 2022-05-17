@@ -17,7 +17,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $scope.sort_data = {
         availableSortOptions: [
             {sort: '', title: 'Сортировка'},
-            {sort: '', title: 'Без сортировки'},
+            // {sort: '', title: 'Без сортировки'},
             {sort: 'fee,asc', title: 'По возрастанию цены аренды'},
             {sort: 'fee,desc', title: 'По убыванию цены аренды'},
             {sort: 'price,asc', title: 'По возрастанию стоимости залога'},
