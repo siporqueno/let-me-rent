@@ -72,6 +72,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         }).on("change", function() {
             var today = new Date();
             var selected = $(this).datepicker('getDate');
+            //FIXME непонятно почему надо добавлять день, но работает только так, иначе сегодняшний день выбрать нельзя
             if (selected.addDays(1) < today) {
                 alert("Нельзя выбрать дату меньше сегодняшней");
             }
