@@ -2,8 +2,10 @@ package ru.letmerent.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -21,7 +23,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Schema(description = "Модель пользователя")
 @ToString
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UserDto {
 

@@ -3,9 +3,9 @@
     <h2>Информация об инструменте</h2>
     <br/>
     <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
-    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"
-            ng-click="navToToolHistory(tool.id)">История аренд инструмента
-    </button>
+<!--    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"-->
+<!--            ng-click="navToToolHistory(tool.id)">История аренд инструмента-->
+<!--    </button>-->
     <br/>
     <p></p>
     <p>{{'Категория: ' + tool.categoryName}}</p>
@@ -27,8 +27,8 @@
     <table id="tools-list" class="table">
         <thead>
         <tr>
-            <td>Дата начала аренды</td>
-            <td>Дата окончания аренды</td>
+            <td>Дата начала периода доступности</td>
+            <td>Дата окончания периода доступности</td>
         </tr>
         </thead>
         <tbody>
