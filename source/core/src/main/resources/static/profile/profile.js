@@ -48,10 +48,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         alert("Владелец не может оставлять отзывы о своем инструменте :)");
     }
 
-    $scope.renterIsOwner = function (ownerId){
-        if(ownerId === $rootScope.myUserIdFromProfile){
+    $scope.renterIsOwner = function (ownerId) {
+        if (ownerId === $rootScope.myUserIdFromProfile) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -65,7 +65,14 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/change-profile-form');
     }
 
-    $scope.loadMyProfile();
-    $scope.loadRents();
-    $scope.loadMyTools();
+    $scope.loadAllProfileInfo = function () {
+        if ($rootScope.isUserLoggedIn()) {
+            $scope.loadMyProfile();
+            $scope.loadRents();
+            $scope.loadMyTools();
+        }
+    }
+
+    $scope.loadAllProfileInfo();
+
 });

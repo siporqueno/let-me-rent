@@ -89,6 +89,26 @@ public class UserController {
         return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
     }
 
+//    @Operation(summary = "Модификация пользовательских данных")
+//    @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
+//    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
+//            content = @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ApplicationError.class)))
+//    @PutMapping
+//    public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
+//        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
+//            return ResponseEntity.unprocessableEntity()
+//                    .body(mapper.valueToTree(ApplicationError.builder()
+//                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+//                            .userMessage("Incorrect password confirmation")
+//                            .date(new Date())
+//                            .build()));
+//        }
+//        userService.saveUser(userDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    } //Этот метод не подходит для модификации пользователя, поэтому сделала свой вариант ниже:
+
+
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
@@ -96,23 +116,17 @@ public class UserController {
                     schema = @Schema(implementation = ApplicationError.class)))
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
-        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return ResponseEntity.unprocessableEntity()
+        if (userService.existByEmail(userDto.getEmail())) {
+            return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Incorrect password confirmation")
+                            .errorCode(HttpStatus.BAD_REQUEST.value())
+                            .userMessage("Выбранный адрес электронной почты уже используется!")
                             .date(new Date())
                             .build()));
         }
-        userService.saveUser(userDto);
+        userService.modifyUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
-    } //TODO: Вопрос: этот метод, видимо надо модифицирвоать?:
-    // Когда мы отправляем с фронта сюда запрос на модификацию пользователя,
-    // то сюда в составе DTO прилетает тот айдишник, Username, которые мы получили с бэка для формы
-    //  ввода изменений (паролей тут нет !!). А вот ФИО и Email могут поменяться.
-    //т.е. валидируем совпадение тех полей, которые мы с бэка и отправляли правильными (пароль и подтверждение)
-    // При этом при модификации хорошо бы проверить, не совпадает ли новый адрес эл.почты
-    // с каким-то еще в базе. Такая должна быть валидацая, а не на совпадение пароля и подтверждения.
+    }
 
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "пользователь успешно удален")

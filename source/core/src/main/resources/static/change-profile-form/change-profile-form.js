@@ -17,7 +17,7 @@ angular.module('tools').controller('changeProfileInfoController', function ($sco
                 alert('Личные данные успешно обновлены');
                 $location.path('/profile');
             }, function failureCallback (response) {
-                alert(response.data.messages);
+                alert(response.data.userMessage);
             });
     };
 
