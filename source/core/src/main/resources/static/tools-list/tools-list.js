@@ -68,31 +68,42 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
     $(document).ready(function () {
+
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
-        }).on("change", function() {
-            var today = new Date();
+        }).on("change", function () {
+            var today = new Date().getDate();
+            console.log(today);
             var selected = $(this).datepicker('getDate');
-            //FIXME непонятно почему надо добавлять день, но работает только так, иначе сегодняшний день выбрать нельзя
-            if (selected.addDays(1) < today) {
-                alert("Нельзя выбрать дату меньше сегодняшней");
+            console.log(selected);
+            if (selected != null) {
+                selected = selected.getDate();
+                console.log(selected);
+                if (selected < today) {
+                    alert("Нельзя выбрать дату раньше сегодняшней");
+                }
             }
         });
-        $('.datepickerEnd').datepicker({
-             format: 'dd-mm-yyyy'
-        }).on("change", function() {
-            var startDate = $('.datepickerStart').datepicker('getDate');
-            var selected = $(this).datepicker('getDate');
-            if (selected < startDate.addDays(1)) {
-                alert("Нельзя выбрать дату меньше начальной");
-            }
-        });
-    });
 
-    Date.prototype.addDays = function (days) {
-        this.setDate(this.getDate() + days);
-        return this;
-    };
+        $('.datepickerEnd').datepicker({
+            format: 'dd-mm-yyyy'
+        }).on("change", function () {
+            var startDate = $('.datepickerStart').datepicker('getDate');
+            if (startDate === null) {
+                alert("Выберите дату начала аренды")
+            } else {
+                startDate = startDate.getDate();
+                var selected = $(this).datepicker('getDate');
+                if (selected != null) {
+                    selected = selected.getDate();
+                    if (selected < startDate) {
+                        alert("Нельзя выбрать дату раньше начальной");
+                    }
+                }
+            }
+        });
+
+    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
@@ -111,7 +122,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         }).then(function (response) {
             var x = document.getElementById("snackbar");
             x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
         });
     }
 
