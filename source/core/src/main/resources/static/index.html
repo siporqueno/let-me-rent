@@ -44,42 +44,41 @@
 </head>
 
 <body ng-app="tools" style="position: relative; min-height: 100%; padding-bottom: 6rem">
-<div class="container">
-    <div ng-controller="indexController">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: lightblue">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                < class="navbar-nav">
+<div class="container" style="color: #00008b;">
+    <div ng-controller="indexController" style="background-color: #f0f8ff;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav" style="list-style-type: none; background-color: #f0f8ff;">
                     <li class="nav-item">
-                        <a class="nav-link material-icons" title="Главная" href="#!/" style="color: darkblue">home</a>
+                        <a class="nav-link material-icons" title="Главная" href="#!/" style="color: #00008b;">home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRent" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: darkblue">
+                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: #00008b;">
                             Арендовать
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/tools-list" style="color: darkblue">
+                            <li><a class="dropdown-item" href="#!/tools-list" style="color: #00008b;">
                                 Все инструменты в аренду</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLet" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: darkblue">
+                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: #00008b;">
                             Сдать
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/add-tool-form" style="color: darkblue">Добавить
+                            <li><a class="dropdown-item" href="#!/add-tool-form" style="color: #00008b;">Добавить
                                 инструмент</a></li>
                         </ul>
                     </li>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link material-icons" title="Корзина"
-                                                href="#!/cart" style="color: darkblue">shopping_cart</a></li>
+                                                href="#!/cart" style="color: #00008b;">shopping_cart</a></li>
                         <li class="nav-item"><a class="nav-link material-icons" title="Личный кабинет" href="#!/profile"
-                                                style="color: darkblue">account_circle</a>
+                                                style="color: #00008b;">account_circle</a>
                         </li>
                         <li class="nav-item" ng-show="!isUserLoggedIn()"><a class="nav-link" href="#!/authorisation"
-                                                                            style="font-weight: bold; color: darkblue">Авторизоваться</a>
+                                                                            style="font-weight: bold; color: #00008b;">Авторизоваться</a>
                         </li>
                         <li class="nav-item" ng-show="isUserLoggedIn()">
                             <button class="btn btn-info btn-sm" ng-click="tryToLogout()">Выйти из профиля</button>
@@ -88,18 +87,17 @@
             </div>
         </nav>
     </div>
+    <div style="position:absolute; bottom: 0;">
+        <footer class="bg-light text-center text-lg-start container fixed-bottom">
+            <div class="text-center p-3" style="background-color: #f0f8ff;">
+                © 2022 Все права защищены:
+                <a class="text-dark" href="mailto:инфо@дайпогонять.рф">инфо@дайпогонять.рф</a>
+            </div>
+        </footer>
+    </div>
 
     <ng-view></ng-view>
 
 </div>
-<div style="position:absolute; bottom: 0;">
-    <footer class="bg-light text-center text-lg-start container fixed-bottom">
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.02);">
-            © 2022 Все права защищены:
-            <a class="text-dark" href="mailto:инфо@дайпогонять.рф">инфо@дайпогонять.рф</a>
-        </div>
-    </footer>
-</div>
-
 </body>
 </html>
