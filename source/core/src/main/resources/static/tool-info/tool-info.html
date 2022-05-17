@@ -48,7 +48,7 @@
     <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
     <br/>
     <div ng-repeat="tc in tool_comments">
-        <textarea cols="170" rows="3">{{tc.description}}</textarea>
+        <textarea cols="170" rows="3" readonly>{{tc.description}}</textarea>
     </div>
 
 </div>
