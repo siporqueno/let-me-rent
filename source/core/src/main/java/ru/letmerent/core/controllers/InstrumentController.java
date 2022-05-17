@@ -161,11 +161,6 @@ public class InstrumentController {
 
         InstrumentInfoDto instrumentInfoDto = instrumentConverter.toInstrumentInfoDto(newInstrument);
 
-//        Optional<InstrumentInfoDto> instrument = Optional.of(instrumentDto)
-//                .map(item -> instrumentConverter.toInstrument(item, user))
-//                .map(instrumentService::createInstrument)
-//                .map(instrumentConverter::toInstrumentInfoDto);
-
         return new ResponseEntity<>(instrumentInfoDto, HttpStatus.CREATED);
     }
 
@@ -212,8 +207,10 @@ public class InstrumentController {
                     schema = @Schema(
                             implementation = InstrumentDto.class))
     )
-    ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentDto instrument) {
-        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
+    ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentInfoDto instrumentInfoDto) {
+        User user = userService.findByUsername(instrumentInfoDto.getOwnerUsername());
+        Instrument instrument = instrumentConverter.toInstrument(instrumentInfoDto, user);
+        return new ResponseEntity<>(instrumentConverter.toInstrumentInfoDto(instrumentService.updateInstrument(instrument)), HttpStatus.OK);
     }
 
     @Operation(summary = "Изменение цены инструмента")
