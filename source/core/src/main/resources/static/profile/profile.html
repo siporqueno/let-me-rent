@@ -9,11 +9,14 @@
         <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
         <h3>Личные данные</h3>
         <p>{{'Пользователь: ' + userProfile.userName}}</p>
-        <p>{{'Имя: ' + userProfile.firstName}}</p>
-        <p>{{'Имя: ' + userProfile.secondName}}</p>
         <p>{{'Фамилия: ' + userProfile.lastName}}</p>
+        <p>{{'Имя: ' + userProfile.firstName}}</p>
+        <p>{{'Отчество: ' + userProfile.secondName}}</p>
         <p>{{'E-Mail: ' + userProfile.email}}</p>
+        <br/>
 
+        <button class="btn btn-info" ng-click="navToChangeProfileForm()">Редактировать личные данные</button>
+        <br/>
         <br/>
 
         <h4>Список инструментов, взятых в аренду</h4>
@@ -79,7 +82,6 @@
                 <td>Сумма залога</td>
                 <td></td>
                 <td></td>
-                <td></td>
             </tr>
             </thead>
             <tbody>
@@ -94,12 +96,6 @@
                 </td>
                 <td>
                     <button class="btn btn-primary" ng-click="changeTool(t.id)">Изменить</button>
-                </td>
-                <td>
-                    <button class="btn btn-danger" ng-click="deleteTool(t.id)">Удалить</button>
-                </td>
-                <td>
-                    <button class="btn btn-danger" ng-click="stopRentSuggestion(t.id)">Снять с аренды</button>
                 </td>
             </tr>
             </tbody>

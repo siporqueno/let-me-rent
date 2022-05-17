@@ -75,7 +75,7 @@ public class UserController {
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
-    } //TODO: А давайте дополним контроллер еще методом поиска юзера по его ID?
+    }
 
     @Operation(summary = "Получение информации о себе как пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",
@@ -89,6 +89,26 @@ public class UserController {
         return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
     }
 
+//    @Operation(summary = "Модификация пользовательских данных")
+//    @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
+//    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
+//            content = @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ApplicationError.class)))
+//    @PutMapping
+//    public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
+//        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
+//            return ResponseEntity.unprocessableEntity()
+//                    .body(mapper.valueToTree(ApplicationError.builder()
+//                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+//                            .userMessage("Incorrect password confirmation")
+//                            .date(new Date())
+//                            .build()));
+//        }
+//        userService.saveUser(userDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    } //Этот метод не подходит для модификации пользователя, поэтому сделала свой вариант ниже:
+
+
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
@@ -96,15 +116,16 @@ public class UserController {
                     schema = @Schema(implementation = ApplicationError.class)))
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
-        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return ResponseEntity.unprocessableEntity()
+        if (userService.existByEmail(userDto.getEmail()) && !userService.emailBelongsToThisUser(userDto)) {
+            return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Incorrect password confirmation")
+                            .errorCode(HttpStatus.BAD_REQUEST.value())
+                            .userMessage("Выбранный адрес электронной почты принадлежит другому пользователю!")
                             .date(new Date())
                             .build()));
         }
-        userService.saveUser(userDto);
+
+        userService.modifyUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
