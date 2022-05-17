@@ -3,9 +3,9 @@
     <h2>Информация об инструменте</h2>
     <br/>
     <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
-    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"
-            ng-click="navToToolHistory(tool.id)">История аренд инструмента
-    </button>
+<!--    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"-->
+<!--            ng-click="navToToolHistory(tool.id)">История аренд инструмента-->
+<!--    </button>-->
     <br/>
     <p></p>
     <p>{{'Категория: ' + tool.categoryName}}</p>
@@ -23,13 +23,12 @@
     <p>{{'Сумма залога: ' + tool.price}}</p>
     <p></p>
     <h3>КАЛЕНДАРЬ ДОСТУПНОСТИ ИНСТРУМЕНТА</h3>
-    <p>ЗДЕСЬ ПОДГРУЖАЕТСЯ КАЛЕНДАРЬ, ПОКА Я СДЕЛАЛА ТАБЛИЧКУ</p>
     <p></p>
     <table id="tools-list" class="table">
         <thead>
         <tr>
-            <td>Дата начала аренды</td>
-            <td>Дата окончания аренды</td>
+            <td>Дата начала периода доступности</td>
+            <td>Дата окончания периода доступности</td>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +41,6 @@
     <p></p>
     <h3>РУКОВОДСТВО ПО ЭКСПЛУАТАЦИИ, КОММЕНТАРИИ ВЛАДЕЛЬЦА</h3>
     <p>{{tool.description}}</p>
-    <p>Здесь еще, может, сделаем подгрузку фото с инструкцией (на будущее, пока нигде нет функционала)</p>
 
     <br/>
     <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
