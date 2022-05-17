@@ -52,43 +52,21 @@
     </div>
 
     <br/>
-
-    <label for="sizeSelectTest">Кол-во элементов на странице</label>
-    <select id="sizeSelectTest" class="form-select" ng-model="size_data.model" ng-change="loadTools()">
-        <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
-            {{option.pageSize}}
-        </option>
-    </select>
-
-    <br/>
-    <br/>
-    <label for="sortSelectTest">Сортировка</label>
-    <select id="sortSelectTest" class="form-select" ng-model="sort_data.model"
-            ng-change="loadTools()">
-        <option ng-repeat='option in sort_data.availableSortOptions' value='{{option.sort}}'>
-            {{option.title}}
-        </option>
-    </select>
-
-    <br/>
     <div class="row">
         <div class="col-md-6">
-            <select id="sizeSelect" class="form-select" aria-label="Default select example" ng-model="size"
+            <select id="sizeSelect" class="form-select" aria-label="Default select example" ng-model="sort_data.model"
                     ng-change="loadTools()">
-                <option value="" disabled selected>Количество элементов на странице</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option ng-repeat='option in sort_data.availableSortOptions' value='{{option.sort}}'>
+                    {{option.title}}
+                </option>
             </select>
         </div>
         <div class="col-md-6">
-            <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="sort"
+            <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="size_data.model"
                     ng-change="loadTools()">
-                <option value="" disabled selected>Сортировка</option>
-                <option value="fee,asc">По возрастанию цены аренды</option>
-                <option value="fee,desc">По убыванию цены аренды</option>
-                <option value="price,asc">По возрастанию стоимости залога</option>
-                <option value="price,desc">По убыванию стоимости залога</option>
+                <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
+                    Элементов: {{option.pageSize}}
+                </option>
             </select>
         </div>
     </div>
