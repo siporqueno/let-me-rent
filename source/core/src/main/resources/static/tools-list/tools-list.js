@@ -69,6 +69,21 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $(document).ready(function () {
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
+        }).on("change", function() {
+            var today = new Date();
+            var selected = $(this).datepicker('getDate');
+            if (selected.addDays(1) < today) {
+                alert("Нельзя выбрать дату меньше сегодняшней");
+            }
+        });
+        $('.datepickerEnd').datepicker({
+             format: 'dd-mm-yyyy'
+        }).on("change", function() {
+            var startDate = $('.datepickerStart').datepicker('getDate');
+            var selected = $(this).datepicker('getDate');
+            if (selected < startDate.addDays(1)) {
+                alert("Нельзя выбрать дату меньше начальной");
+            }
         });
     });
 
@@ -76,12 +91,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         this.setDate(this.getDate() + days);
         return this;
     };
-
-    $(document).ready(function () {
-        $('.datepickerEnd').datepicker({
-            format: 'dd-mm-yyyy'
-        });
-    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
