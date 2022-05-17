@@ -116,7 +116,7 @@ public class UserController {
                     schema = @Schema(implementation = ApplicationError.class)))
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
-        if (userService.existByEmail(userDto.getEmail())) {
+        if (userService.existByEmail(userDto.getEmail()) && !userService.emailBelongsToThisUser(userDto)) {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
