@@ -120,7 +120,7 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(ApplicationError.builder()
                             .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Выбранный адрес электронной почты уже используется!")
+                            .userMessage("Выбранный адрес электронной почты принадлежит другому пользователю!")
                             .date(new Date())
                             .build()));
         }
