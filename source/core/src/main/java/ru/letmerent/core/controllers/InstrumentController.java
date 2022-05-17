@@ -213,7 +213,7 @@ public class InstrumentController {
                             implementation = InstrumentDto.class))
     )
     ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentDto instrument) {
-        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
+        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK); // TODO: да, здесь заглушка, нужен метод рабочий
     }
 
     @Operation(summary = "Изменение цены инструмента")
