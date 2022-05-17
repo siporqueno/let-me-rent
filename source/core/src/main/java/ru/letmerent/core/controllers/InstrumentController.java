@@ -41,6 +41,7 @@ import ru.letmerent.core.services.impl.UserService;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -153,6 +154,8 @@ public class InstrumentController {
     @PostMapping
     @Transactional
     ResponseEntity<InstrumentInfoDto> addNewInstrument(@RequestBody InstrumentInfoDto instrumentDto, Principal principal, UriComponentsBuilder uriComponentsBuilder) {
+        instrumentDto.setStartDate(LocalDateTime.now());
+
         User user = userService.findByUsername(principal.getName());
 
         Instrument instrument = instrumentConverter.toInstrument(instrumentDto, user);
