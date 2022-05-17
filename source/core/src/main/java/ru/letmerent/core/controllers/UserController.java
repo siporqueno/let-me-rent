@@ -124,6 +124,7 @@ public class UserController {
                             .date(new Date())
                             .build()));
         }
+
         userService.modifyUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
