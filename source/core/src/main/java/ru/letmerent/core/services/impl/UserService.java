@@ -44,6 +44,7 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByEmail(email);
     }
 
+
     public Boolean emailBelongsToThisUser (UserDto userDto){
         return findByUsername(userDto.getUserName()).getEmail().equals(userDto.getEmail());
     }
@@ -53,6 +54,7 @@ public class UserService implements UserDetailsService {
         User user = userConverter.userDtoToUserConverter(userDto);
         userRepository.save(user);
     }
+
 
     @Transactional
     public void modifyUser(UserDto userDto) {

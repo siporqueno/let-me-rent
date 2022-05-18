@@ -65,6 +65,7 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/change-profile-form');
     }
 
+
     $scope.loadAllProfileInfo = function () {
         if ($rootScope.isUserLoggedIn()) {
             $scope.loadMyProfile();

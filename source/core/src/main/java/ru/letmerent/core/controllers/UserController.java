@@ -108,7 +108,6 @@ public class UserController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    } //Этот метод не подходит для модификации пользователя, поэтому сделала свой вариант ниже:
 
-
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
@@ -128,6 +127,7 @@ public class UserController {
         userService.modifyUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "пользователь успешно удален")
