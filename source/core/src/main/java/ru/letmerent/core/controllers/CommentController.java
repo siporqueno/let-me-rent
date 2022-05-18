@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,6 @@ import ru.letmerent.core.services.comments.InstrumentCommentService;
 import ru.letmerent.core.services.comments.UserCommentsService;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +36,7 @@ public class CommentController {
     private final InstrumentCommentService instrumentCommentService;
     private final UserCommentsService userCommentsService;
     private final ObjectMapper mapper;
+    private final ApplicationError applicationError;
 
     @Operation(summary = "Добавление нового комментария")
     @PostMapping
@@ -99,9 +100,6 @@ public class CommentController {
 
     private ResponseEntity<?> generateError() {
         return ResponseEntity.badRequest()
-                .body(ApplicationError.builder()
-                        .userMessage("Не поддерживаемый заголовок запроса")
-                        .date(new Date())
-                        .build());
+                .body(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "Не поддерживаемый заголовок запроса"));
     }
 }

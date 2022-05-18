@@ -7,8 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import ru.letmerent.core.entity.Picture;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -43,4 +43,13 @@ public class InstrumentInfoDto extends InstrumentDto {
 
     @Schema(description = "список URL картинок")
     Collection<String> pictureUrls;
+
+    @Schema(description = "Дата постановки инструмента в аренду")
+    LocalDateTime startDate;
+
+    @Schema(description = "Дата снятия инструмента с аренды")
+    LocalDateTime endDate;
+
+    @Schema(description = "Последний, на текущий момент, день аренды инструмента")
+    LocalDateTime lastRentDate;
 }

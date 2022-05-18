@@ -16,6 +16,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $scope.sort_data = {
         availableSortOptions: [
+            {sort: '', title: 'Сортировка'},
             {sort: '', title: 'Без сортировки'},
             {sort: 'fee,asc', title: 'По возрастанию цены аренды'},
             {sort: 'fee,desc', title: 'По убыванию цены аренды'},
@@ -67,20 +68,43 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
     $(document).ready(function () {
+
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
+        }).on("change", function () {
+            var today = new Date().getDate();
+            console.log(today);
+            var selected = $(this).datepicker('getDate');
+            console.log(selected);
+            if (selected != null) {
+                selected = selected.getDate();
+                console.log(selected);
+                if (selected < today) {
+                    $(this).datepicker('setDate', null);
+                    alert("Нельзя выбрать дату раньше сегодняшней");
+                }
+            }
         });
-    });
 
-    Date.prototype.addDays = function (days) {
-        this.setDate(this.getDate() + days);
-        return this;
-    };
-
-    $(document).ready(function () {
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy'
+        }).on("change", function () {
+            var startDate = $('.datepickerStart').datepicker('getDate');
+            if (startDate === null) {
+                alert("Выберите дату начала аренды")
+            } else {
+                startDate = startDate.getDate();
+                var selected = $(this).datepicker('getDate');
+                if (selected != null) {
+                    selected = selected.getDate();
+                    if (selected < startDate) {
+                        $(this).datepicker('setDate', null);
+                        alert("Нельзя выбрать дату раньше начальной");
+                    }
+                }
+            }
         });
+
     });
 
     $scope.navToToolInfoPage = function (toolId) {
@@ -100,7 +124,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         }).then(function (response) {
             var x = document.getElementById("snackbar");
             x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
         });
     }
 

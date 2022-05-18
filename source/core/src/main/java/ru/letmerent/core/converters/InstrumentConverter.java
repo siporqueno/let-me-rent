@@ -10,6 +10,7 @@ import ru.letmerent.core.dto.IntervalDto;
 import ru.letmerent.core.entity.Brand;
 import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.OrderItem;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.BrandService;
@@ -91,6 +92,15 @@ public class InstrumentConverter {
         Category category = categoryService.findCategoryById(instrument.getCategoryId());
         dto.setCategoryName(category.getName());
 
+        dto.setStartDate(instrument.getStartDate());
+        dto.setEndDate(instrument.getEndDate());
+
+        orderItemService.findAllByInstrumentId(instrument.getId())
+                .stream()
+                .map(OrderItem::getEndDate)
+                .max(LocalDateTime::compareTo)
+                .ifPresent(dto::setLastRentDate);
+
         return dto;
     }
 
@@ -113,7 +123,8 @@ public class InstrumentConverter {
         instrument.setUser(user);
         instrument.setBrand(brand.get());
         instrument.setCategoryId(category.get().getId());
-        instrument.setStartDate(LocalDateTime.now());
+        instrument.setStartDate(instrumentDto.getStartDate());
+        instrument.setEndDate(instrumentDto.getEndDate());
         return instrument;
     }
     
