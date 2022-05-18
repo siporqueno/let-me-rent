@@ -64,6 +64,10 @@
                 templateUrl: 'feedback-about-renter-page/feedback-about-renter-page.html',
                 controller: 'feedbackAboutRenterController'
             })
+            .when('/change-profile-form', {
+                templateUrl: 'change-profile-form/change-profile-form.html',
+                controller: 'changeProfileInfoController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -94,13 +98,13 @@ angular.module('tools').controller('indexController', function ($rootScope, $sco
         }
     };
 
-    $rootScope.isUserNameEqualsTo = function (userName) {
-        if ($localStorage.letMeRentUser.username == userName) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // $rootScope.isUserNameEqualsTo = function (userName) {
+    //     if ($localStorage.letMeRentUser.username == userName) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 
 });

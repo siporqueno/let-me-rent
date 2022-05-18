@@ -37,6 +37,11 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
+    public Instrument updateInstrument(Instrument instrument) {
+        return instrumentRepository.save(instrument);
+    }
+
+    @Override
     public Instrument createInstrument(Instrument instrument) {
         return instrumentRepository.save(instrument);
     }

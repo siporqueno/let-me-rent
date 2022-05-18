@@ -16,6 +16,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $scope.sort_data = {
         availableSortOptions: [
+            {sort: '', title: 'Сортировка'},
             {sort: '', title: 'Без сортировки'},
             {sort: 'fee,asc', title: 'По возрастанию цены аренды'},
             {sort: 'fee,desc', title: 'По убыванию цены аренды'},
@@ -69,6 +70,22 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $(document).ready(function () {
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
+        }).on("change", function() {
+            var today = new Date();
+            var selected = $(this).datepicker('getDate');
+            //FIXME непонятно почему надо добавлять день, но работает только так, иначе сегодняшний день выбрать нельзя
+            if (selected.addDays(1) < today) {
+                alert("Нельзя выбрать дату меньше сегодняшней");
+            }
+        });
+        $('.datepickerEnd').datepicker({
+             format: 'dd-mm-yyyy'
+        }).on("change", function() {
+            var startDate = $('.datepickerStart').datepicker('getDate');
+            var selected = $(this).datepicker('getDate');
+            if (selected < startDate.addDays(1)) {
+                alert("Нельзя выбрать дату меньше начальной");
+            }
         });
     });
 
@@ -76,12 +93,6 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         this.setDate(this.getDate() + days);
         return this;
     };
-
-    $(document).ready(function () {
-        $('.datepickerEnd').datepicker({
-            format: 'dd-mm-yyyy'
-        });
-    });
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
@@ -98,6 +109,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
             method: 'GET'
         }).then(function (response) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         });
     }
 
