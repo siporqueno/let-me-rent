@@ -17,6 +17,7 @@ import ru.letmerent.core.services.impl.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,7 +64,7 @@ public class UserController {
     @GetMapping("/{username}")
     public UserDto getUser(@PathVariable String username) {
         return userConverter.userToUserDtoConverter(userService.findByUsername(username));
-    } //TODO: А давайте дополним контроллер еще методом поиска юзера по его ID?
+    }
 
     @Operation(summary = "Получение информации о себе как пользователе")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе",
@@ -77,6 +78,21 @@ public class UserController {
         return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
     }
 
+//    @Operation(summary = "Модификация пользовательских данных")
+//    @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
+//    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
+//            content = @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ApplicationError.class)))
+//    @PutMapping
+//    public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
+//        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
+//            return ResponseEntity.unprocessableEntity()
+//                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Incorrect password confirmation")));
+//        }
+//        userService.saveUser(userDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    } // такая редакция метода не подходит для модификации существующего юзера,поэтому я сделала новый -строки 96-114
+
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
@@ -84,11 +100,12 @@ public class UserController {
                     schema = @Schema(implementation = ApplicationError.class)))
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
-        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-            return ResponseEntity.unprocessableEntity()
-                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Incorrect password confirmation")));
+        if (userService.existByEmail(userDto.getEmail()) && !userService.emailBelongsToThisUser(userDto)) {
+            return ResponseEntity.badRequest()
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST
+                            .value(), "Выбранный адрес электронной почты принадлежит другому пользователю!")));
         }
-        userService.saveUser(userDto);
+        userService.modifyUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
