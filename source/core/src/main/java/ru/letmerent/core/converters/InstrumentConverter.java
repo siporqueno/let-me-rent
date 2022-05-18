@@ -10,6 +10,7 @@ import ru.letmerent.core.dto.IntervalDto;
 import ru.letmerent.core.entity.Brand;
 import ru.letmerent.core.entity.Category;
 import ru.letmerent.core.entity.Instrument;
+import ru.letmerent.core.entity.OrderItem;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
 import ru.letmerent.core.services.BrandService;
@@ -93,6 +94,12 @@ public class InstrumentConverter {
 
         dto.setStartDate(instrument.getStartDate());
         dto.setEndDate(instrument.getEndDate());
+
+        orderItemService.findAllByInstrumentId(instrument.getId())
+                .stream()
+                .map(OrderItem::getEndDate)
+                .max(LocalDateTime::compareTo)
+                .ifPresent(dto::setLastRentDate);
 
         return dto;
     }
