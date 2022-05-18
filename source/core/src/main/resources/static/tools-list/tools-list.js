@@ -72,14 +72,10 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
-            var today = new Date().getDate();
-            console.log(today);
+            var today = new Date();
             var selected = $(this).datepicker('getDate');
-            console.log(selected);
             if (selected != null) {
-                selected = selected.getDate();
-                console.log(selected);
-                if (selected < today) {
+                if (!isStartDateNotLaterThanEndDate(today, selected)) {
                     $(this).datepicker('setDate', null);
                     alert("Нельзя выбрать дату раньше сегодняшней");
                 }
@@ -93,11 +89,9 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             if (startDate === null) {
                 alert("Выберите дату начала аренды")
             } else {
-                startDate = startDate.getDate();
                 var selected = $(this).datepicker('getDate');
                 if (selected != null) {
-                    selected = selected.getDate();
-                    if (selected < startDate) {
+                    if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
                         $(this).datepicker('setDate', null);
                         alert("Нельзя выбрать дату раньше начальной");
                     }
@@ -106,6 +100,20 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         });
 
     });
+
+    let isStartDateNotLaterThanEndDate = function (startDate, endDate) {
+
+        if (startDate.getFullYear() > endDate.getFullYear()) {
+            return false;
+        }
+
+        if (startDate.getMonth() > endDate.getMonth()) {
+            return false;
+        }
+
+        return startDate.getDate() <= endDate.getDate();
+
+    }
 
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
