@@ -43,7 +43,6 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +60,7 @@ public class InstrumentController {
     private final ObjectMapper mapper;
     private final UserService userService;
     private final AuthenticationFacade authenticationFacade;
+    private final ApplicationError applicationError;
     
     @Operation(summary = "Вывод информации по всем инструментам")
     @GetMapping
@@ -129,11 +129,7 @@ public class InstrumentController {
         Optional<Instrument> oInstrument = instrumentService.getInstrumentById(id);
         if (oInstrument.isEmpty()) {
             return ResponseEntity.badRequest()
-                .body(mapper.valueToTree(ApplicationError.builder()
-                    .errorCode(HttpStatus.BAD_REQUEST.value())
-                    .userMessage(COULD_NOT_FIND_INSTRUMENT)
-                    .date(new Date())
-                    .build()));
+                .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), COULD_NOT_FIND_INSTRUMENT)));
         }
         
         InstrumentInfoDto infoDto = instrumentConverter.toInstrumentInfoDto(oInstrument.get());
@@ -167,20 +163,6 @@ public class InstrumentController {
         return new ResponseEntity<>(instrumentInfoDto, HttpStatus.CREATED);
     }
 
-//    @Operation(summary = "Информация по инструменту по имени пользователя") //todo конфликт мапинга с ru.letmerent.core.controllers.InstrumentController.getInstrumentById
-//    @GetMapping("/{username}")
-//    @ApiResponse(
-//            responseCode = "200",
-//            description = "Информация по инструменту.",
-//            content = @Content(
-//                    mediaType = "application/json",
-//                    schema = @Schema(
-//                            implementation = InstrumentDto.class))
-//    )
-//    ResponseEntity<InstrumentDto> getInstrumentByUsername(@Parameter(description = "Имя пользователя") @PathVariable String username) {
-//        return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
-//    }
-
     @Operation(summary = "Удаление инструмента")
     @DeleteMapping("/{id}")
     @ApiResponse(
@@ -193,11 +175,7 @@ public class InstrumentController {
             return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
         }else
             return ResponseEntity.badRequest()
-            .body(mapper.valueToTree(ApplicationError.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.value())
-                .userMessage("only admin can delete instruments")
-                .date(new Date())
-                .build()));
+            .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "only admin can delete instruments")));
     }
 
     @Operation(summary = "Изменение информации по инструменту")
