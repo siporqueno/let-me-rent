@@ -80,6 +80,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 selected = selected.getDate();
                 console.log(selected);
                 if (selected < today) {
+                    $(this).datepicker('setDate', null);
                     alert("Нельзя выбрать дату раньше сегодняшней");
                 }
             }
@@ -97,6 +98,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 if (selected != null) {
                     selected = selected.getDate();
                     if (selected < startDate) {
+                        $(this).datepicker('setDate', null);
                         alert("Нельзя выбрать дату раньше начальной");
                     }
                 }
