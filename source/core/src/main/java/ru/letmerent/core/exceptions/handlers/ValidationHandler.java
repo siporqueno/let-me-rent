@@ -1,6 +1,5 @@
 package ru.letmerent.core.exceptions.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
