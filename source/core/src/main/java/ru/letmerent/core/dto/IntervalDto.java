@@ -1,12 +1,7 @@
 package ru.letmerent.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
@@ -19,6 +14,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Модель интервала времени")
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class IntervalDto {
 
