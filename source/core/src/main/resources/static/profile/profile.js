@@ -34,6 +34,20 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/edit-tool/' + toolId);
     }
 
+    $scope.deleteTool = function (toolId) {
+        // Здесь в дальнейшем надо будет прописать логику отправки запроса администратору а удаление инструмента из базы
+        //либо чтобы у этого инструмента в базе ставился какой-то флаг, что владелец хочет удалить.
+    };
+
+    $scope.stopRentSuggestion = function (toolId) {
+        // здесь у меня два варианта, как это сделать:
+        //1. или мы отправляем с фронта запрос на модификацию инструмента, где с фронта прилети инструмент, в котором
+        //   дата окончания возможной аренды в инструменте будет сегодняшняя
+        //2. или сделаем на бэке отедельный метод в контроллере (в который прилетит айдишник инструмента)
+        //   и уже на бэке дата изменится. Этот вариант мне кажется предпочтительнее
+
+    };
+
     $scope.navToAuthPage = function () {
         $location.path('/authorisation');
     }
@@ -48,10 +62,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         alert("Владелец не может оставлять отзывы о своем инструменте :)");
     }
 
-    $scope.renterIsOwner = function (ownerId) {
-        if (ownerId === $rootScope.myUserIdFromProfile) {
+    $scope.renterIsOwner = function (ownerId){
+        if(ownerId === $rootScope.myUserIdFromProfile){
             return true;
-        } else {
+        }else {
             return false;
         }
     }
@@ -61,18 +75,7 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/tool-history');
     }
 
-    $scope.navToChangeProfileForm = function () {
-        $location.path('/change-profile-form');
-    }
-
-    $scope.loadAllProfileInfo = function () {
-        if ($rootScope.isUserLoggedIn()) {
-            $scope.loadMyProfile();
-            $scope.loadRents();
-            $scope.loadMyTools();
-        }
-    }
-
-    $scope.loadAllProfileInfo();
-
+    $scope.loadMyProfile();
+    $scope.loadRents();
+    $scope.loadMyTools();
 });
