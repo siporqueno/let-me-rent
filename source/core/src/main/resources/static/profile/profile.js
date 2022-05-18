@@ -75,7 +75,14 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/tool-history');
     }
 
-    $scope.loadMyProfile();
-    $scope.loadRents();
-    $scope.loadMyTools();
+    $scope.loadAllProfileInfo = function () {
+        if ($rootScope.isUserLoggedIn()) {
+            $scope.loadMyProfile();
+            $scope.loadRents();
+            $scope.loadMyTools();
+        }
+    }
+
+    $scope.loadAllProfileInfo();
+
 });
