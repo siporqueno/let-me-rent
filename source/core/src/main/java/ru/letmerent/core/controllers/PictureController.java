@@ -25,7 +25,6 @@ import ru.letmerent.core.services.InstrumentService;
 import ru.letmerent.core.services.PictureStorageService;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +38,7 @@ public class PictureController {
     private final ObjectMapper mapper;
     private final PictureStorageService storageService;
     private final InstrumentService instrumentService;
+    private final ApplicationError applicationError;
     
     @Operation(summary = "Загрузка картинки")
     @PostMapping("/upload")
@@ -134,10 +134,6 @@ public class PictureController {
     
     private ResponseEntity<Object> getErrorResponse(String message) {
         return ResponseEntity.badRequest()
-            .body(mapper.valueToTree(ApplicationError.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.value())
-                .userMessage(message)
-                .date(new Date())
-                .build()));
+            .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), message)));
     }
 }
