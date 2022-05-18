@@ -44,23 +44,9 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByEmail(email);
     }
 
-    public Boolean emailBelongsToThisUser (UserDto userDto){
-        return findByUsername(userDto.getUserName()).getEmail().equals(userDto.getEmail());
-    }
-
     @Transactional
     public void saveUser(UserDto userDto) {
         User user = userConverter.userDtoToUserConverter(userDto);
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void modifyUser(UserDto userDto) {
-        User user = findByUsername(userDto.getUserName());
-        user.setFirstName(userDto.getFirstName());
-        user.setSecondName(userDto.getSecondName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
         userRepository.save(user);
     }
 
