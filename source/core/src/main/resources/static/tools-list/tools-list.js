@@ -120,23 +120,44 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     }
 
 
-    $scope.putIntoCart = function (toolId) {
-        if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
-            alert("Введите даты начала и окончания аренды");
-            return
-        }
-        $http({
-            url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
-                + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
-            method: 'GET'
-        }).then(function (response) {
-            var x = document.getElementById("snackbar");
-            x.className = "show";
-            setTimeout(function () {
-                x.className = x.className.replace("show", "");
-            }, 3000);
-        });
-    }
+    // $scope.putIntoCart = function (toolId) {
+    //     if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
+    //         alert("Введите даты начала и окончания аренды");
+    //         return
+    //     }
+    //     $http({
+    //         url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
+    //             + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
+    //         method: 'GET'
+    //     }).then(function (response) {
+    //         var x = document.getElementById("snackbar");
+    //         x.className = "show";
+    //         setTimeout(function () {
+    //             x.className = x.className.replace("show", "");
+    //         }, 3000);
+    //     });
+    // }
+
+           $scope.putIntoCart = function (toolId) {
+           if ($scope.filter.startDate != null && $scope.filter.endDate != null &&
+           $scope.filter.startDate != '' && $scope.filter.endDate != ''
+           && $scope.filter.startDate != NaN && $scope.filter.endDate != NaN
+           && typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
+           $http({
+                           url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
+                               + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
+                           method: 'GET'
+                       }).then(function (response) {
+                           var x = document.getElementById("snackbar");
+                           x.className = "show";
+                           setTimeout(function () {
+                               x.className = x.className.replace("show", "");
+                           }, 3000);
+                       });
+           }else{
+           alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды");
+           }
+       }
 
 
     $scope.loadTools();
