@@ -54,6 +54,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void modifyUser(UserDto userDto) {
+        User user = findByUsername(userDto.getUserName());
+        user.setFirstName(userDto.getFirstName());
+        user.setSecondName(userDto.getSecondName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        userRepository.save(user);
+    }
+
     public void deleteUser(String username) {
         userRepository.deleteUserByUserName(username);
     }
