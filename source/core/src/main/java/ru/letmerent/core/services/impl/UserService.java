@@ -44,6 +44,10 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByEmail(email);
     }
 
+    public Boolean emailBelongsToThisUser (UserDto userDto){
+        return findByUsername(userDto.getUserName()).getEmail().equals(userDto.getEmail());
+    }
+
     @Transactional
     public void saveUser(UserDto userDto) {
         User user = userConverter.userDtoToUserConverter(userDto);
