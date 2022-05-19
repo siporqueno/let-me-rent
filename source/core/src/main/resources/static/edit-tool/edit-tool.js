@@ -5,6 +5,7 @@ angular.module('tools').controller('editToolController', function ($scope, $http
         $http.get(contextPath + '/' + $routeParams.toolId)
             .then(function successCallback(response) {
                 $scope.updated_tool = response.data;
+                console.log($scope.updated_tool);
                 $scope.earliestPossibleEndDate = response.data.lastRentDate;
             }, function failureCallback(response) {
                 console.log(response);
@@ -17,6 +18,7 @@ angular.module('tools').controller('editToolController', function ($scope, $http
         if ($scope.updated_tool.endDate < $scope.earliestPossibleEndDate) {
             alert("Предоставление инструмента в аренду не может быть приостановлено раньше окончания последнего забронированного периода аренды");
         } else {
+            console.log($scope.updated_tool);
             $http.put(contextPath, $scope.updated_tool)
                 .then(function successCallback(response) {
                     $scope.updated_tool = null;
