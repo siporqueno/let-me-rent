@@ -1,6 +1,6 @@
 <div>
     <p></p>
-    <h3 style="font-style: italic;">СПИСОК ИНСТРУМЕНТОВ, КОТОРЫЕ МОЖНО АРЕНДОВАТЬ</h3>
+    <h3>СПИСОК ИНСТРУМЕНТОВ, КОТОРЫЕ МОЖНО АРЕНДОВАТЬ</h3>
     <p></p>
     <div class="container">
         <form novalidate class="input-group col" ng-submit="loadTools()">
@@ -73,7 +73,7 @@
     <div class="mt-4"></div>
     <div class="container">
         <div>
-            <table style="color: #00008b;" id="tools-list" class="table">
+            <table id="tools-list" class="table">
                 <thead>
                 <tr>
                     <td>Категория</td>
@@ -101,13 +101,13 @@
                     <td>{{t.fee}}</td>
                     <td>{{t.price}}</td>
                     <td>
-                        <button class="btn" style="color: #00008b;">
+                        <button class="btn">
                             <i class="material-icons" ng-click="navToToolInfoPage(t.id)"
                                title="Информация о инструменте">info</i>
                         </button>
                     </td>
                     <td>
-                        <button class="btn" style="color: #00008b;">
+                        <button class="btn">
                             <i class="material-icons" ng-click="putIntoCart(t.id)" title="Добавить в корзину">add_shopping_cart</i>
                         </button>
                     </td>

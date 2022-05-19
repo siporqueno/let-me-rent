@@ -46,6 +46,43 @@
 
 <!--    TODO сделать css файл-->
     <style>
+        h1 {
+            font-style: italic;
+        }
+
+        h2 {
+            font-style: italic;
+        }
+
+        h3 {
+            font-style: italic;
+        }
+
+        h4 {
+            font-style: italic;
+        }
+
+        h5 {
+            font-style: italic;
+        }
+
+        .table {
+            color: #00008b;
+        }
+
+        .dropdown-item {
+            color: #00008b;
+        }
+
+        .dropdown-toggle {
+            color: #00008b;
+            font-weight: bold;
+        }
+
+        .material-icons {
+            color: #00008b;
+        }
+
         #snackbar {
             visibility: hidden;
             min-width: 250px;
@@ -97,26 +134,24 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav" style="list-style-type: none; background-color: #f0f8ff;">
                     <li class="nav-item">
-                        <a class="nav-link material-icons" title="Главная" href="#!/" style="color: #00008b;">home</a>
+                        <a class="nav-link material-icons" title="Главная" href="#!/">home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRent" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: #00008b;">
-                            Арендовать
-                        </a>
+                           data-bs-toggle="dropdown" aria-expanded="false">Арендовать</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/tools-list" style="color: #00008b;">
-                                Все инструменты в аренду</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#!/tools-list">Все инструменты в аренду</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLet" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold; color: #00008b;">
-                            Сдать
-                        </a>
+                           data-bs-toggle="dropdown" aria-expanded="false">Сдать</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/add-tool-form" style="color: #00008b;">Добавить
-                                инструмент</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#!/add-tool-form">Добавить инструмент</a>
+                            </li>
                         </ul>
                     </li>
                     <ul class="navbar-nav ms-auto">

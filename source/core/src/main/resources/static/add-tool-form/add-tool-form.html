@@ -1,6 +1,6 @@
 <div>
     <p></p>
-    <h1 style="font-style: italic;">ФОРМА ДОБАВЛЕНИЯ СВОЕГО ИНСТРУМЕНТА В БАЗУ САЙТА</h1>
+    <h1>ФОРМА ДОБАВЛЕНИЯ СВОЕГО ИНСТРУМЕНТА В БАЗУ САЙТА</h1>
     <span ng-show="!isUserLoggedIn()">Функция добавления инструмента доступна только для зарегистрированных пользователей. Пройдите авторизацию</span>
     <form novalidate ng-show="isUserLoggedIn()" ng-submit="addTool()" enctype="multipart/form-data">
         <input class="form-control" type="text" placeholder="Название инструмента" ng-model="new_tool.title">
@@ -21,7 +21,7 @@
         <button type="submit" class="btn btn-primary">Разместить в базе инструментов</button>
     </form>
 <br>
-    <h3 ng-show="isUserLoggedIn()" style="font-style: italic">Добавляемые фото:</h3>
+    <h3 ng-show="isUserLoggedIn()">Добавляемые фото:</h3>
     <div ng-show="isUserLoggedIn()" ng-repeat="p in pictures">
         {{p.name}}
         {{p.size}}
