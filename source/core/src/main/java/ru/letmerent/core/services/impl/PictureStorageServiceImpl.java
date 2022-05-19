@@ -66,8 +66,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
 
             file.transferTo(f);
             minioService.uploadFile(f, newName);
-
-            Files.copy(file.getInputStream(), this.root.resolve(newName));
+//            Files.copy(file.getInputStream(), this.root.resolve(newName));
             pictureRepository.save(new Picture(newName, instrument));
         } catch (IOException e) {
             log.error("Could not save picture: {}", e.getClass());
@@ -106,11 +105,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
         Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrumentId);
         if (isNull(pictureIds) || pictureIds.isEmpty()) {
             allByInstrumentId.forEach(pic -> {
-                try {
-                    Files.deleteIfExists(root.resolve(pic.getName()));
-                } catch (IOException e) {
-                    log.error(e.getMessage());
-                }
+                    minioService.removeFile(pic.getName());
             });
             pictureRepository.deleteAll(allByInstrumentId);
         } else {
@@ -119,11 +114,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
                     .filter(pic -> pictureIds.contains(pic.getId()))
                     .collect(Collectors.toList());
             picturesToDelete.forEach(pic -> {
-                try {
-                    Files.deleteIfExists(root.resolve(pic.getName()));
-                } catch (IOException e) {
-                    log.error(e.getMessage());
-                }
+                minioService.removeFile(pic.getName());
             });
             pictureRepository.deleteAll(picturesToDelete);
         }

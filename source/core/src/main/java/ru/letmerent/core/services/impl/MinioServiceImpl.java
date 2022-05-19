@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.letmerent.core.services.MinioService;
 
 import java.io.File;
@@ -47,9 +46,8 @@ public class MinioServiceImpl implements MinioService {
                     .object(shortName)
                     .build());
         } catch (Exception e) {
-            log.error("Удаление {} прошла не успешно", shortName);
+            log.error("Удаление {} прошло не успешно", shortName);
         }
-
     }
 
     @Override
@@ -70,6 +68,4 @@ public class MinioServiceImpl implements MinioService {
             return null;
         }
     }
-
-
 }

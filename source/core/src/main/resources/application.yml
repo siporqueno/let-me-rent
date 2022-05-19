@@ -51,7 +51,7 @@ logging:
         core: info
 
 minio:
-  url: http://127.0.0.1:9001/
+  url: http://127.0.0.1:9000/
   bucket: let-me-rent
   key: minio
   secret: minio-password
