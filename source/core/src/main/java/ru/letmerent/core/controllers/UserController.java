@@ -90,7 +90,7 @@ public class UserController {
                     .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST
                             .value(), "Выбранный адрес электронной почты принадлежит другому пользователю!")));
         }
-        userService.modifyUser(userDto);
+        userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
