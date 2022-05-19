@@ -28,7 +28,6 @@ import ru.letmerent.core.services.impl.UserService;
 import ru.letmerent.core.utils.TokenUtil;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -40,6 +39,7 @@ public class AuthController {
     private final TokenUtil tokenUtil;
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper mapper;
+    private final ApplicationError applicationError;
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping
@@ -61,11 +61,7 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.UNAUTHORIZED.value())
-                            .userMessage(e.getMessage())
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.UNAUTHORIZED.value(), e.getMessage())));
         }
     }
 }

@@ -3,6 +3,7 @@ package ru.letmerent.core.configs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
 
         http.authorizeRequests().antMatchers("/api/v1/auth").permitAll()
-                .antMatchers("/api/v1/users/*").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/instruments").permitAll()
                 .anyRequest().permitAll();
 
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);

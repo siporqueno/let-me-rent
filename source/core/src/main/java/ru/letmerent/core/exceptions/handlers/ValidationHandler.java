@@ -1,21 +1,27 @@
 package ru.letmerent.core.exceptions.handlers;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.letmerent.core.exceptions.models.ApplicationError;
 import ru.letmerent.core.exceptions.models.Violation;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@RestControllerAdvice
+@RequiredArgsConstructor
 public class ValidationHandler {
+
+    private final ApplicationError applicationError;
 
     @ResponseBody
     @ExceptionHandler(ConstraintViolationException.class)
@@ -27,11 +33,7 @@ public class ValidationHandler {
                         .message(v.getMessage())
                         .build())
                 .collect(Collectors.toList());
-        return ApplicationError.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.value())
-                .userMessage(violations)
-                .date(new Date())
-                .build();
+        return applicationError.generateError(HttpStatus.BAD_REQUEST.value(), violations);
     }
 
     @ResponseBody
@@ -44,10 +46,6 @@ public class ValidationHandler {
                         .message(error.getDefaultMessage())
                         .build())
                 .collect(Collectors.toList());
-        return ApplicationError.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.value())
-                .userMessage(violations)
-                .date(new Date())
-                .build();
+        return applicationError.generateError(HttpStatus.BAD_REQUEST.value(), violations);
     }
 }

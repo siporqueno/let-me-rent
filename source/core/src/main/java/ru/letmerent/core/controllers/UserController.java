@@ -25,6 +25,7 @@ import java.util.Date;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
+    private final ApplicationError applicationError;
     private final UserService userService;
     private final UserConverter userConverter;
     private final ObjectMapper mapper;
@@ -39,27 +40,15 @@ public class UserController {
     public ResponseEntity<?> registerNewUser(@Valid @RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
             return ResponseEntity.unprocessableEntity()
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Некорректное подтверждение пароля. Данные пароля и подтверждения должны совпадать")
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "Некорректное подтверждение пароля. Данные пароля и подтверждения должны совпадать")));
         }
         if (userService.existByEmail(userDto.getEmail())) {
             return ResponseEntity.badRequest()
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Выбранный адрес электронной почты уже используется!")
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "Выбранный адрес электронной почты уже используется!")));
         }
         if (userService.existByUsername(userDto.getUserName())) {
             return ResponseEntity.badRequest()
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Такой логин уже существует!")
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "Такой логин уже существует!")));
         }
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -89,26 +78,6 @@ public class UserController {
         return userConverter.userToUserDtoConverter(userService.findByUsername(principal.getName()));
     }
 
-//    @Operation(summary = "Модификация пользовательских данных")
-//    @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
-//    @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
-//            content = @Content(mediaType = "application/json",
-//                    schema = @Schema(implementation = ApplicationError.class)))
-//    @PutMapping
-//    public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
-//        if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
-//            return ResponseEntity.unprocessableEntity()
-//                    .body(mapper.valueToTree(ApplicationError.builder()
-//                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-//                            .userMessage("Incorrect password confirmation")
-//                            .date(new Date())
-//                            .build()));
-//        }
-//        userService.saveUser(userDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    } //Этот метод не подходит для модификации пользователя, поэтому сделала свой вариант ниже:
-
-
     @Operation(summary = "Модификация пользовательских данных")
     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно изменена")
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
@@ -118,14 +87,10 @@ public class UserController {
     public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
         if (userService.existByEmail(userDto.getEmail()) && !userService.emailBelongsToThisUser(userDto)) {
             return ResponseEntity.badRequest()
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.BAD_REQUEST.value())
-                            .userMessage("Выбранный адрес электронной почты принадлежит другому пользователю!")
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST
+                            .value(), "Выбранный адрес электронной почты принадлежит другому пользователю!")));
         }
-
-        userService.modifyUser(userDto);
+        userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -138,11 +103,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@RequestBody UserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
             return ResponseEntity.unprocessableEntity()
-                    .body(mapper.valueToTree(ApplicationError.builder()
-                            .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                            .userMessage("Incorrect password confirmation")
-                            .date(new Date())
-                            .build()));
+                    .body(mapper.valueToTree(applicationError.generateError(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Incorrect password confirmation")));
         }
         userService.deleteUser(userDto.getUserName());
         return new ResponseEntity<>(HttpStatus.OK);

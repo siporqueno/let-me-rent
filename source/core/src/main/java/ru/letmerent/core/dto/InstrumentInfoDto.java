@@ -49,4 +49,7 @@ public class InstrumentInfoDto extends InstrumentDto {
 
     @Schema(description = "Дата снятия инструмента с аренды")
     LocalDateTime endDate;
+
+    @Schema(description = "Последний, на текущий момент, день аренды инструмента")
+    LocalDateTime lastRentDate;
 }

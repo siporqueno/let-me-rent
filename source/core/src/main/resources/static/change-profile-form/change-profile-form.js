@@ -1,3 +1,4 @@
+
 angular.module('tools').controller('changeProfileInfoController', function ($scope, $rootScope, $http, $location) {
     const contextPath = 'http://localhost:8890/let-me-rent/api/v1/users';
 
