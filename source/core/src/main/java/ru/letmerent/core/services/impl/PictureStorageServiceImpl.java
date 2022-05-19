@@ -14,6 +14,7 @@ import ru.letmerent.core.repositories.PictureRepository;
 import ru.letmerent.core.services.PictureStorageService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -40,6 +41,8 @@ public class PictureStorageServiceImpl implements PictureStorageService {
 
     private final PictureRepository pictureRepository;
 
+    private final MinioServiceImpl minioService;
+
     @PostConstruct
     public void init() {
         this.root = Paths.get(storagePath);
@@ -56,9 +59,14 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             if (nonNull(originalFilename)) {
                 extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
-            
+
             String newName = UUID.randomUUID() + extension;
-            
+
+            File f = new File("/tmp/" + newName);
+
+            file.transferTo(f);
+            minioService.uploadFile(f, newName);
+
             Files.copy(file.getInputStream(), this.root.resolve(newName));
             pictureRepository.save(new Picture(newName, instrument));
         } catch (IOException e) {
@@ -66,13 +74,13 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             throw new RuntimeException("Could not save picture " + " " + file.getName());
         }
     }
-    
+
     @Override
     public Resource load(String pictureName) {
         try {
             Path picture = root.resolve(pictureName);
             Resource resource = new UrlResource(picture.toUri());
-            
+
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
@@ -82,7 +90,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
-    
+
     @Override
     public Resource load(Long pictureId) {
         Optional<Picture> oPicture = pictureRepository.findById(pictureId);
@@ -92,7 +100,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             throw new RuntimeException("Could not read the picture or picture does not exists!");
         }
     }
-    
+
     @Override
     public void deletePictures(Long instrumentId, List<Long> pictureIds) {
         Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrumentId);
@@ -107,9 +115,9 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             pictureRepository.deleteAll(allByInstrumentId);
         } else {
             List<Picture> picturesToDelete = allByInstrumentId
-                .stream()
-                .filter(pic -> pictureIds.contains(pic.getId()))
-                .collect(Collectors.toList());
+                    .stream()
+                    .filter(pic -> pictureIds.contains(pic.getId()))
+                    .collect(Collectors.toList());
             picturesToDelete.forEach(pic -> {
                 try {
                     Files.deleteIfExists(root.resolve(pic.getName()));
@@ -120,7 +128,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             pictureRepository.deleteAll(picturesToDelete);
         }
     }
-    
+
     @Override
     public MediaType getMediaType(String fileName) {
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -133,7 +141,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
                 return MediaType.IMAGE_PNG;
         }
     }
-    
+
     @Override
     public List<Picture> findAllPictureByInstrumentId(Long instrumentId) {
         return pictureRepository.findAllByInstrumentId(instrumentId);

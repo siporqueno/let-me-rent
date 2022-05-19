@@ -49,3 +49,10 @@ logging:
     ru:
       letmerent:
         core: info
+
+minio:
+  url: http://127.0.0.1:9001/
+  bucket: let-me-rent
+  key: minio
+  secret: minio-password
+
