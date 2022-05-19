@@ -85,16 +85,16 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
-            var startDate = $('.datepickerStart').datepicker('getDate');
-            if (startDate === null) {
-                alert("Выберите дату начала аренды")
-            } else {
-                var selected = $(this).datepicker('getDate');
-                if (selected != null) {
-                    if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
-                        $(this).datepicker('setDate', null);
-                        alert("Нельзя выбрать дату раньше начальной");
-                    }
+            var selected = $(this).datepicker('getDate');
+            if (selected != null) {
+                var startDate = $('.datepickerStart').datepicker('getDate');
+                if (startDate === null) {
+                    $(this).datepicker('setDate', null);
+                    alert("Выберите дату начала аренды")
+                }
+                if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
+                    $(this).datepicker('setDate', null);
+                    alert("Нельзя выбрать дату раньше начальной");
                 }
             }
         });
