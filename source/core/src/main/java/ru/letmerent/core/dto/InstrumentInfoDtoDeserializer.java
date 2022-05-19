@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInfoDto> {
@@ -53,8 +54,28 @@ public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInf
         System.out.println(ownerEmail);
         String description = node.get("description").toString().replace("\"", "");
         System.out.println(description);
+
         List<IntervalDto> intervals = new ArrayList<>();
+        JsonNode jsonIntervals = node.get("intervals");
+        if (jsonIntervals.isArray()) {
+            for (JsonNode jsonInterval : jsonIntervals) {
+                LocalDateTime dateStart = convertStringDateToLocalDateTime(jsonInterval.get("dateStart").toString().replace("\"", ""));
+                System.out.println(dateStart);
+                LocalDateTime dateFinish = convertStringDateToLocalDateTime(jsonInterval.get("dateFinish").toString().replace("\"", ""));
+                System.out.println(dateFinish);
+                IntervalDto intervalDto = new IntervalDto(dateStart, dateFinish);
+                intervals.add(intervalDto);
+            }
+        }
+
         Collection<String> pictureUrls = new ArrayList<>();
+        JsonNode jsonPictureUrls = node.get("pictureUrls");
+        if (jsonPictureUrls.isArray()) {
+            for (JsonNode jsonUrl : jsonPictureUrls) {
+                pictureUrls.add(jsonUrl.toString().replace("\"", ""));
+            }
+        }
+
         LocalDateTime startDate = convertStringDateToLocalDateTime(node.get("startDate").toString().replace("\"", ""));
         System.out.println(startDate);
         LocalDateTime endDate = convertStringDateToLocalDateTime(node.get("endDate").toString().replace("\"", ""));
