@@ -20,10 +20,6 @@
                 templateUrl: 'tool-info/tool-info.html',
                 controller: 'toolInfoController'
             })
-            .when('/rent-request-page/:toolId', { //ПО ЛОГИКЕ ПРИЛОЖЕНИЯ ЭТО ПОКА ЛИШНЯЯ СТРАНИЦА. ПОТОМ УБЕРЕМ
-                templateUrl: 'rent-request-page/rent-request-page.html',
-                controller: 'rentRequestController'
-            })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
                 controller: 'profileController'

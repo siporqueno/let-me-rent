@@ -8,8 +8,8 @@ values ('Ручной', 'Ручной инструмент'),
        ('Электрический', 'Электрический инструмент'),
        ('Дрели', 'Дрели');
 
-insert into users (first_name, second_name, last_name, email, username, password)
-values ('Test', 'Testovich', 'Testov', 'test@test.com', 'test', '1111');
+insert into users (first_name, email, username, password)
+values ('Test', 'test@test.com', 'test', '1111');
 
 insert into instruments (title, category, description, price, fee, owner, brand_brand_id)
 values ('Шуруповерт', 3, 'Крутит, сверлит', 1234.56, 12.23, 1, 1),
