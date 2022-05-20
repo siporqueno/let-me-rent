@@ -45,6 +45,43 @@
 
 <!--    TODO сделать css файл-->
     <style>
+        h1 {
+            font-style: italic;
+        }
+
+        h2 {
+            font-style: italic;
+        }
+
+        h3 {
+            font-style: italic;
+        }
+
+        h4 {
+            font-style: italic;
+        }
+
+        h5 {
+            font-style: italic;
+        }
+
+        .table {
+            color: #00008b;
+        }
+
+        .dropdown-item {
+            color: #00008b;
+        }
+
+        .dropdown-toggle {
+            color: #00008b;
+            font-weight: bold;
+        }
+
+        .material-icons {
+            color: #00008b;
+        }
+
         #snackbar {
             visibility: hidden;
             min-width: 250px;
@@ -91,60 +128,61 @@
 </head>
 
 <body ng-app="tools" style="position: relative; min-height: 100%; padding-bottom: 6rem">
-<div class="container">
-    <div ng-controller="indexController">
+<div class="container" style="color: #00008b;">
+    <div ng-controller="indexController" style="background-color: #f0f8ff;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse" id="navbarNav" style="list-style-type: none; background-color: #f0f8ff;">
                     <li class="nav-item">
                         <a class="nav-link material-icons" title="Главная" href="#!/">home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRent" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Арендовать
-                        </a>
+                           data-bs-toggle="dropdown" aria-expanded="false">Арендовать</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/tools-list">Все инструменты в аренду</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#!/tools-list">Все инструменты в аренду</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLet" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Сдать
-                        </a>
+                           data-bs-toggle="dropdown" aria-expanded="false">Сдать</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!/add-tool-form">Добавить инструмент</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#!/add-tool-form">Добавить инструмент</a>
+                            </li>
                         </ul>
                     </li>
-                    <!--                    <li class="nav-item" ng-show="isUserLoggedIn()"> // как вариант, показывать только, если пользователь зарегистрировался-->
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link material-icons" title="Корзина"
-                                            href="#!/cart">shopping_cart</a></li>
-                    <li class="nav-item"><a class="nav-link material-icons" title="Личный кабинет" href="#!/profile">account_circle</a>
-                    </li>
-                    <li class="nav-item" ng-show="!isUserLoggedIn()"><a class="nav-link" href="#!/authorisation">Авторизоваться</a>
-                    </li>
-                    <li class="nav-item" ng-show="isUserLoggedIn()">
-                        <button class="btn btn-info btn-sm" ng-click="tryToLogout()">Выйти из профиля</button>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link material-icons" title="Корзина"
+                                                href="#!/cart" style="color: #00008b;">shopping_cart</a></li>
+                        <li class="nav-item"><a class="nav-link material-icons" title="Личный кабинет" href="#!/profile"
+                                                style="color: #00008b;">account_circle</a>
+                        </li>
+                        <li class="nav-item" ng-show="!isUserLoggedIn()">
+                            <a class="nav-link material-icons" title="Авторизоваться"
+                               href="#!/authorisation" style="color: #00008b;">login</a>
+                        </li>
+                        <li class="nav-item" ng-show="isUserLoggedIn()">
+                            <button class="btn">
+                                <i class="material-icons" title="Выйти из профиля" ng-click="tryToLogout()">logout</i>
+                            </button>
+                        </li>
+                    </ul>
             </div>
         </nav>
+    </div>
+    <div style="position:absolute; bottom: 0;">
+        <footer class="bg-light text-center text-lg-start container fixed-bottom">
+            <div class="text-center p-3" style="background-color: #f0f8ff;">
+                © 2022 Все права защищены:
+                <a class="text-dark" href="mailto:инфо@дайпогонять.рф">инфо@дайпогонять.рф</a>
+            </div>
+        </footer>
     </div>
 
     <ng-view></ng-view>
 
 </div>
-<div style="position:absolute; bottom: 0;">
-    <footer class="bg-light text-center text-lg-start container fixed-bottom">
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.02);">
-            © 2022 Все права защищены:
-            <a class="text-dark" href="mailto:инфо@дайпогонять.рф">инфо@дайпогонять.рф</a>
-        </div>
-    </footer>
-</div>
-
 </body>
 </html>
