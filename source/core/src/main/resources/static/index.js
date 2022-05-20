@@ -60,6 +60,10 @@
                 templateUrl: 'feedback-about-renter-page/feedback-about-renter-page.html',
                 controller: 'feedbackAboutRenterController'
             })
+            .when('/change-profile-form', {
+                templateUrl: 'change-profile-form/change-profile-form.html',
+                controller: 'changeProfileInfoController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

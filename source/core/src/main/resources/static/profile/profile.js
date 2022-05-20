@@ -61,6 +61,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $location.path('/tool-history');
     }
 
+    $scope.navToChangeProfileForm = function () {
+        $location.path('/change-profile-form');
+    }
+
     $scope.loadMyProfile();
     $scope.loadRents();
     $scope.loadMyTools();

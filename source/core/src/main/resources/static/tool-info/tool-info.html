@@ -3,16 +3,22 @@
     <h2>Информация об инструменте</h2>
     <br/>
     <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
-<!--    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"-->
-<!--            ng-click="navToToolHistory(tool.id)">История аренд инструмента-->
-<!--    </button>-->
+    <!--    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"-->
+    <!--            ng-click="navToToolHistory(tool.id)">История аренд инструмента-->
+    <!--    </button>-->
     <br/>
     <p></p>
     <p>{{'Категория: ' + tool.categoryName}}</p>
     <p>{{'Название инструмента: ' + tool.title}}</p>
     <p>{{'Марка : ' + tool.brandName}}</p>
     <p ng-if='tool.pictureUrls'>Фотографии</p>
-    <img ng-repeat='url in tool.pictureUrls' ng-src='{{url}}'>
+    <div class="container">
+        <div class="row">
+            <div class="col-3" ng-repeat='url in tool.pictureUrls'>
+                <img class="img-fluid" ng-src='{{url}}'>
+            </div>
+        </div>
+    </div>
     <p></p>
     <h3>Владелец инструмента:</h3>
     <p>{{'Имя пользователя на сайте: ' + tool.ownerUsername}}</p>
@@ -46,7 +52,8 @@
     <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
     <br/>
     <br/>
-    <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
+    <span style="color: mediumblue"
+          ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
     <br/>
     <div ng-repeat="tc in tool_comments">
         <textarea cols="170" rows="3" readonly>{{tc.description}}</textarea>
