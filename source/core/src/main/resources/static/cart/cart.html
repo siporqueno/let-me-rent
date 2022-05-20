@@ -5,7 +5,9 @@
     <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
     <br/>
     <br/>
-    <button class="btn btn-outline-primary" ng-click="navToToolsList()">Назад к выбору инструмента</button>
+    <button class="btn btn-link" ng-click="navToToolsList()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Назад к выбору инструмента
+    </button>
     <br/>
     <br/>
     <table class="table align-middle table-bordered" ng-show="cart.items.length > 0">

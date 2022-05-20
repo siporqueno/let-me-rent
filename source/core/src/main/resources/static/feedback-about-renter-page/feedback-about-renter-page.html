@@ -2,7 +2,9 @@
     <p></p>
     <h3>Здесь вы можете оставить отзыв об арендаторе вашего инструмента:</h3>
     <br/>
-    <button class="btn btn-outline-primary" ng-click="navToToolHistory2()">Вернуться в историю аренд</button>
+    <button class="btn btn-link" ng-click="navToToolHistory2()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Вернуться в историю аренд
+    </button>
     <br/>
     <p>{{'Арендатор: ' + renterInfo.userName}}</p>
     <p>{{'ФИО : ' + renterInfo.lastName + ' ' + renterInfo.firstName + ' ' + renterInfo.secondName}}</p>
