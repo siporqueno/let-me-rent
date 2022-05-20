@@ -27,10 +27,12 @@
     </ul>
     <p></p>
     <p></p>
-    <h2>Если вы еще не зарегистрированы, вам необходимо это сделать</h2>
-    <br/>
+    <div ng-show="!isUserLoggedIn()">
+        <h2>Если вы еще не зарегистрированы, вам необходимо это сделать</h2>
+        <br/>
 
-    <button class="btn btn-outline-warning" ng-click="navToRegistration()">ПРОЙТИ РЕГИСТРАЦИЮ</button>
+        <button class="btn btn-outline-warning" ng-click="navToRegistration()">ПРОЙТИ РЕГИСТРАЦИЮ</button>
+    </div>
 
 
 </div>
