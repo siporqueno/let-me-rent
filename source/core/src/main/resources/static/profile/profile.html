@@ -2,7 +2,6 @@
 
     <div class="container" ng-show="!isUserLoggedIn()">
         <h1>Доступ к личному кабинету возможен только для авторизованных пользователей!</h1>
-<!--        ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ-->
         <button class="btn btn-outline-success" ng-click="navToAuthPage()">Авторизоваться</button>
     </div>
     <div class="container" ng-show="isUserLoggedIn()">
