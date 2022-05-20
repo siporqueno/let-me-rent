@@ -1,23 +1,33 @@
 <div>
     <p></p>
     <h3>Изменить сведения об инструменте</h3>
+    <h5>Если вы хотите снять инструмент с аренды, поменяйте дату окончания предоставления инструмента в аренду на текущую</h5>
     <form novalidate ng-submit="updateTool()">
         <input class="form-control" type="number" hidden placeholder="ID" ng-model="updated_tool.id">
+        <p></p>
+        <input class="form-control" type="number" hidden placeholder="ownerID" ng-model="updated_tool.ownerId">
         <p></p>
         <input class="form-control" type="text" placeholder="Категория" ng-model="updated_tool.categoryName">
         <p></p>
         <input class="form-control" type="text" placeholder="Название инструмента" ng-model="updated_tool.title">
         <p></p>
-        <input class="form-control" type="text" placeholder="Марка" ng-model="updated_tool.brand">
+        <input class="form-control" type="text" placeholder="Марка" ng-model="updated_tool.brandName">
         <p></p>
-        <input class="form-control" type="text" placeholder="Фото" ng-model="updated_tool.picturesUrls">
+        <input class="form-control" type="number" placeholder="Цена аренды в сутки" ng-model="updated_tool.fee">
         <p></p>
-        <input class="form-control" type="text" placeholder="Цена аренды в сутки" ng-model="updated_tool.fee">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Сумма залога" ng-model="updated_tool.price">
+        <input class="form-control" type="number" placeholder="Сумма залога" ng-model="updated_tool.price">
         <p></p>
         <input class="form-control" type="text" placeholder="Описание" ng-model="updated_tool.description">
         <p></p>
+<<<<<<< HEAD
         <button type="submit" class="btn btn-outline-warning">Сохранить изменения</button>
+=======
+        <p>Если вы хотите ограничить по времени дальнейшую аренду инструмента, вы можете поменять дату окончания
+            предоставления инструмента в аренду на любую дату после даты окончания крайней аренды: {{earliestPossibleEndDate}}</p>
+        <input class="form-control" type="text" placeholder="Дата окончания предоставления инструмента в аренду" ng-model="updated_tool.endDate">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+>>>>>>> 169946ba4887e50e017ed127541f742d5d272a56
     </form>
+
 </div>

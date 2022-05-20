@@ -191,6 +191,7 @@ public class InstrumentController {
                     schema = @Schema(
                             implementation = InstrumentDto.class))
     )
+
     ResponseEntity<InstrumentDto> modifyInstrument(@RequestBody InstrumentInfoDto instrumentInfoDto) {
         User user = userService.findByUsername(instrumentInfoDto.getOwnerUsername());
         Instrument instrument = instrumentConverter.toInstrument(instrumentInfoDto, user);
