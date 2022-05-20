@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.converters.OrderConverter;
 import ru.letmerent.core.dto.OrderDto;
 import ru.letmerent.core.entity.Order;
+import ru.letmerent.core.services.EmailService;
 import ru.letmerent.core.services.OrderService;
 import ru.letmerent.core.services.impl.CartService;
 import ru.letmerent.core.services.impl.UserService;
@@ -42,6 +43,8 @@ public class OrderController {
     private final CartService cartService;
 
     private final UserService userService;
+    
+    private final EmailService emailService;
 
     @Operation(summary = "Создание заказа")
     @PostMapping("/{uuid}")
@@ -56,6 +59,7 @@ public class OrderController {
         String cartUuid = cartService.getCurrentCartUuid(principal, uuid);
         OrderDto orderDto = orderConverter.convertCartToOrder(principal, cartUuid);
         Order order = orderService.createOrder(orderConverter.convertToOrder(orderDto));
+        emailService.sendNotification(order);
         return new ResponseEntity<>(orderConverter.convertToOrderDto(order), HttpStatus.CREATED);
     }
 

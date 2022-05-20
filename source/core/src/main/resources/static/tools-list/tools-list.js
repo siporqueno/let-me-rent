@@ -72,14 +72,10 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
-            var today = new Date().getDate();
-            console.log(today);
+            var today = new Date();
             var selected = $(this).datepicker('getDate');
-            console.log(selected);
             if (selected != null) {
-                selected = selected.getDate();
-                console.log(selected);
-                if (selected < today) {
+                if (!isStartDateNotLaterThanEndDate(today, selected)) {
                     $(this).datepicker('setDate', null);
                     alert("Нельзя выбрать дату раньше сегодняшней");
                 }
@@ -89,46 +85,79 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
-            var startDate = $('.datepickerStart').datepicker('getDate');
-            if (startDate === null) {
-                alert("Выберите дату начала аренды")
-            } else {
-                startDate = startDate.getDate();
-                var selected = $(this).datepicker('getDate');
-                if (selected != null) {
-                    selected = selected.getDate();
-                    if (selected < startDate) {
-                        $(this).datepicker('setDate', null);
-                        alert("Нельзя выбрать дату раньше начальной");
-                    }
+            var selected = $(this).datepicker('getDate');
+            if (selected != null) {
+                var startDate = $('.datepickerStart').datepicker('getDate');
+                if (startDate === null) {
+                    $(this).datepicker('setDate', null);
+                    alert("Выберите дату начала аренды")
+                }
+                if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
+                    $(this).datepicker('setDate', null);
+                    alert("Нельзя выбрать дату раньше начальной");
                 }
             }
         });
 
     });
 
+    let isStartDateNotLaterThanEndDate = function (startDate, endDate) {
+
+        if (startDate.getFullYear() > endDate.getFullYear()) {
+            return false;
+        }
+
+        if (startDate.getMonth() > endDate.getMonth()) {
+            return false;
+        }
+
+        return startDate.getDate() <= endDate.getDate();
+
+    }
+
     $scope.navToToolInfoPage = function (toolId) {
         $location.path('/tool-info/' + toolId);
     }
 
 
-    $scope.putIntoCart = function (toolId) {
-        if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
-            alert("Введите даты начала и окончания аренды");
-            return
-        }
-        $http({
-            url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
-                + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
-            method: 'GET'
-        }).then(function (response) {
-            var x = document.getElementById("snackbar");
-            x.className = "show";
-            setTimeout(function () {
-                x.className = x.className.replace("show", "");
-            }, 3000);
-        });
-    }
+    // $scope.putIntoCart = function (toolId) {
+    //     if (typeof $scope.filter === 'undefined' || typeof $scope.filter.startDate === 'undefined' || typeof $scope.filter.endDate === 'undefined') {
+    //         alert("Введите даты начала и окончания аренды");
+    //         return
+    //     }
+    //     $http({
+    //         url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
+    //             + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
+    //         method: 'GET'
+    //     }).then(function (response) {
+    //         var x = document.getElementById("snackbar");
+    //         x.className = "show";
+    //         setTimeout(function () {
+    //             x.className = x.className.replace("show", "");
+    //         }, 3000);
+    //     });
+    // }
+
+           $scope.putIntoCart = function (toolId) {
+           if ($scope.filter.startDate != null && $scope.filter.endDate != null &&
+           $scope.filter.startDate != '' && $scope.filter.endDate != ''
+           && $scope.filter.startDate != NaN && $scope.filter.endDate != NaN
+           && typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
+           $http({
+                           url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
+                               + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
+                           method: 'GET'
+                       }).then(function (response) {
+                           var x = document.getElementById("snackbar");
+                           x.className = "show";
+                           setTimeout(function () {
+                               x.className = x.className.replace("show", "");
+                           }, 3000);
+                       });
+           }else{
+           alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды");
+           }
+       }
 
 
     $scope.loadTools();

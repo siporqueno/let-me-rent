@@ -32,13 +32,13 @@
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
                         <input class="form-control border datepickerStart" type="search" value="" id="filterStartDate"
-                               placeholder="дата начала аренды" ng-model="filter.startDate">
+                               autocomplete="off" placeholder="дата начала аренды" ng-model="filter.startDate">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <div class="input-group">
                         <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate"
-                               placeholder="дата окончания аренды" ng-model="filter.endDate">
+                               autocomplete="off" placeholder="дата окончания аренды" ng-model="filter.endDate">
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
@@ -70,79 +70,82 @@
             </select>
         </div>
     </div>
-    <div class="mt-4"></div>
-    <div class="container">
-        <div>
-            <table id="tools-list" class="table">
-                <thead>
-                <tr>
-                    <td>Категория</td>
-                    <td>Название инструмента</td>
-                    <td>Брэнд</td>
-                    <td>Фото</td>
-                    <td>Владелец</td>
-                    <td>Цена аренды в сутки</td>
-                    <td>Сумма залога</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="t in toolsPage.instruments">
-                    <td>{{t.categoryName}}</td>
-                    <td>{{t.title}}</td>
-                    <td>{{t.brandName}}</td>
-                    <td>
-                        <img ng-if='t.avatarPictureUrl'
-                             ng-src='{{t.avatarPictureUrl}}'>
-                    </td>
-                    <td>{{t.ownerUsername}}</td>
-                    <td>{{t.fee}}</td>
-                    <td>{{t.price}}</td>
-                    <td>
-                        <button class="btn">
-                            <i class="material-icons" ng-click="navToToolInfoPage(t.id)" style="color: #08711e;" title="Информация о инструменте">info</i>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn">
-                            <i class="material-icons" ng-click="putIntoCart(t.id)" title="Добавить в корзину">add_shopping_cart</i>
-                        </button>
-                    </td>
-                </tr>
+    <div class="mt-4">
+        <div class="container">
+            <div>
+                <table id="tools-list" class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-1">Категория</th>
+                        <th class="col-3">Название инструмента</th>
+                        <th class="col-1">Брэнд</th>
+                        <th class="col-1">Фото</th>
+                        <th class="col-1">Владелец</th>
+                        <th class="col-1">Цена аренды в сутки</th>
+                        <th class="col-1">Сумма залога</th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="t in toolsPage.instruments">
+                        <td class="col-1">{{t.categoryName}}</td>
+                        <td class="col-3">{{t.title}}</td>
+                        <td class="col-1">{{t.brandName}}</td>
+                        <td class="col-1">
+                            <img class="img-fluid img-thumbnail" ng-if='t.avatarPictureUrl'
+                                 ng-src='{{t.avatarPictureUrl}}'>
+                        </td>
+                        <td class="col-1">{{t.ownerUsername}}</td>
+                        <td class="col-1">{{t.fee}}</td>
+                        <td class="col-1">{{t.price}}</td>
+                        <td class="col-1">
+                            <button class="btn">
+                                <i class="material-icons" ng-click="navToToolInfoPage(t.id)"
+                                   title="Информация о инструменте">info</i>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn">
+                                <i class="material-icons" ng-click="putIntoCart(t.id)" title="Добавить в корзину">add_shopping_cart</i>
+                            </button>
+                        </td>
+                    </tr>
 
-                <!--               С Денисом оговорили - оставляю напоминалку в коде - ПОДУМАТЬ НАД ФОРМИРОВАНИЕ ЗАКАЗА И КОРЗИНЫ-->
-                <!--ПОКА кнопка "В КОРЗИНУ" ведет на страницу оформления инструмента, где выбирается дата и можно уже арендовать.-->
-                <!--НО когда проработаем схему работы с корзиной, будет, наверное, просто добавление этого инструмента в корзину,-->
-                <!--из которой потом можно будет переходить от нужного инструмента на страницу оформления аренды. Может, будет иметь смысл-->
-                <!--добавить еще одну кнопку типа "Арендовать сразу", если человеку нужен только один инструмент и он не хочет ничего-->
-                <!--сравнивать, а сразу понял, что это то, что ему надо-->
+                    <!--               С Денисом оговорили - оставляю напоминалку в коде - ПОДУМАТЬ НАД ФОРМИРОВАНИЕ ЗАКАЗА И КОРЗИНЫ-->
+                    <!--ПОКА кнопка "В КОРЗИНУ" ведет на страницу оформления инструмента, где выбирается дата и можно уже арендовать.-->
+                    <!--НО когда проработаем схему работы с корзиной, будет, наверное, просто добавление этого инструмента в корзину,-->
+                    <!--из которой потом можно будет переходить от нужного инструмента на страницу оформления аренды. Может, будет иметь смысл-->
+                    <!--добавить еще одну кнопку типа "Арендовать сразу", если человеку нужен только один инструмент и он не хочет ничего-->
+                    <!--сравнивать, а сразу понял, что это то, что ему надо-->
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <p></p>
+                <p></p>
 
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li ng-show="!toolsPage.firstPage">
-                        <button class="page-link" ng-click="loadTools(toolsPage.number - 1)"><<</button>
-                    </li>
-                    <li ng-show="toolsPage.totalElements > 0"
-                        ng-repeat="pageIndex in paginationArray"
-                        ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3">
-                        <button class="page-link"
-                                ng-style="{'font-weight': (pageIndex == toolsPage.number+1) ? 'bold' : ''}"
-                                ng-click="loadTools(pageIndex - 1)">{{pageIndex}}
-                        </button>
-                    </li>
-                    <li ng-show="!toolsPage.lastPage">
-                        <button class="page-link" ng-click="loadTools(toolsPage.number + 1)">>></button>
-                    </li>
-                </ul>
-            </nav>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li ng-show="!toolsPage.firstPage">
+                            <button class="page-link" ng-click="loadTools(toolsPage.number - 1)"><<</button>
+                        </li>
+                        <li ng-show="toolsPage.totalElements > 0"
+                            ng-repeat="pageIndex in paginationArray"
+                            ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3">
+                            <button class="page-link"
+                                    ng-style="{'font-weight': (pageIndex == toolsPage.number+1) ? 'bold' : ''}"
+                                    ng-click="loadTools(pageIndex - 1)">{{pageIndex}}
+                            </button>
+                        </li>
+                        <li ng-show="!toolsPage.lastPage">
+                            <button class="page-link" ng-click="loadTools(toolsPage.number + 1)">>></button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
+
     <div id="snackbar">Инструмент успешно добавлен в корзину</div>
 </div>

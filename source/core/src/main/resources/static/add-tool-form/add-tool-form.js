@@ -1,4 +1,3 @@
-
 angular
     .module('tools')
     .controller('addToolFormController', function ($scope, $http, $routeParams, $location, $localStorage) {
@@ -29,6 +28,8 @@ angular
                             alert(response.data.messages);
                         });
                     }
+
+                    alert('Инструмент успешно добавлен в базу');
 
                     $location.path('/profile');
                 }, function failureCallback(response) {
