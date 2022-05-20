@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.letmerent.core.converters.UserConverter;
 import ru.letmerent.core.dto.UserDto;
@@ -20,6 +21,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
+    private final PasswordEncoder passwordEncoder;
 
     public User findByUsername(String username) {
         return userRepository.findByUserName(username).orElseThrow(() ->
@@ -50,17 +52,18 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void saveUser(UserDto userDto) {
+        if (userRepository.existsById(userDto.getId())) {
+            User user = userRepository.getById(userDto.getId());
+            user.setFirstName(userDto.getFirstName());
+            user.setSecondName(userDto.getSecondName());
+            user.setLastName(userDto.getLastName());
+            user.setEmail(userDto.getEmail());
+            user.setUserName(userDto.getUserName());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            userRepository.save(user);
+            return;
+        }
         User user = userConverter.userDtoToUserConverter(userDto);
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void modifyUser(UserDto userDto) {
-        User user = findByUsername(userDto.getUserName());
-        user.setFirstName(userDto.getFirstName());
-        user.setSecondName(userDto.getSecondName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
         userRepository.save(user);
     }
 
