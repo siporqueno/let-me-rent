@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInfoDto> {
@@ -29,40 +28,25 @@ public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInf
 
         JsonNode node = jp.getCodec().readTree(jp);
         Long id = node.get("id").longValue();
-        System.out.println(id);
         String title = node.get("title").toString().replace("\"", "");
-        System.out.println(title);
         String brandName = node.get("brandName").toString().replace("\"", "");
-        System.out.println(brandName);
         BigDecimal fee = node.get("fee").decimalValue();
-        System.out.println(fee);
         BigDecimal price = node.get("price").decimalValue();
-        System.out.println(price);
         String ownerUsername = node.get("ownerUsername").toString().replace("\"", "");
-        System.out.println(ownerUsername);
         String categoryName = node.get("categoryName").toString().replace("\"", "");
-        System.out.println(categoryName);
         Long ownerId = node.get("ownerId").longValue();
-        System.out.println(ownerId);
         String ownerFirstName = node.get("ownerFirstName").toString().replace("\"", "");
-        System.out.println(ownerFirstName);
         String ownerSecondName = node.get("ownerSecondName").toString().replace("\"", "");
-        System.out.println(ownerSecondName);
         String ownerLastName = node.get("ownerLastName").toString().replace("\"", "");
-        System.out.println(ownerLastName);
         String ownerEmail = node.get("ownerEmail").toString().replace("\"", "");
-        System.out.println(ownerEmail);
         String description = node.get("description").toString().replace("\"", "");
-        System.out.println(description);
 
         List<IntervalDto> intervals = new ArrayList<>();
         JsonNode jsonIntervals = node.get("intervals");
         if (jsonIntervals.isArray()) {
             for (JsonNode jsonInterval : jsonIntervals) {
                 LocalDateTime dateStart = convertStringDateToLocalDateTime(jsonInterval.get("dateStart").toString().replace("\"", ""));
-                System.out.println(dateStart);
                 LocalDateTime dateFinish = convertStringDateToLocalDateTime(jsonInterval.get("dateFinish").toString().replace("\"", ""));
-                System.out.println(dateFinish);
                 IntervalDto intervalDto = new IntervalDto(dateStart, dateFinish);
                 intervals.add(intervalDto);
             }
@@ -77,9 +61,7 @@ public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInf
         }
 
         LocalDateTime startDate = convertStringDateToLocalDateTime(node.get("startDate").toString().replace("\"", ""));
-        System.out.println(startDate);
         LocalDateTime endDate = convertStringDateToLocalDateTime(node.get("endDate").toString().replace("\"", ""));
-        System.out.println(endDate);
 
         InstrumentInfoDto instrum = new InstrumentInfoDto();
         instrum.setId(id);
