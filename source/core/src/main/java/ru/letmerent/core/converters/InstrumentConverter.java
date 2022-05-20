@@ -116,6 +116,7 @@ public class InstrumentConverter {
         }
 
         Instrument instrument = new Instrument();
+        instrument.setId(instrumentDto.getId());
         instrument.setTitle(instrumentDto.getTitle());
         instrument.setDescription(instrumentDto.getDescription());
         instrument.setPrice(instrumentDto.getPrice());
@@ -125,6 +126,7 @@ public class InstrumentConverter {
         instrument.setCategoryId(category.get().getId());
         instrument.setStartDate(instrumentDto.getStartDate());
         instrument.setEndDate(instrumentDto.getEndDate());
+        instrument.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrumentDto.getId()));
         return instrument;
     }
     
