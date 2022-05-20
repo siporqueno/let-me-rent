@@ -2,7 +2,7 @@
     <p></p>
     <h2 style="font-style: italic;">Информация об инструменте</h2>
     <br/>
-    <button class="btn btn-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
+    <button class="btn btn-outline-primary" ng-click="navToToolsList()">НАЗАД К ВЫБОРУ</button>
 <!--    <button class="btn btn-primary" ng-show="isUserLoggedIn() && isUserNameEqualsTo(tool.ownerUsername)"-->
 <!--            ng-click="navToToolHistory(tool.id)">История аренд инструмента-->
 <!--    </button>-->
@@ -43,7 +43,7 @@
     <p>{{tool.description}}</p>
 
     <br/>
-    <button class="btn btn-info" ng-click="showToolComments()">Показать отзывы об инструменте</button>
+    <button class="btn btn-outline-success" ng-click="showToolComments()">Показать отзывы об инструменте</button>
     <br/>
     <br/>
     <span style="color: mediumblue" ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
