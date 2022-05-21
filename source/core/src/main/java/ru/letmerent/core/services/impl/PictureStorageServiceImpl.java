@@ -56,6 +56,11 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             if (!Files.exists(root)) {
                 Files.createDirectory(root);
             }
+            Path temp = Paths.get(storagePath, "temp");
+            if (!Files.exists(temp)) {
+                Files.createDirectory(temp);
+            }
+    
             String originalFilename = file.getOriginalFilename();
             String extension = "";
             if (nonNull(originalFilename)) {
@@ -63,12 +68,12 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             }
 
             String newName = UUID.randomUUID() + extension;
+    
+            Path filePath = temp.resolve(newName);
+            Files.copy(file.getInputStream(), filePath);
+            File f = new File(String.valueOf(filePath));
 
-            File f = new File("/tmp/" + newName);
-
-            file.transferTo(f);
-            minioService.uploadFile(f, newName);
-//            Files.copy(file.getInputStream(), this.root.resolve(newName));
+            minioService.uploadFile(f);
             pictureRepository.save(new Picture(newName, instrument));
         } catch (IOException e) {
             log.error("Could not save picture: {}", e.getClass());

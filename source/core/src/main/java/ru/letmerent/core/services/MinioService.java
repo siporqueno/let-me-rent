@@ -4,7 +4,7 @@ import java.io.File;
 
 public interface MinioService {
 
-    void uploadFile(File file, String shortName);
+    void uploadFile(File file);
 
     void removeFile(String shortName);
 
