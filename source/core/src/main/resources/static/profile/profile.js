@@ -14,7 +14,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
     $scope.loadMyTools = function () {
         $http({
             url: contextPath + 'api/v1/instruments/lk',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                size: 50
+            }
         }).then(function (response) {
             $scope.tools = response.data;
         });
@@ -62,10 +65,10 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         alert("Владелец не может оставлять отзывы о своем инструменте :)");
     }
 
-    $scope.renterIsOwner = function (ownerId){
-        if(ownerId === $rootScope.myUserIdFromProfile){
+    $scope.renterIsOwner = function (ownerId) {
+        if (ownerId === $rootScope.myUserIdFromProfile) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
