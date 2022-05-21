@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,60 +26,63 @@ public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInf
     public InstrumentInfoDto deserialize(JsonParser jp, DeserializationContext deserializationContext) throws IOException, JacksonException {
 
         JsonNode node = jp.getCodec().readTree(jp);
-        Long id = node.get("id").longValue();
-        String title = node.get("title").toString().replace("\"", "");
-        String brandName = node.get("brandName").toString().replace("\"", "");
-        BigDecimal fee = node.get("fee").decimalValue();
-        BigDecimal price = node.get("price").decimalValue();
-        String ownerUsername = node.get("ownerUsername").toString().replace("\"", "");
-        String categoryName = node.get("categoryName").toString().replace("\"", "");
-        Long ownerId = node.get("ownerId").longValue();
-        String ownerFirstName = node.get("ownerFirstName").toString().replace("\"", "");
-        String ownerSecondName = node.get("ownerSecondName").toString().replace("\"", "");
-        String ownerLastName = node.get("ownerLastName").toString().replace("\"", "");
-        String ownerEmail = node.get("ownerEmail").toString().replace("\"", "");
-        String description = node.get("description").toString().replace("\"", "");
-
-        List<IntervalDto> intervals = new ArrayList<>();
-        JsonNode jsonIntervals = node.get("intervals");
-        if (jsonIntervals.isArray()) {
-            for (JsonNode jsonInterval : jsonIntervals) {
-                LocalDateTime dateStart = convertStringDateToLocalDateTime(jsonInterval.get("dateStart").toString().replace("\"", ""));
-                LocalDateTime dateFinish = convertStringDateToLocalDateTime(jsonInterval.get("dateFinish").toString().replace("\"", ""));
-                IntervalDto intervalDto = new IntervalDto(dateStart, dateFinish);
-                intervals.add(intervalDto);
-            }
-        }
-
-        Collection<String> pictureUrls = new ArrayList<>();
-        JsonNode jsonPictureUrls = node.get("pictureUrls");
-        if (jsonPictureUrls.isArray()) {
-            for (JsonNode jsonUrl : jsonPictureUrls) {
-                pictureUrls.add(jsonUrl.toString().replace("\"", ""));
-            }
-        }
-
-        LocalDateTime startDate = convertStringDateToLocalDateTime(node.get("startDate").toString().replace("\"", ""));
-        LocalDateTime endDate = convertStringDateToLocalDateTime(node.get("endDate").toString().replace("\"", ""));
-
         InstrumentInfoDto instrum = new InstrumentInfoDto();
-        instrum.setId(id);
-        instrum.setTitle(title);
-        instrum.setBrandName(brandName);
-        instrum.setPrice(price);
-        instrum.setFee(fee);
-        instrum.setOwnerUsername(ownerUsername);
-        instrum.setCategoryName(categoryName);
-        instrum.setOwnerId(ownerId);
-        instrum.setOwnerFirstName(ownerFirstName);
-        instrum.setOwnerSecondName(ownerSecondName);
-        instrum.setOwnerLastName(ownerLastName);
-        instrum.setOwnerEmail(ownerEmail);
-        instrum.setDescription(description);
-        instrum.setPictureUrls(pictureUrls);
-        instrum.setIntervals(intervals);
-        instrum.setStartDate(startDate);
-        instrum.setEndDate(endDate);
+        if (node.get("id") != null) {
+            instrum.setId(node.get("id").longValue());
+        }
+        instrum.setTitle(node.get("title").toString().replace("\"", ""));
+        instrum.setBrandName(node.get("brandName").toString().replace("\"", ""));
+        instrum.setFee(node.get("fee").decimalValue());
+        instrum.setPrice(node.get("price").decimalValue());
+        if (node.get("ownerUsername") != null) {
+            instrum.setOwnerUsername(node.get("ownerUsername").toString().replace("\"", ""));
+        }
+        instrum.setCategoryName(node.get("categoryName").toString().replace("\"", ""));
+        if (node.get("ownerId") != null) {
+            instrum.setOwnerId(node.get("ownerId").longValue());
+        }
+        if (node.get("ownerFirstName") != null) {
+            instrum.setOwnerFirstName(node.get("ownerFirstName").toString().replace("\"", ""));
+        }
+        if (node.get("ownerSecondName") != null) {
+            instrum.setOwnerSecondName(node.get("ownerSecondName").toString().replace("\"", ""));
+        }
+        if (node.get("ownerLastName") != null) {
+            instrum.setOwnerLastName(node.get("ownerLastName").toString().replace("\"", ""));
+        }
+        if (node.get("ownerEmail") != null) {
+            instrum.setOwnerEmail(node.get("ownerEmail").toString().replace("\"", ""));
+        }
+        instrum.setDescription(node.get("description").toString().replace("\"", ""));
+        if (node.get("intervals") != null) {
+            JsonNode jsonIntervals = node.get("intervals");
+            List<IntervalDto> intervals = new ArrayList<>();
+            if (jsonIntervals.isArray()) {
+                for (JsonNode jsonInterval : jsonIntervals) {
+                    LocalDateTime dateStart = convertStringDateToLocalDateTime(jsonInterval.get("dateStart").toString().replace("\"", ""));
+                    LocalDateTime dateFinish = convertStringDateToLocalDateTime(jsonInterval.get("dateFinish").toString().replace("\"", ""));
+                    IntervalDto intervalDto = new IntervalDto(dateStart, dateFinish);
+                    intervals.add(intervalDto);
+                }
+            }
+            instrum.setIntervals(intervals);
+        }
+        if (node.get("pictureUrls") != null) {
+            JsonNode jsonPictureUrls = node.get("pictureUrls");
+            Collection<String> pictureUrls = new ArrayList<>();
+            if (jsonPictureUrls.isArray()) {
+                for (JsonNode jsonUrl : jsonPictureUrls) {
+                    pictureUrls.add(jsonUrl.toString().replace("\"", ""));
+                }
+            }
+            instrum.setPictureUrls(pictureUrls);
+        }
+        if (node.get("startDate") != null) {
+            instrum.setStartDate(convertStringDateToLocalDateTime(node.get("startDate").toString().replace("\"", "")));
+        }
+        if (node.get("endDate") != null) {
+            instrum.setEndDate(convertStringDateToLocalDateTime(node.get("endDate").toString().replace("\"", "")));
+        }
 
         return instrum;
     }
