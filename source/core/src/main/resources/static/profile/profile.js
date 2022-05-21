@@ -63,12 +63,20 @@ angular.module('tools').controller('profileController', function ($scope, $rootS
         $rootScope.myToolIdFromProfile = toolId;
         $location.path('/tool-history');
     }
-
-    $scope.navToChangeProfileForm = function () {
+  
+      $scope.navToChangeProfileForm = function () {
         $location.path('/change-profile-form');
     }
+  
+    $scope.loadAllProfileInfo = function () {
+        if ($rootScope.isUserLoggedIn()) {
+            $scope.loadMyProfile();
+            $scope.loadRents();
+            $scope.loadMyTools();
+        }
+    }
 
-    $scope.loadMyProfile();
-    $scope.loadRents();
-    $scope.loadMyTools();
+    $scope.loadAllProfileInfo();
+
+
 });
