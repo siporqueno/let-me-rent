@@ -7,6 +7,10 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
     };
 
     $scope.sendFeedbackAboutRenter = function () {
+        if (typeof $scope.renter_comment.description === 'undefined' || typeof $scope.renter_comment.grade === 'undefined') {
+            alert("Для отправки отзыва необходимо заполнить описание и выбрать оценку для рейтинга");
+            return;
+        }
         $http({
             url: contextPath + '/api/v1/comments',
             method: 'POST',
@@ -25,7 +29,7 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
 
     $scope.loadRenterInfo = function () {
         $http({
-            url: contextPath + '/api/v1/users/' + $routeParams.renterUsername, //TODO: Давайте в UserController сделаем метод поиска юзера по айдишнику (и тогда сюда можно не передавать дополнительно имя)?
+            url: contextPath + '/api/v1/users/' + $routeParams.renterUsername,
             method: 'GET'
         }).then(function (response) {
             $scope.renterInfo = response.data;
