@@ -26,11 +26,15 @@
         <input class="form-control" type="text" placeholder="Дата окончания предоставления инструмента в аренду"
                ng-model="updated_tool.endDate">
         <p></p>
-        <p ng-if='tool.pictureUrls'>Фотографии</p>
+        <p ng-if='updated_tool.pictureUrls'>Имеющиеся фотографии</p>
         <div class="container">
             <div class="row">
                 <div class="col-2" ng-repeat='url in updated_tool.pictureUrls'>
                     <img class="img-fluid img-thumbnail" ng-src='{{url}}'>
+                    <a ng-click="removePicture(url, updated_tool.pictureUrls)" class="material-icons"
+                       style="color: #00008b">delete</a>
+                    <a ng-click="removePicture(url, updated_tool.pictureUrls)" class="float-right"><i
+                            class="fa fa-times" style="color: #00008b"></i></a>
                 </div>
             </div>
         </div>
