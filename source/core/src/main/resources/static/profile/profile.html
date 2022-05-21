@@ -1,8 +1,8 @@
 <div class="container">
 
     <div class="container" ng-show="!isUserLoggedIn()">
-        <h1>ДОСТУП К ЛИЧНОМУ КАБИНЕТУ ВОЗМОЖЕН ТОЛЬКО ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</h1>
-        <button class="btn btn-info" ng-click="navToAuthPage()">Авторизоваться</button>
+        <h1>Доступ к личному кабинету возможен только для авторизованных пользователей!</h1>
+        <button class="btn btn-outline-success" ng-click="navToAuthPage()">Авторизоваться</button>
     </div>
     <div class="container" ng-show="isUserLoggedIn()">
         <p></p>
@@ -15,7 +15,7 @@
         <p>{{'E-Mail: ' + userProfile.email}}</p>
 
         <br/>
-        <button class="btn btn-info" ng-click="navToChangeProfileForm()">Редактировать личные данные</button>
+        <button class="btn btn-outline-success" ng-click="navToChangeProfileForm()">Редактировать личные данные</button>
         <br/>
         <br/>
 
@@ -53,13 +53,11 @@
                             <td>{{oi.instrument.price}}</td>
                             <td>{{oi.instrument.price}}</td>
                             <td>
-                                <button class="btn btn-primary" ng-show="!renterIsOwner(oi.instrument.ownerId)"
-                                        ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить
-                                    отзыв
+                                <button class="btn btn-outline-warning" ng-show="!renterIsOwner(oi.instrument.ownerId)"
+                                        ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить&nbsp;отзыв
                                 </button>
-                                <button class="btn btn-secondary" ng-show="renterIsOwner(oi.instrument.ownerId)"
-                                        ng-click="failedNavToFeedbackPage()">Оставить
-                                    отзыв
+                                <button class="btn btn-outline-secondary" ng-show="renterIsOwner(oi.instrument.ownerId)"
+                                        ng-click="failedNavToFeedbackPage()">Оставить&nbsp;отзыв
                                 </button>
                             </td>
                         </tr>
@@ -76,26 +74,27 @@
         <table class="table">
             <thead>
             <tr>
-                <td>Название инструмента</td>
-                <td>Марка</td>
-                <td>Цена аренды</td>
-                <td>Сумма залога</td>
-                <td></td>
-                <td></td>
+                <th>Название инструмента</th>
+                <th>Марка</th>
+                <th>Цена аренды</th>
+                <th>Сумма залога</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
-            <tbody>
 
+            <tbody>
             <tr ng-repeat="t in tools.instruments">
                 <td>{{t.title}}</td>
                 <td>{{t.brandName}}</td>
                 <td>{{t.fee}}</td>
                 <td>{{t.price}}</td>
                 <td>
-                    <button class="btn btn-primary" ng-click="navToToolHistory(t.id)">История&nbsp;аренд</button>
+                    <button class="btn btn-outline-success" ng-click="navToToolHistory(t.id)">История&nbsp;аренд
+                    </button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" ng-click="changeTool(t.id)">Изменить</button>
+                    <button class="btn btn-outline-warning" ng-click="changeTool(t.id)">Изменить</button>
                 </td>
             </tr>
             </tbody>

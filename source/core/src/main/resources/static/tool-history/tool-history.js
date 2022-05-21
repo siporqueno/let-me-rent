@@ -26,6 +26,9 @@ angular.module('tools').controller('toolHistoryController', function ($scope, $h
         $location.path('/feedback-about-renter-page/' + renterUsername);
     }
 
+    $scope.navToProfile = function () {
+            $location.path('/profile');
+    }
 
     $scope.showToolInfo();
     $scope.showToolHistory();
