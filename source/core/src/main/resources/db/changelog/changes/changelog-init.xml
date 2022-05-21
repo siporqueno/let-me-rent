@@ -40,4 +40,8 @@
         <sqlFile path="sql/v6_fix_sequence.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="08_add_picture" author="dkhrebtov" failOnError="true">
+        <sqlFile path="sql/v7_add_picture.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -1,6 +1,11 @@
 <div>
     <p></p>
     <h3>Здесь вы можете оставить отзыв об арендаторе вашего инструмента:</h3>
+    <br/>
+    <button class="btn btn-link" ng-click="navToToolHistory2()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Вернуться в историю аренд
+    </button>
+    <br/>
     <p>{{'Арендатор: ' + renterInfo.userName}}</p>
     <p>{{'ФИО : ' + renterInfo.lastName + ' ' + renterInfo.firstName + ' ' + renterInfo.secondName}}</p>
 
@@ -9,10 +14,19 @@
         <textarea class="form-control" type="text" placeholder="Напишите свой отзыв"
                   ng-model="renter_comment.description">
         </textarea>
-        <input class="form-control" type="number" placeholder="Введите оценку по 5-бальной шкале"
-               ng-model="renter_comment.grade">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Рейтинг (выберите оценку)</label>
+            <select class="form-select" id="inputGroupSelect01" ng-model="renter_comment.grade">
+                <option selected></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
         <p></p>
         <p></p>
-        <button type="submit" class="btn btn-primary">Отправить отзыв об арендаторе</button>
+        <button type="submit" class="btn btn-outline-warning">Отправить отзыв об арендаторе</button>
     </form>
 </div>
