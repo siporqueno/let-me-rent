@@ -15,7 +15,8 @@ angular.module('tools').controller('editToolController', function ($scope, $http
     }
 
     $scope.updateTool = function () {
-        if ($scope.updated_tool.endDate < $scope.earliestPossibleEndDate) {
+        console.log('Last rent date: ' + $scope.updated_tool.lastRentDate);
+        if ($scope.updated_tool.endDate < $scope.updated_tool.lastRentDate) {
             alert("Предоставление инструмента в аренду не может быть приостановлено раньше окончания последнего забронированного периода аренды");
         } else {
             console.log($scope.updated_tool);
@@ -29,6 +30,13 @@ angular.module('tools').controller('editToolController', function ($scope, $http
                 });
         }
 
+    }
+
+    $scope.removePicture = function (url, pictureUrls) {
+        console.log('Before: ' + $scope.updated_tool.pictureUrls);
+        pictureUrls.splice(pictureUrls.indexOf(url), 1);
+        console.log('Deleted picture');
+        console.log('After: ' + $scope.updated_tool.pictureUrls);
     }
 
     $scope.prepareToolForUpdate();
