@@ -1,5 +1,7 @@
 package ru.letmerent.core.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,6 @@ public interface InstrumentRepository extends JpaRepository<Instrument, Long>, J
     "where i.id =?1 and i.user.id=?2 " +
     "and oi.startDate >= ?3 and oi.endDate <= ?4")
     Collection<InstrumentRentDto> getInstrumentRents(Long instrumentId, Long userId, LocalDateTime from, LocalDateTime to );
+
+    Page<Instrument> findAllByUserUserName(Pageable pageable, String userName);
 }

@@ -5,7 +5,10 @@
     <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
     <br/>
     <br/>
-    <button class="btn btn-primary" ng-click="navToToolsList()">К ВЫБОРУ</button>
+    <button class="btn btn-link" ng-click="navToToolsList()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Назад к выбору инструмента
+    </button>
+    <br/>
     <br/>
     <table class="table align-middle table-bordered" ng-show="cart.items.length > 0">
         <thead>
@@ -34,12 +37,12 @@
 
             <td>
                 <button class = "btn">
-                    <i class="material-icons" ng-click="deleteItem(i.instrument.id)" title = "Удалить из корзины">close</i>
+                    <i class="material-icons" ng-click="deleteItem(i.instrument.id)" style="color: #c51759;" title = "Удалить из корзины">close</i>
                 </button>
             </td>
             <td>
                 <button class = "btn">
-                    <i class="material-icons" ng-click="navToToolInfoPage(t.id)" title = "Информация о инструменте">info</i>
+                    <i class="material-icons" ng-click="navToToolInfoPage(t.id)" style="color: #08711e;" title = "Информация о инструменте">info</i>
                 </button>
             </td>
         </tr>
@@ -55,7 +58,7 @@
         </tbody>
     </table>
     <br/>
-    <button class="btn btn-primary" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
-    <button class="btn btn-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
+    <button class="btn btn-outline-warning" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
+    <button class="btn btn-outline-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
 
 </div>

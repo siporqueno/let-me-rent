@@ -32,6 +32,10 @@ angular.module('tools').controller('feedbackAboutRenterController', function ($s
         });
     };
 
+    $scope.navToToolHistory2 = function () {
+            $location.path('/tool-history');
+    }
+
 
     $scope.loadRenterInfo();
 
