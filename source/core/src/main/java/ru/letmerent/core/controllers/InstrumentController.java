@@ -76,7 +76,7 @@ public class InstrumentController {
                     implementation = InstrumentForListDto.class))
         ))
     PageDto<InstrumentForListDto> getAllInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
-        return getInstruments( pageable, criteriaSearch);
+        return getInstruments(instrumentService.getAllInstruments(pageable, criteriaSearch));
     }
     
     @Operation(summary = "Вывод информации по всем инструментам пользователя")
@@ -91,12 +91,14 @@ public class InstrumentController {
                                     implementation = InstrumentForListDto.class))
             ))
     PageDto<InstrumentForListDto> getAllUserInstrument(@PageableDefault Pageable pageable, CriteriaSearch criteriaSearch) {
+        Page<Instrument> page;
         if (!authenticationFacade.isAdmin()) {
-            String username = authenticationFacade.getLogin();
-            criteriaSearch.setOwnerName(username);
+            page = instrumentService.getAllUserInstruments(pageable, authenticationFacade.getLogin());
+        } else {
+            page = instrumentService.getAllInstruments(pageable, criteriaSearch);
         }
-    
-        return getInstruments( pageable, criteriaSearch);
+        
+        return  getInstruments(page);
     }
     
     @Operation(summary = "Вывод информации по арендам своих инструментов")
@@ -212,9 +214,7 @@ public class InstrumentController {
         return new ResponseEntity<>(new InstrumentDto(), HttpStatus.OK);
     }
     
-    private PageDto<InstrumentForListDto> getInstruments(Pageable pageable, CriteriaSearch criteriaSearch) {
-        Page<Instrument> page = instrumentService.getAllInstruments(pageable, criteriaSearch);
-        
+    private PageDto<InstrumentForListDto> getInstruments(Page<Instrument> page) {
         List<InstrumentForListDto> instrumentForListDtos = page.get()
             .map(instrumentConverter::toListDto).collect(toList());
         PageDto<InstrumentForListDto> pageDto = new PageDto<>();

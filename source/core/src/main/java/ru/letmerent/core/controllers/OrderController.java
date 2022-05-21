@@ -1,5 +1,6 @@
 package ru.letmerent.core.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,14 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.letmerent.core.converters.OrderConverter;
 import ru.letmerent.core.dto.OrderDto;
 import ru.letmerent.core.entity.Order;
+import ru.letmerent.core.exceptions.models.ApplicationError;
+import ru.letmerent.core.security.IAuthenticationFacade;
 import ru.letmerent.core.services.EmailService;
 import ru.letmerent.core.services.OrderService;
 import ru.letmerent.core.services.impl.CartService;
-import ru.letmerent.core.services.impl.UserService;
 
 import java.security.Principal;
 import java.util.Collection;
 
+import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -42,9 +45,13 @@ public class OrderController {
 
     private final CartService cartService;
 
-    private final UserService userService;
+    private final IAuthenticationFacade authenticationFacade;
     
     private final EmailService emailService;
+    
+    private final ObjectMapper mapper;
+    
+    private final ApplicationError applicationError;
 
     @Operation(summary = "Создание заказа")
     @PostMapping("/{uuid}")
@@ -89,8 +96,13 @@ public class OrderController {
                             schema = @Schema(
                                     implementation = OrderDto.class))
             ))
-    ResponseEntity<Collection<OrderDto>> getOrdersByUserId(Principal principal) {
-        Collection<OrderDto> result = orderService.findOrdersByUserName(principal.getName()).stream().map(orderConverter::convertToOrderDto).collect(toList());
+    ResponseEntity<Object> getOrdersByUserId() {
+        String login = authenticationFacade.getLogin();
+        if(isNull(login)){
+            return ResponseEntity.badRequest()
+                .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST.value(), "notAuth")));
+        }
+        Collection<OrderDto> result = orderService.findOrdersByUserName(login).stream().map(orderConverter::convertToOrderDto).collect(toList());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

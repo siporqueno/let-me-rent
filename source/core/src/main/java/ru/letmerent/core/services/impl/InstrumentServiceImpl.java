@@ -30,7 +30,12 @@ public class InstrumentServiceImpl implements InstrumentService {
     public Page<Instrument> getAllInstruments(Pageable pageable, CriteriaSearch criteriaSearch) {
         return instrumentRepository.findAll(instrumentSpecification.spec(criteriaSearch), pageable);
     }
-
+    
+    @Override
+    public Page<Instrument> getAllUserInstruments(Pageable pageable, String userName) {
+        return instrumentRepository.findAllByUserUserName(pageable, userName);
+    }
+    
     @Override
     public Optional<Instrument> getInstrumentById(Long id) {
         return Optional.of(instrumentRepository.getById(id));
