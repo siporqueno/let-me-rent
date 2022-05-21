@@ -9,10 +9,11 @@ angular
                     $scope.new_tool = null;
                     $scope.created_tool = response.data;
                     console.log('Инструмент без фото успешно добавлен в базу');
-                    let formData = new FormData();
                     console.log($scope.pictures);
                     for (let i = 0; i < $scope.pictures.length; i++) {
-                        formData.set('picture', $scope.pictures[i], $scope.pictures[i].name);
+                        let formData = new FormData();
+                        formData.set('picture', $scope.pictures[i]);
+
                         console.log('File name: ' + $scope.pictures[i].name + ', size: ' + $scope.pictures[i].size)
                         $http({
                             url: contextPath + "/api/v1/pictures/upload",
