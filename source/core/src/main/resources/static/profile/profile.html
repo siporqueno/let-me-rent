@@ -74,23 +74,24 @@
         <table class="table">
             <thead>
             <tr>
-                <td>Название инструмента</td>
-                <td>Марка</td>
-                <td>Цена аренды</td>
-                <td>Сумма залога</td>
-                <td></td>
-                <td></td>
+                <th>Название инструмента</th>
+                <th>Марка</th>
+                <th>Цена аренды</th>
+                <th>Сумма залога</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
-            <tbody>
 
+            <tbody>
             <tr ng-repeat="t in tools.instruments">
                 <td>{{t.title}}</td>
                 <td>{{t.brandName}}</td>
                 <td>{{t.fee}}</td>
                 <td>{{t.price}}</td>
                 <td>
-                    <button class="btn btn-outline-success" ng-click="navToToolHistory(t.id)">История&nbsp;аренд</button>
+                    <button class="btn btn-outline-success" ng-click="navToToolHistory(t.id)">История&nbsp;аренд
+                    </button>
                 </td>
                 <td>
                     <button class="btn btn-outline-warning" ng-click="changeTool(t.id)">Изменить</button>
