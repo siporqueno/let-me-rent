@@ -81,8 +81,16 @@ public class EmailServiceImpl implements EmailService {
     
     @Override
     public void sendNotification(Order order) {
-        sendRecipientMessage(order);
-        sendRenterMessage(order);
+        try {
+            if (!transport.isConnected()) {
+                init();
+            }
+            sendRecipientMessage(order);
+            sendRenterMessage(order);
+        } catch (Exception e) {
+            log.error("Can't send emailNotification: {}", e.getMessage());
+            close();
+        }
     }
     
     private void sendRecipientMessage(Order order) {
@@ -116,8 +124,8 @@ public class EmailServiceImpl implements EmailService {
             message.setContent(multipart);
             
             transport.sendMessage(message, message.getAllRecipients());
-        } catch (MessagingException e) {
-            log.error("Can't send email {}", e.getMessage());
+        } catch (Exception e) {
+            log.error("Can't send email: {}", e.getMessage());
             close();
         }
     }
