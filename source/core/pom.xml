@@ -20,7 +20,7 @@
         <validation.hibernate.version>6.1.5.Final</validation.hibernate.version>
         <springdoc.version>1.6.6</springdoc.version>
         <swagger.version>2.2.0</swagger.version>
-        <swagger.ui.version>3.0.0</swagger.ui.version>
+        <swagger.ui.version>2.9.2</swagger.ui.version>
     </properties>
 
     <dependencies>
@@ -128,6 +128,17 @@
             <version>1.4.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.3</version>
+        </dependency>
     </dependencies>
 
 </project>

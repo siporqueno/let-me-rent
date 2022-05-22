@@ -11,9 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.repositories.PictureRepository;
+import ru.letmerent.core.services.MinioService;
 import ru.letmerent.core.services.PictureStorageService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -40,6 +43,8 @@ public class PictureStorageServiceImpl implements PictureStorageService {
 
     private final PictureRepository pictureRepository;
 
+    private final MinioService minioService;
+
     @PostConstruct
     public void init() {
         this.root = Paths.get(storagePath);
@@ -51,28 +56,46 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             if (!Files.exists(root)) {
                 Files.createDirectory(root);
             }
+            Path temp = Paths.get(storagePath, "temp");
+            if (!Files.exists(temp)) {
+                Files.createDirectory(temp);
+            }
+    
             String originalFilename = file.getOriginalFilename();
             String extension = "";
             if (nonNull(originalFilename)) {
                 extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
-            
+
             String newName = UUID.randomUUID() + extension;
-            
-            Files.copy(file.getInputStream(), this.root.resolve(newName));
+    
+            Path filePath = temp.resolve(newName);
+            Files.copy(file.getInputStream(), filePath);
+            File f = new File(String.valueOf(filePath));
+
+            minioService.uploadFile(f);
             pictureRepository.save(new Picture(newName, instrument));
         } catch (IOException e) {
             log.error("Could not save picture: {}", e.getClass());
             throw new RuntimeException("Could not save picture " + " " + file.getName());
         }
     }
-    
+
     @Override
     public Resource load(String pictureName) {
         try {
+            byte[] bytes = minioService.downloadFile(pictureName);
+            File file = new File(String.valueOf(this.root.resolve(pictureName)));
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(bytes);
+                fileOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Path picture = root.resolve(pictureName);
             Resource resource = new UrlResource(picture.toUri());
-            
+
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
@@ -82,7 +105,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
-    
+
     @Override
     public Resource load(Long pictureId) {
         Optional<Picture> oPicture = pictureRepository.findById(pictureId);
@@ -92,35 +115,27 @@ public class PictureStorageServiceImpl implements PictureStorageService {
             throw new RuntimeException("Could not read the picture or picture does not exists!");
         }
     }
-    
+
     @Override
     public void deletePictures(Long instrumentId, List<Long> pictureIds) {
         Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrumentId);
         if (isNull(pictureIds) || pictureIds.isEmpty()) {
             allByInstrumentId.forEach(pic -> {
-                try {
-                    Files.deleteIfExists(root.resolve(pic.getName()));
-                } catch (IOException e) {
-                    log.error(e.getMessage());
-                }
+                minioService.removeFile(pic.getName());
             });
             pictureRepository.deleteAll(allByInstrumentId);
         } else {
             List<Picture> picturesToDelete = allByInstrumentId
-                .stream()
-                .filter(pic -> pictureIds.contains(pic.getId()))
-                .collect(Collectors.toList());
+                    .stream()
+                    .filter(pic -> pictureIds.contains(pic.getId()))
+                    .collect(Collectors.toList());
             picturesToDelete.forEach(pic -> {
-                try {
-                    Files.deleteIfExists(root.resolve(pic.getName()));
-                } catch (IOException e) {
-                    log.error(e.getMessage());
-                }
+                minioService.removeFile(pic.getName());
             });
             pictureRepository.deleteAll(picturesToDelete);
         }
     }
-    
+
     @Override
     public MediaType getMediaType(String fileName) {
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -133,7 +148,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
                 return MediaType.IMAGE_PNG;
         }
     }
-    
+
     @Override
     public List<Picture> findAllPictureByInstrumentId(Long instrumentId) {
         return pictureRepository.findAllByInstrumentId(instrumentId);
