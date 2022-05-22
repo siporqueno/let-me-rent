@@ -1,7 +1,8 @@
 <div>
     <p></p>
     <h3>Изменить сведения об инструменте</h3>
-    <h5>Если вы хотите снять инструмент с аренды, поменяйте дату окончания предоставления инструмента в аренду на текущую</h5>
+    <h5>Если вы хотите снять инструмент с аренды, поменяйте дату окончания предоставления инструмента в аренду на
+        текущую</h5>
     <form novalidate ng-submit="updateTool()">
         <input class="form-control" type="number" hidden placeholder="ID" ng-model="updated_tool.id">
         <p></p>
@@ -20,8 +21,19 @@
         <input class="form-control" type="text" placeholder="Описание" ng-model="updated_tool.description">
         <p></p>
         <p>Если вы хотите ограничить по времени дальнейшую аренду инструмента, вы можете поменять дату окончания
-            предоставления инструмента в аренду на любую дату после даты окончания крайней аренды: {{earliestPossibleEndDate}}</p>
-        <input class="form-control" type="text" placeholder="Дата окончания предоставления инструмента в аренду" ng-model="updated_tool.endDate">
+            предоставления инструмента в аренду на любую дату после даты окончания крайней аренды:
+            {{updated_tool.lastRentDate}}</p>
+        <input class="form-control" type="text" placeholder="Дата окончания предоставления инструмента в аренду"
+               ng-model="updated_tool.endDate">
+        <p></p>
+        <p ng-if='tool.pictureUrls'>Фотографии</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-2" ng-repeat='url in updated_tool.pictureUrls'>
+                    <img class="img-fluid img-thumbnail" ng-src='{{url}}'>
+                </div>
+            </div>
+        </div>
         <p></p>
         <button type="submit" class="btn btn-outline-warning">Сохранить изменения</button>
     </form>
