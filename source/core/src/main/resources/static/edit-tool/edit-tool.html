@@ -1,6 +1,7 @@
 <div>
     <p></p>
     <h3>Изменить сведения об инструменте</h3>
+    <h5>Если вы хотите снять инструмент с аренды, поменяйте дату окончания предоставления инструмента в аренду на текущую</h5>
     <form novalidate ng-submit="updateTool()">
         <input class="form-control" type="number" hidden placeholder="ID" ng-model="updated_tool.id">
         <p></p>
@@ -17,6 +18,9 @@
         <input class="form-control" type="text" placeholder="Сумма залога" ng-model="updated_tool.price">
         <p></p>
         <input class="form-control" type="text" placeholder="Описание" ng-model="updated_tool.description">
+        <p></p>
+        <p>Если вы хотите снять инструмент с аренды, поменяйте дату окончания предоставления инструмента в аренду на текущую:</p>
+        <input class="form-control" type="date" placeholder="Дата окончания предоставления инструмента в аренду" ng-model="updated_tool.endDate">
         <p></p>
         <button type="submit" class="btn btn-outline-warning">Сохранить изменения</button>
     </form>
