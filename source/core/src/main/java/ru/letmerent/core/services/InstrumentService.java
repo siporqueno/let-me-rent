@@ -12,11 +12,13 @@ import java.util.Optional;
 public interface InstrumentService {
 
     Page<Instrument> getAllInstruments(Pageable pageable, CriteriaSearch criteriaSearch);
-
+    
+    Page<Instrument> getAllUserInstruments(Pageable pageable, String username);
+    
     Instrument createInstrument(Instrument instrument);
-
+    
     Optional<Instrument> getInstrumentById(Long id);
-
+    
     Instrument updateInstrument(Instrument instrument);
     
     Collection<InstrumentRentDto> getInstrumentRents(Long userId, Long instrumentId);
