@@ -6,7 +6,7 @@ angular.module('tools').controller('editToolController', function ($scope, $http
             .then(function successCallback(response) {
                 $scope.updated_tool = response.data;
                 console.log($scope.updated_tool);
-                $scope.earliestPossibleEndDate = response.data.lastRentDate;
+                // $scope.earliestPossibleEndDate = response.data.lastRentDate;
             }, function failureCallback(response) {
                 console.log(response);
                 alert(response.data.messages);
