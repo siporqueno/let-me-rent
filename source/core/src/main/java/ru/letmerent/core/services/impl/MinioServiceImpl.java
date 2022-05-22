@@ -23,18 +23,21 @@ public class MinioServiceImpl implements MinioService {
     private final MinioClient minioClient;
 
     @Override
-    public void uploadFile(File file, String shortName) {
-        String fullFileName = "/tmp/" + shortName;
+    public void uploadFile(File file) {
+        String name = file.getName();
         try {
             minioClient.uploadObject(
-                    UploadObjectArgs.builder()
-                            .bucket(bucket)
-                            .object(shortName)
-                            .filename(fullFileName)
-                            .build());
-            file.delete();
+                UploadObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(name)
+                    .filename(file.getAbsolutePath())
+                    .build());
         } catch (Exception e) {
-            log.error("Загрузка {} прошла не успешно", shortName);
+            log.error("Загрузка {} прошла не успешно", name);
+        }finally {
+            if(file.exists()){
+                file.delete();
+            }
         }
     }
 

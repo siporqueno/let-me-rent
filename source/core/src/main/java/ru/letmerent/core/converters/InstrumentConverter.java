@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
+
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -126,10 +127,14 @@ public class InstrumentConverter {
         instrument.setBrand(brand.get());
         instrument.setCategoryId(category.get().getId());
         instrument.setStartDate(instrumentDto.getStartDate());
-        instrument.setEndDate(instrumentDto.getEndDate());
-        if (nonNull(instrumentDto.getId())) {
-            instrument.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrumentDto.getId()));
-        }
+
+//        if (nonNull(instrumentDto.getId())) {
+//            instrument.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrumentDto.getId()));
+//        }
+
+        LocalDateTime endDate = isNull(instrumentDto.getEndDate()) ? LocalDateTime.of(2099, 12, 31, 0, 0) : instrumentDto.getEndDate();
+        instrument.setEndDate(endDate);
+
         return instrument;
     }
     
