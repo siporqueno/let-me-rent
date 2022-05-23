@@ -66,12 +66,8 @@ angular
         }
 
         $scope.removePicture = function (url, pictureUrls) {
-            console.log('Before: ' + $scope.updated_tool.pictureUrls);
             pictureUrlsToRemove.push(url);
-            console.log(pictureUrlsToRemove);
             pictureUrls.splice(pictureUrls.indexOf(url), 1);
-            console.log('Deleted picture');
-            console.log('After: ' + $scope.updated_tool.pictureUrls);
         }
 
         $scope.prepareToolForUpdate();
