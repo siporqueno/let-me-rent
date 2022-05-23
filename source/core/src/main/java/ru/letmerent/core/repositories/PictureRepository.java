@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PictureRepository extends JpaRepository<Picture, Long> {
     List<Picture> findAllByInstrumentId(Long instrumentId);
+    Picture findByName(String name);
 }
