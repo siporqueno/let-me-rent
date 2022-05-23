@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -91,7 +92,7 @@ public class PictureStorageServiceImpl implements PictureStorageService {
                 fileOutputStream.write(bytes);
                 fileOutputStream.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Can't load picture from minio: {}", e.getMessage());
             }
             Path picture = root.resolve(pictureName);
             Resource resource = new UrlResource(picture.toUri());
@@ -120,22 +121,23 @@ public class PictureStorageServiceImpl implements PictureStorageService {
     public void deletePictures(Long instrumentId, List<Long> pictureIds) {
         Collection<Picture> allByInstrumentId = pictureRepository.findAllByInstrumentId(instrumentId);
         if (isNull(pictureIds) || pictureIds.isEmpty()) {
-            allByInstrumentId.forEach(pic -> {
-                minioService.removeFile(pic.getName());
-            });
+            allByInstrumentId.forEach(pic -> minioService.removeFile(pic.getName()));
             pictureRepository.deleteAll(allByInstrumentId);
         } else {
             List<Picture> picturesToDelete = allByInstrumentId
                     .stream()
                     .filter(pic -> pictureIds.contains(pic.getId()))
                     .collect(Collectors.toList());
-            picturesToDelete.forEach(pic -> {
-                minioService.removeFile(pic.getName());
-            });
+            picturesToDelete.forEach(pic -> minioService.removeFile(pic.getName()));
             pictureRepository.deleteAll(picturesToDelete);
         }
     }
-
+    
+    @Override
+    public void deletePicture(Long instrumentId, Long pictureId) {
+        deletePictures(instrumentId, Collections.singletonList(pictureId));
+    }
+    
     @Override
     public MediaType getMediaType(String fileName) {
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);

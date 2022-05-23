@@ -2,6 +2,7 @@ package ru.letmerent.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.letmerent.core.dto.InstrumentForListDto;
@@ -13,12 +14,15 @@ import ru.letmerent.core.entity.Instrument;
 import ru.letmerent.core.entity.OrderItem;
 import ru.letmerent.core.entity.Picture;
 import ru.letmerent.core.entity.User;
+import ru.letmerent.core.repositories.PictureRepository;
 import ru.letmerent.core.services.BrandService;
 import ru.letmerent.core.services.CategoryService;
 import ru.letmerent.core.services.OrderItemService;
 import ru.letmerent.core.services.PictureStorageService;
 
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,11 +31,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-
 import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class InstrumentConverter {
     @Value("${server.port}")
     private int port;
@@ -42,6 +46,7 @@ public class InstrumentConverter {
     private final PictureStorageService pictureStorageService;
     private final OrderItemService orderItemService;
     private final BrandService brandService;
+    private final PictureRepository pictureRepository;
     
     public InstrumentForListDto toListDto(Instrument instrument) {
         InstrumentForListDto dto = new InstrumentForListDto();
@@ -116,6 +121,9 @@ public class InstrumentConverter {
         if (category.isEmpty()) {
             category = Optional.of(categoryService.createCategory(new Category(instrumentDto.getCategoryName(), null, LocalDateTime.now(), null)));
         }
+        if (!instrumentDto.getPictureUrls().isEmpty()) {
+            removePictures(instrumentDto.getId(), new ArrayList<>(instrumentDto.getPictureUrls()));
+        }
 
         Instrument instrument = new Instrument();
         instrument.setId(instrumentDto.getId());
@@ -128,14 +136,25 @@ public class InstrumentConverter {
         instrument.setCategoryId(category.get().getId());
         instrument.setStartDate(instrumentDto.getStartDate());
 
-//        if (nonNull(instrumentDto.getId())) {
-//            instrument.setPictures(pictureStorageService.findAllPictureByInstrumentId(instrumentDto.getId()));
-//        }
-
         LocalDateTime endDate = isNull(instrumentDto.getEndDate()) ? LocalDateTime.of(2099, 12, 31, 0, 0) : instrumentDto.getEndDate();
         instrument.setEndDate(endDate);
 
         return instrument;
+    }
+    
+    private void removePictures(Long instrumentId, List<String> pictureUrl) {
+        pictureUrl.forEach(pi -> {
+            try {
+                String name = new URI(pi).getPath();
+                int index = name.lastIndexOf("/");
+                if (index > -1) {
+                    name = name.substring(index+1);
+                    pictureStorageService.deletePicture(instrumentId, pictureRepository.findByName(name).getId());
+                }
+            } catch (URISyntaxException e) {
+                log.error("Can't init name: {}", e.getMessage());
+            }
+        });
     }
     
     @SneakyThrows
