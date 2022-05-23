@@ -3,6 +3,8 @@ angular
     .controller('editToolController', function ($scope, $http, $routeParams, $location) {
         const contextPath = 'http://localhost:8890/let-me-rent';
 
+        let pictureUrlsToRemove = [];
+
         $scope.prepareToolForUpdate = function () {
             $http.get(contextPath + '/api/v1/instruments/' + $routeParams.toolId)
                 .then(function successCallback(response) {
@@ -21,11 +23,14 @@ angular
                 alert("Предоставление инструмента в аренду не может быть приостановлено раньше окончания последнего забронированного периода аренды");
             } else {
                 console.log($scope.updated_tool);
+                $scope.updated_tool.pictureUrls = pictureUrlsToRemove;
+
                 $http.put(contextPath + '/api/v1/instruments', $scope.updated_tool)
                     .then(function successCallback(response) {
-                        let instrumentId = $scope.updated_tool.id;
+                        let instrumentId = $scope.updated_tool.id
+                        pictureUrlsToRemove.splice(0, pictureUrlsToRemove.length);
                         $scope.updated_tool = null;
-                        alert('Продукт без добавления фото успешно обновлен');
+                        console.log('Инструмент и его имеющиеся фото успешно обновлены');
 
                         if ($scope.pictures) {
 
@@ -50,15 +55,20 @@ angular
                         }
 
                         $location.path('/profile');
+
                     }, function failureCallback(response) {
                         alert(response.data.messages);
                     });
+                alert('Инструмент и его имеющиеся фото успешно обновлены, новые фото добавлены');
+
             }
 
         }
 
         $scope.removePicture = function (url, pictureUrls) {
             console.log('Before: ' + $scope.updated_tool.pictureUrls);
+            pictureUrlsToRemove.push(url);
+            console.log(pictureUrlsToRemove);
             pictureUrls.splice(pictureUrls.indexOf(url), 1);
             console.log('Deleted picture');
             console.log('After: ' + $scope.updated_tool.pictureUrls);
