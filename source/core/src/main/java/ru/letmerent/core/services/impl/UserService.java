@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void saveUser(UserDto userDto) {
-        if (userRepository.existsById(userDto.getId())) {
+        if (userDto.getId()!=null && userRepository.existsById(userDto.getId())) {
             User user = userRepository.getById(userDto.getId());
             user.setFirstName(userDto.getFirstName());
             user.setSecondName(userDto.getSecondName());
