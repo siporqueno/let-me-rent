@@ -67,16 +67,19 @@ public class InstrumentInfoDtoDeserializer extends StdDeserializer<InstrumentInf
             }
             instrum.setIntervals(intervals);
         }
+
+        Collection<String> pictureUrls = new ArrayList<>();
         if (node.get("pictureUrls") != null) {
             JsonNode jsonPictureUrls = node.get("pictureUrls");
-            Collection<String> pictureUrls = new ArrayList<>();
             if (jsonPictureUrls.isArray()) {
                 for (JsonNode jsonUrl : jsonPictureUrls) {
                     pictureUrls.add(jsonUrl.toString().replace("\"", ""));
                 }
             }
-            instrum.setPictureUrls(pictureUrls);
         }
+        instrum.setPictureUrls(pictureUrls);
+
+
         if (node.get("startDate") != null) {
             instrum.setStartDate(convertStringDateToLocalDateTime(node.get("startDate").toString().replace("\"", "")));
         }
