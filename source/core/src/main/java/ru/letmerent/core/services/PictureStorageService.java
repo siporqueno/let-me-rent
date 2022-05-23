@@ -19,6 +19,8 @@ public interface PictureStorageService {
     
     void deletePictures(Long instrumentId, List<Long> pictureIds);
     
+    void deletePicture(Long instrumentId, Long pictureId);
+    
     MediaType getMediaType(String fileName);
     
 }
