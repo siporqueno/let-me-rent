@@ -11,8 +11,8 @@ angular.module('tools').controller('changeProfileInfoController', function ($sco
         });
     };
 
-    $scope.updateUserInfo = function () {
-        $http.put(contextPath, $scope.updated_user)
+    $scope.updateUserInfo = function (userId) {
+        $http.put(contextPath + '/' + userId, $scope.updated_user)
             .then(function successCallback (response) {
                 $scope.updated_user = null;
                 alert('Личные данные успешно обновлены');

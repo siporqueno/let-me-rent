@@ -17,7 +17,6 @@ import ru.letmerent.core.services.impl.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -83,13 +82,14 @@ public class UserController {
     @ApiResponse(responseCode = "422", description = "Введены не корректные данные",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ApplicationError.class)))
-    @PutMapping
-    public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modifyUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         if (userService.existByEmail(userDto.getEmail()) && !userService.emailBelongsToThisUser(userDto)) {
             return ResponseEntity.badRequest()
                     .body(mapper.valueToTree(applicationError.generateError(HttpStatus.BAD_REQUEST
                             .value(), "Выбранный адрес электронной почты принадлежит другому пользователю!")));
         }
+        userDto.setId(id);
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
