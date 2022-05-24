@@ -22,4 +22,4 @@ Maven
 
 Сообщество
 
-Следите за нами на GitHub: 
+Следите за нами на GitHub: https://github.com/siporqueno/let-me-rent
