@@ -7,7 +7,7 @@
 
 # Установка  
 Для сборки и запуска приложения вам понадобится:
-- [JDK 11] или выше
+- [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) или выше
 - [Maven 3](https://maven.apache.org/download.cgi) или выше
 - Git
 - Docker
