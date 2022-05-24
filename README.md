@@ -12,4 +12,4 @@ Docker
 Maven
 
 # Сообщество  
-Следите за нами на GitHub: https://github.com/siporqueno/let-me-rent
+Следите за нами на [GitHub](https://github.com/siporqueno/let-me-rent)
