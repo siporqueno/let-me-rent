@@ -141,9 +141,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $scope.putIntoCart = function (toolId) {
         if (typeof $scope.filter != 'undefined' &&
             $scope.filter.startDate != null && $scope.filter.endDate != null &&
-            $scope.filter.startDate !== '' && $scope.filter.endDate !== ''
-            && !isNaN($scope.filter.startDate) && !isNaN($scope.filter.endDate)
-            && typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
+            $scope.filter.startDate !== '' && $scope.filter.endDate !== '' &&
+            typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
             $http({
                 url: contextPath + 'api/v1/carts/' + $localStorage.letMeRentGuestCartId + '/add/'
                     + toolId + '/' + $scope.filter.startDate + '/' + $scope.filter.endDate,
