@@ -9,23 +9,28 @@ angular
                     $scope.new_tool = null;
                     $scope.created_tool = response.data;
                     console.log('Инструмент без фото успешно добавлен в базу');
-                    console.log($scope.pictures);
-                    let formData = new FormData();
-                    for (let i = 0; i < $scope.pictures.length; i++) {
-                        formData.append('pictures', $scope.pictures[i]);
-                        console.log('File name: ' + $scope.pictures[i].name + ', size: ' + $scope.pictures[i].size);
+
+                    if ($scope.pictures) {
+
+                        console.log($scope.pictures);
+                        let formData = new FormData();
+                        for (let i = 0; i < $scope.pictures.length; i++) {
+                            formData.append('pictures', $scope.pictures[i]);
+                            console.log('File name: ' + $scope.pictures[i].name + ', size: ' + $scope.pictures[i].size);
+                        }
+                        formData.append('instrumentId', $scope.created_tool.id);
+                        $http({
+                            url: contextPath + "/api/v1/pictures/uploads",
+                            method: 'POST',
+                            headers: {'Content-Type': undefined},
+                            data: formData
+                        }).then(function successCallback(response) {
+                            console.log('Added pictures');
+                        }, function failureCallback(response) {
+                            alert(response.data.messages);
+                        });
+
                     }
-                    formData.append('instrumentId', $scope.created_tool.id);
-                    $http({
-                        url: contextPath + "/api/v1/pictures/uploads",
-                        method: 'POST',
-                        headers: {'Content-Type': undefined},
-                        data: formData
-                    }).then(function successCallback(response) {
-                        console.log('Added pictures');
-                    }, function failureCallback(response) {
-                        alert(response.data.messages);
-                    });
 
                     alert('Инструмент успешно добавлен в базу');
 

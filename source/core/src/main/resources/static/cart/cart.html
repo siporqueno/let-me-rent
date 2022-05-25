@@ -25,7 +25,6 @@
           </tr>
         </thead>
         <tbody>
-        <!--        //код для работы с бэком-->
                 <tr ng-repeat="i in cart.items">
                     <td>{{i.instrument.title}}</td>
                     <td>{{i.instrument.brandName}}</td>
@@ -58,7 +57,7 @@
         </tbody>
     </table>
     <br/>
-    <button class="btn btn-outline-warning" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
-    <button class="btn btn-outline-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Подтвердить заказ</button>
+    <button class="btn btn-outline-warning" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-outline-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
 
 </div>
