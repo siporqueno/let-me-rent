@@ -1,0 +1,61 @@
+<div>
+    <p></p>
+    <h2>Информация об инструменте</h2>
+    <br/>
+    <button class="btn btn-link" ng-click="navToToolsList()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Назад к выбору инструмента
+    </button>
+    <br/>
+    <p></p>
+    <p>{{'Категория: ' + tool.categoryName}}</p>
+    <p>{{'Название инструмента: ' + tool.title}}</p>
+    <p>{{'Марка : ' + tool.brandName}}</p>
+    <p ng-if='tool.pictureUrls'>Фотографии</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-3" ng-repeat='url in tool.pictureUrls'>
+                <img class="img-fluid" ng-src='{{url}}'>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <h3>Владелец инструмента:</h3>
+    <p>{{'Имя пользователя на сайте: ' + tool.ownerUsername}}</p>
+    <p>{{'ФИО: ' + tool.ownerFirstName + ' ' + tool.ownerSecondName + ' ' + tool.ownerLastName}}</p>
+    <p>{{'Email Владельца: ' + tool.ownerEmail}}</p>
+    <p></p>
+    <p>{{'Цена аренды в сутки: ' + tool.fee}}</p>
+    <p>{{'Сумма залога: ' + tool.price}}</p>
+    <p></p>
+    <h3>КАЛЕНДАРЬ ДОСТУПНОСТИ ИНСТРУМЕНТА</h3>
+    <p></p>
+    <table id="tools-list" class="table">
+        <thead>
+        <tr>
+            <td>Дата начала периода доступности</td>
+            <td>Дата окончания периода доступности</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in tool.intervals">
+            <td>{{i.dateStart}}</td>
+            <td>{{i.dateFinish}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <h3>РУКОВОДСТВО ПО ЭКСПЛУАТАЦИИ, КОММЕНТАРИИ ВЛАДЕЛЬЦА</h3>
+    <p>{{tool.description}}</p>
+
+    <br/>
+    <button class="btn btn-outline-success" ng-click="showToolComments()">Показать отзывы об инструменте</button>
+    <br/>
+    <br/>
+    <span style="color: mediumblue"
+          ng-show="ascToolGrade">{{'Рейтинг инструмента по 5-бальной шкале:  '+ tool_grade}}</span>
+    <br/>
+    <div ng-repeat="tc in tool_comments">
+        <textarea cols="170" rows="3" readonly>{{tc.description}}</textarea>
+    </div>
+
+</div>

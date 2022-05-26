@@ -1,0 +1,44 @@
+<div>
+    <p></p>
+    <h2>Вы попали на страницу, где можете оставить свой отзыв</h2>
+    <br/>
+    <button class="btn btn-link" ng-click="navToProfile()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Вернуться в профиль
+    </button>
+    <br/>
+    <p></p>
+    <h3>Сведения об инструменте, о котором вы пожелали оставить отзыв</h3>
+    <p>{{'Категория: ' + tool.categoryName}}</p>
+    <p>{{'Название инструмента: ' + tool.title}}</p>
+    <p>{{'Марка : ' + tool.brandName}}</p>
+    <p></p>
+    <h3>Владелец инструмента:</h3>
+    <p>{{'Имя пользователя на сайте: ' + tool.ownerUsername}}</p>
+    <p>{{'ФИО: ' + tool.ownerFirstName + ' ' + tool.ownerSecondName + ' ' + tool.ownerLastName}}</p>
+    <p></p>
+    <p>{{'Цена аренды в сутки: ' + tool.fee}}</p>
+    <p>{{'Сумма залога: ' + tool.price}}</p>
+    <p></p>
+
+    <h3>Форма для отправки отзыва об инструменте</h3>
+    <br/>
+    <form novalidate ng-submit="sendToolFeedback()">
+        <textarea class="form-control" type="text" placeholder="Поле для ввода отзыва об инструменте. Здесь рукомендуется дать комментарий по состоянию инструмента, удобству его использования, а также можно нписать отзыв о владельце инструмента"
+                  ng-model="tool_comment.description"></textarea>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Рейтинг (выберите оценку)</label>
+            <select class="form-select" id="inputGroupSelect01" ng-model="tool_comment.grade">
+                <option selected></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <p></p>
+        <p></p>
+        <button type="submit" class="btn btn-outline-warning">Отправить отзыв</button>
+    </form>
+
+</div>

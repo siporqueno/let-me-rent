@@ -1,0 +1,29 @@
+<div>
+    <p></p>
+    <h1>ФОРМА ДОБАВЛЕНИЯ СВОЕГО ИНСТРУМЕНТА В БАЗУ САЙТА</h1>
+    <span ng-show="!isUserLoggedIn()">Функция добавления инструмента доступна только для зарегистрированных пользователей. Пройдите авторизацию</span>
+    <form novalidate ng-show="isUserLoggedIn()" ng-submit="addTool()" enctype="multipart/form-data">
+        <input class="form-control" type="text" placeholder="Название инструмента" ng-model="new_tool.title">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Марка" ng-model="new_tool.brandName">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена аренды в сутки" ng-model="new_tool.fee">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Стоимость инструмента" ng-model="new_tool.price">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Категория инструмента" ng-model="new_tool.categoryName">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Инструкции, дополнительная информация"
+               ng-model="new_tool.description">
+        <p></p>
+        <input class="form-control" type="file" placeholder="Фото" files-model="pictures" multiple>
+        <p></p>
+        <button type="submit" class="btn btn-outline-success">Разместить в базе инструментов</button>
+    </form>
+<br>
+    <h3 ng-show="isUserLoggedIn()">Добавляемые фото:</h3>
+    <div ng-show="isUserLoggedIn()" ng-repeat="p in pictures">
+        {{p.name}}
+        {{p.size}}
+    </div>
+</div>

@@ -1,0 +1,151 @@
+<div>
+    <p></p>
+    <h3>СПИСОК ИНСТРУМЕНТОВ, КОТОРЫЕ МОЖНО АРЕНДОВАТЬ</h3>
+    <p></p>
+    <div class="container">
+        <form novalidate class="input-group col" ng-submit="loadTools()">
+            <div class="row">
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border" type="search" value="" id="filterCategoryName"
+                               placeholder="категория" ng-model="filter.categoryName">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border" type="search" value="" id="filterTitle"
+                               placeholder="названиe инструмента" ng-model="filter.title">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border" type="search" value="" id="filterOwnerUsername"
+                               placeholder="имя владельца" ng-model="filter.ownerUsername">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border" type="search" value="" id="filterMaxFee"
+                               placeholder="максимальная цена" ng-model="filter.maxFee">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border datepickerStart" type="search" value="" id="filterStartDate"
+                               autocomplete="off" placeholder="дата начала аренды" ng-model="filter.startDate">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <div class="input-group">
+                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate"
+                               autocomplete="off" placeholder="дата окончания аренды" ng-model="filter.endDate">
+                    </div>
+                </div>
+                <div class="col-3 col-md-3" style="margin-top:10px;">
+                    <span class="input-group-btn" style="width:0; margin-top:10px;">
+                        <button class="btn btn-outline-success"
+                                type="submit">Применить&nbsp;фильтрацию</button>
+                        </span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <select id="sizeSelect" class="form-select" aria-label="Default select example" ng-model="sort_data.model"
+                    ng-change="loadTools()">
+                <option ng-repeat='option in sort_data.availableSortOptions' value='{{option.sort}}'>
+                    {{option.title}}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <select id="sortSelect" class="form-select" aria-label="Default select example" ng-model="size_data.model"
+                    ng-change="loadTools()">
+                <option ng-repeat='option in size_data.availablePageSizeOptions' value='{{option.pageSize}}'>
+                    {{option.pageSize}} инструментов на странице
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="container">
+            <div>
+                <table id="tools-list" class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-1">Категория</th>
+                        <th class="col-3">Название инструмента</th>
+                        <th class="col-1">Брэнд</th>
+                        <th class="col-1">Фото</th>
+                        <th class="col-1">Владелец</th>
+                        <th class="col-1">Цена аренды в сутки</th>
+                        <th class="col-1">Сумма залога</th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="t in toolsPage.instruments">
+                        <td class="col-1">{{t.categoryName}}</td>
+                        <td class="col-3">{{t.title}}</td>
+                        <td class="col-1">{{t.brandName}}</td>
+                        <td class="col-1">
+                            <img class="img-fluid img-thumbnail" ng-if='t.avatarPictureUrl'
+                                 ng-src='{{t.avatarPictureUrl}}'>
+                        </td>
+                        <td class="col-1">{{t.ownerUsername}}</td>
+                        <td class="col-1">{{t.fee}}</td>
+                        <td class="col-1">{{t.price}}</td>
+                        <td class="col-1">
+                            <button class="btn">
+                                <i class="material-icons" ng-click="navToToolInfoPage(t.id)"
+                                   style="color: #08711e;" title="Информация о инструменте">info</i>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn">
+                                <i class="material-icons" ng-click="putIntoCart(t.id)" title="Добавить в корзину">add_shopping_cart</i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!--               С Денисом оговорили - оставляю напоминалку в коде - ПОДУМАТЬ НАД ФОРМИРОВАНИЕ ЗАКАЗА И КОРЗИНЫ-->
+                    <!--ПОКА кнопка "В КОРЗИНУ" ведет на страницу оформления инструмента, где выбирается дата и можно уже арендовать.-->
+                    <!--НО когда проработаем схему работы с корзиной, будет, наверное, просто добавление этого инструмента в корзину,-->
+                    <!--из которой потом можно будет переходить от нужного инструмента на страницу оформления аренды. Может, будет иметь смысл-->
+                    <!--добавить еще одну кнопку типа "Арендовать сразу", если человеку нужен только один инструмент и он не хочет ничего-->
+                    <!--сравнивать, а сразу понял, что это то, что ему надо-->
+
+                    </tbody>
+                </table>
+
+                <p></p>
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li ng-show="!toolsPage.firstPage">
+                            <button class="page-link" ng-click="loadTools(toolsPage.number - 1)"><<</button>
+                        </li>
+                        <li ng-show="toolsPage.totalElements > 0"
+                            ng-repeat="pageIndex in paginationArray"
+                            ng-hide="pageIndex < toolsPage.number-1 || pageIndex > toolsPage.number+3">
+                            <button class="page-link"
+                                    ng-style="{'font-weight': (pageIndex == toolsPage.number+1) ? 'bold' : ''}"
+                                    ng-click="loadTools(pageIndex - 1)">{{pageIndex}}
+                            </button>
+                        </li>
+                        <li ng-show="!toolsPage.lastPage">
+                            <button class="page-link" ng-click="loadTools(toolsPage.number + 1)">>></button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div id="snackbar">Инструмент успешно добавлен в корзину</div>
+</div>

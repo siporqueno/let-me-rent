@@ -1,0 +1,64 @@
+server:
+  port: 8890
+  servlet:
+    context-path: /let-me-rent
+
+spring:
+  application:
+    name: let-me-rent
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5435/letmerent
+    username: postgres
+    password: postgrespass
+  jpa:
+#    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jackson:
+    default-property-inclusion: NON_NULL
+  main:
+    allow-bean-definition-overriding: true
+  mail:
+    host: smtp.gmail.com
+    user: letmerent2022
+    password: voV+AH/ubnxt9/V/lBc90g==:+QIa+eExuwgRaZHYv0NJ2Q==
+    secret: tJoXMms389FTuw6IciAZXg==:8QpKFE6rno70D+BP+BgwLw==
+    port: 587
+
+swagger:
+  title: CoreService
+  description: API для работы с let-me-rent
+  contact:
+    mail: let-me-rent@gmail.com
+    command: ДайПогонять
+    url: https://gb.ru/
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+
+properties:
+  cart:
+    prefix: LET_ME_RENT_
+  jwt:
+    secretKey: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
+    lifeTime: 36000000
+
+logging:
+  level:
+    ru:
+      letmerent:
+        core: info
+
+minio:
+  url: http://127.0.0.1:9000/
+  bucket: let-me-rent
+  key: minio
+  secret: minio-password
+

@@ -1,0 +1,63 @@
+<div class="container">
+    <p></p>
+    <h1>СПИСОК ИНСТРУМЕНТОВ ДОБАВЛЕННЫХ В КОРЗИНУ</h1>
+    <br/>
+    <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
+    <br/>
+    <br/>
+    <button class="btn btn-link" ng-click="navToToolsList()">
+        <i class="material-icons" style="color: #08711e;" >undo</i>Назад к выбору инструмента
+    </button>
+    <br/>
+    <br/>
+    <table class="table align-middle table-bordered" ng-show="cart.items.length > 0">
+        <thead>
+        <tr>
+            <th scope="col">Название инструмента</th>
+            <th scope="col">Марка инструмента</th>
+            <th scope="col">Владелец инструмента</th>
+            <th scope="col">Дата начала аренды</th>
+            <th scope="col">Дата окончания аренды</th>
+            <th scope="col">Стоимость аренды</th>
+            <th scope="col">Сумма залога</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+                <tr ng-repeat="i in cart.items">
+                    <td>{{i.instrument.title}}</td>
+                    <td>{{i.instrument.brandName}}</td>
+                    <td>{{i.instrument.ownerUsername}}</td>
+                    <td>{{i.startDate}}</td>
+                    <td>{{i.endDate}}</td>
+                    <td>{{i.instrument.fee + '*' + i.rentLength + '=' + i.rentPrice}}</td>
+                    <td>{{i.instrument.price}}</td>
+
+            <td>
+                <button class = "btn">
+                    <i class="material-icons" ng-click="deleteItem(i.instrument.id)" style="color: #c51759;" title = "Удалить из корзины">close</i>
+                </button>
+            </td>
+            <td>
+                <button class = "btn">
+                    <i class="material-icons" ng-click="navToToolInfoPage(i.instrument.id)" style="color: #08711e;" title = "Информация о инструменте">info</i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{'Итого цена: ' + cart.totalFee}}</td>
+            <td>{{'Итого залог: ' + cart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <button class="btn btn-outline-warning" ng-click="confirmOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-outline-secondary" ng-click="disabledCreateOrder()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+
+</div>

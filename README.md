@@ -3,7 +3,7 @@
 
 ## Документация
 - В качестве видеоруководства по использованию приложения можно воспользоваться видео из [презентации](https://docs.google.com/presentation/d/1Tq42chcF3Q-lb7ja8-p767knOUCoUJ6bM1k69Kj7_to/edit?usp=sharing)
-- Диаграмма классов сущностей Key Abstractions и диаграммы последовательности по основным вариантам использования находятся в директории [diagrams](https://github.com/siporqueno/let-me-rent/tree/main/diagrams)
+- Диаграмма классов сущностей Key Abstractions и диаграммы последовательности по основным вариантам использования находятся в директории [diagrams](https://github.com/siporqueno/let-me-rent/tree/develop/diagrams)
 
 ## Установка  
 Для сборки и запуска приложения вам понадобится:
@@ -14,3 +14,4 @@
 
 ## Сообщество  
 Следите за нами на [GitHub](https://github.com/siporqueno/let-me-rent)
+

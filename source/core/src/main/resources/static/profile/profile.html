@@ -1,0 +1,105 @@
+<div class="container">
+
+    <div class="container" ng-show="!isUserLoggedIn()">
+        <h1>Доступ к личному кабинету возможен только для авторизованных пользователей!</h1>
+        <button class="btn btn-outline-success" ng-click="navToAuthPage()">Авторизоваться</button>
+    </div>
+    <div class="container" ng-show="isUserLoggedIn()">
+        <p></p>
+        <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
+        <h3>Личные данные</h3>
+        <p>{{'Пользователь: ' + userProfile.userName}}</p>
+        <p>{{'Фамилия: ' + userProfile.lastName}}</p>
+        <p>{{'Имя: ' + userProfile.firstName}}</p>
+        <p>{{'Отчество: ' + userProfile.secondName}}</p>
+        <p>{{'E-Mail: ' + userProfile.email}}</p>
+
+        <br/>
+        <button class="btn btn-outline-success" ng-click="navToChangeProfileForm()">Редактировать личные данные</button>
+        <br/>
+        <br/>
+
+        <h4>Список инструментов, взятых в аренду</h4>
+        <table class="table align-middle">
+            <thead scope="col">
+            <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Список инструментов</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ord in orders">
+                <th scope="row">{{ord.id}}</th>
+                <td>
+                    <table class="table align-middle table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Название инструмента</th>
+                            <th scope="col">Марка инструмента</th>
+                            <th scope="col">Владелец инструмента</th>
+                            <th scope="col">Дата начала аренды</th>
+                            <th scope="col">Дата окончания аренды</th>
+                            <th scope="col">Сумма залога</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oi in ord.orderItems">
+                            <td>{{oi.instrument.title}}</td>
+                            <td>{{oi.instrument.brandName}}</td>
+                            <td>{{oi.instrument.ownerUsername}}</td>
+                            <td>{{oi.startDate}}</td>
+                            <td>{{oi.endDate}}</td>
+                            <td>{{oi.instrument.price}}</td>
+                            <td>{{oi.instrument.price}}</td>
+                            <td>
+                                <button class="btn btn-outline-warning" ng-show="!renterIsOwner(oi.instrument.ownerId)"
+                                        ng-click="navToFeedbackPage(oi.instrument.id, oi.instrument.ownerId)">Оставить&nbsp;отзыв
+                                </button>
+                                <button class="btn btn-outline-secondary" ng-show="renterIsOwner(oi.instrument.ownerId)"
+                                        ng-click="failedNavToFeedbackPage()">Оставить&nbsp;отзыв
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h4>Список инструментов, выставленных на сайте для передачи в аренду</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Название инструмента</th>
+                <th>Марка</th>
+                <th>Цена аренды</th>
+                <th>Сумма залога</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="t in tools.instruments">
+                <td>{{t.title}}</td>
+                <td>{{t.brandName}}</td>
+                <td>{{t.fee}}</td>
+                <td>{{t.price}}</td>
+                <td>
+                    <button class="btn btn-outline-success" ng-click="navToToolHistory(t.id)">История&nbsp;аренд
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-outline-warning" ng-click="changeTool(t.id)">Изменить</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
