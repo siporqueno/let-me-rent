@@ -1,6 +1,7 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
+    var startDateCleared = false;
 
     $scope.size_data = {
         availablePageSizeOptions: [
@@ -69,37 +70,97 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
 
     $(document).ready(function () {
 
+        // $('.datepickerStart').datepicker({
+        //     format: 'dd-mm-yyyy'
+        // }).on("change", function () {
+        //     var today = new Date();
+        //     var selected = $(this).datepicker('getDate');
+        //     if (selected != null) {
+        //         if (!isStartDateNotLaterThanEndDate(today, selected)) {
+        //             $(this).datepicker('setDate', null);
+        //             alert("Нельзя выбрать дату раньше сегодняшней");
+        //         }
+        //     }
+        // });
+
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
-            var today = new Date();
             var selected = $(this).datepicker('getDate');
-            if (selected != null) {
-                if (!isStartDateNotLaterThanEndDate(today, selected)) {
-                    $(this).datepicker('setDate', null);
-                    alert("Нельзя выбрать дату раньше сегодняшней");
+            console.log(selected);
+            console.log(typeof selected);
+            console.log(typeof startDateCleared)
+            console.log(startDateCleared);
+
+            if (startDateCleared) {
+                console.log(typeof startDateCleared + ' ' + startDateCleared);
+                startDateCleared = Boolean(false);
+                return;
+            }
+
+            if (!isDateValid(selected)) {
+                console.log('Here');
+                $(this).datepicker('update', '');
+                alert("Нужно выбрать дату начала не раньше сегодняшней");
+                startDateCleared = Boolean(true);
+            } else {
+                console.log('There');
+                let endDate = $('.datepickerEnd').datepicker('getDate');
+                if (isDateValid(endDate)) {
+                    if (!isStartDateNotLaterThanEndDate(selected, endDate)) {
+                        alert("Дата начала должна быть не позже даты окончания");
+                    }
                 }
             }
         });
+
+        // $('.datepickerEnd').datepicker({
+        //     format: 'dd-mm-yyyy'
+        // }).on("change", function () {
+        //     var selected = $(this).datepicker('getDate');
+        //     if (selected != null) {
+        //         var startDate = $('.datepickerStart').datepicker('getDate');
+        //         if (startDate === null) {
+        //             $(this).datepicker('setDate', null);
+        //             alert("Выберите дату начала аренды")
+        //         }
+        //         if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
+        //             $(this).datepicker('setDate', null);
+        //             alert("Нельзя выбрать дату раньше начальной");
+        //         }
+        //     }
+        // });
 
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy'
         }).on("change", function () {
             var selected = $(this).datepicker('getDate');
-            if (selected != null) {
-                var startDate = $('.datepickerStart').datepicker('getDate');
-                if (startDate === null) {
-                    $(this).datepicker('setDate', null);
-                    alert("Выберите дату начала аренды")
-                }
-                if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
-                    $(this).datepicker('setDate', null);
-                    alert("Нельзя выбрать дату раньше начальной");
+
+            if (!isDateValid(selected)) {
+                $(this).datepicker('setDate', null);
+                alert("Нужно выбрать дату окончания не раньше сегодняшней");
+            } else {
+                let startDate = $('.datepickerStart').datepicker('getDate');
+                if (isDateValid(startDate)) {
+                    if (!isStartDateNotLaterThanEndDate(selected, endDate)) {
+                        alert("Дата окончания должна быть не раньше даты начала");
+                    } else {
+                        alert("Нужно выбрать дату окончания не раньше сегодняшней");
+                    }
                 }
             }
         });
 
     });
+
+    let isDateValid = function (date) {
+        if (date === null || date === '' || typeof date === undefined) {
+            return false;
+        }
+
+        return isStartDateNotLaterThanEndDate(new Date(), date);
+
+    }
 
     let isStartDateNotLaterThanEndDate = function (startDate, endDate) {
 
