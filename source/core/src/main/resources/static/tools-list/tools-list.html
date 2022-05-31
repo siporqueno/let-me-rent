@@ -30,17 +30,25 @@
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
-                    <div class="input-group">
-                        <input class="form-control border datepickerStart" type="search" value="" id="filterStartDate"
+                    <div class="input-group date">
+                        <input class="form-control border datepickerStart" type="text" value=""
+                               id="filterStartDate"
                                autocomplete="off" placeholder="дата начала аренды" ng-model="filter.startDate">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-3 col-md-3" style="margin-top:10px;">
-                    <div class="input-group">
-                        <input class="form-control border datepickerEnd" type="search" value="" id="filterEndDate"
+                    <div class="input-group date">
+                        <input class="form-control border datepickerEnd" type="text" value="" id="filterEndDate"
                                autocomplete="off" placeholder="дата окончания аренды" ng-model="filter.endDate">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
                     </div>
                 </div>
+
                 <div class="col-3 col-md-3" style="margin-top:10px;">
                     <span class="input-group-btn" style="width:0; margin-top:10px;">
                         <button class="btn btn-outline-success"
