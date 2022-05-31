@@ -1,6 +1,7 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
+    let isApplyFiltersButtonPressed = false;
 
     $scope.size_data = {
         availablePageSizeOptions: [
@@ -28,6 +29,12 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     if ($localStorage.currentSort != null) {
         $scope.sort_data.model = $localStorage.currentSort;
     } else $scope.sort_data.model = '';
+
+    $scope.filterTools = function (pageIndex = 0) {
+        isApplyFiltersButtonPressed = true;
+        $scope.loadTools(pageIndex);
+
+    }
 
     $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
@@ -75,6 +82,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             clearBtn: true
         }).on('change', function () {
 
+            isApplyFiltersButtonPressed = false;
             let startDate = $('.datepickerStart').datepicker('getDate');
             let endDate = $('.datepickerEnd').datepicker('getDate');
 
@@ -94,6 +102,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             clearBtn: true
         }).on("change", function () {
 
+            isApplyFiltersButtonPressed = false;
             let startDate = $('.datepickerStart').datepicker('getDate');
             let endDate = $('.datepickerEnd').datepicker('getDate');
 
@@ -168,7 +177,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     // }
 
     $scope.putIntoCart = function (toolId) {
-        if (typeof $scope.filter != 'undefined' &&
+        if (isApplyFiltersButtonPressed && typeof $scope.filter != 'undefined' &&
             $scope.filter.startDate != null && $scope.filter.endDate != null &&
             $scope.filter.startDate !== '' && $scope.filter.endDate !== '' &&
             typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
@@ -184,7 +193,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 }, 3000);
             });
         } else {
-            alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды");
+            alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды и применить фильтрацию");
         }
     }
 
