@@ -79,7 +79,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerStart').datepicker({
             format: 'dd-mm-yyyy',
             startDate: '0d',
-            clearBtn: true
+            clearBtn: true,
+            language: 'ru'
         }).on('change', function () {
 
             isApplyFiltersButtonPressed = false;
@@ -99,7 +100,8 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
         $('.datepickerEnd').datepicker({
             format: 'dd-mm-yyyy',
             startDate: '0d',
-            clearBtn: true
+            clearBtn: true,
+            language: 'ru'
         }).on("change", function () {
 
             isApplyFiltersButtonPressed = false;
