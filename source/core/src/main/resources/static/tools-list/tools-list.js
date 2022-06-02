@@ -1,6 +1,7 @@
 angular.module('tools').controller('toolsListController', function ($scope, $http, $location, $routeParams, $localStorage) {
     const contextPath = 'http://localhost:8890/let-me-rent/';
     let currentPageIndex = 1;
+    let isApplyFiltersButtonPressed = false;
 
     $scope.size_data = {
         availablePageSizeOptions: [
@@ -28,6 +29,12 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     if ($localStorage.currentSort != null) {
         $scope.sort_data.model = $localStorage.currentSort;
     } else $scope.sort_data.model = '';
+
+    $scope.filterTools = function (pageIndex = 0) {
+        isApplyFiltersButtonPressed = true;
+        $scope.loadTools(pageIndex);
+
+    }
 
     $scope.loadTools = function (pageIndex = 0) {
         currentPageIndex = pageIndex;
@@ -70,36 +77,62 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     $(document).ready(function () {
 
         $('.datepickerStart').datepicker({
-            format: 'dd-mm-yyyy'
-        }).on("change", function () {
-            var today = new Date();
-            var selected = $(this).datepicker('getDate');
-            if (selected != null) {
-                if (!isStartDateNotLaterThanEndDate(today, selected)) {
-                    $(this).datepicker('setDate', null);
-                    alert("Нельзя выбрать дату раньше сегодняшней");
-                }
+            format: 'dd-mm-yyyy',
+            startDate: '0d',
+            clearBtn: true,
+            language: 'ru'
+        }).on('change', function () {
+
+            isApplyFiltersButtonPressed = false;
+            let startDate = $('.datepickerStart').datepicker('getDate');
+            let endDate = $('.datepickerEnd').datepicker('getDate');
+
+            if (isDateValid(startDate) && isDateValid(endDate) && !isStartDateNotLaterThanEndDate(startDate, endDate)) {
+                $(this).datepicker('update', '');
+                alert("Дата начала должна быть не позже даты окончания");
+                $(this).datepicker('show');
+                return;
             }
+
+            $(this).datepicker('hide');
         });
 
         $('.datepickerEnd').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd-mm-yyyy',
+            startDate: '0d',
+            clearBtn: true,
+            language: 'ru'
         }).on("change", function () {
-            var selected = $(this).datepicker('getDate');
-            if (selected != null) {
-                var startDate = $('.datepickerStart').datepicker('getDate');
-                if (startDate === null) {
-                    $(this).datepicker('setDate', null);
-                    alert("Выберите дату начала аренды")
-                }
-                if (!isStartDateNotLaterThanEndDate(startDate, selected)) {
-                    $(this).datepicker('setDate', null);
-                    alert("Нельзя выбрать дату раньше начальной");
-                }
+
+            isApplyFiltersButtonPressed = false;
+            let startDate = $('.datepickerStart').datepicker('getDate');
+            let endDate = $('.datepickerEnd').datepicker('getDate');
+
+            if (isDateValid(startDate) && isDateValid(endDate) && !isStartDateNotLaterThanEndDate(startDate, endDate)) {
+                $(this).datepicker('update', '');
+                alert("Дата окончания должна быть не раньше даты начала");
+                $(this).datepicker('show');
+                return;
             }
+
+            $(this).datepicker('hide');
         });
 
     });
+
+    let isDateValid = function (date) {
+
+        if (date == null) {
+            return false;
+        }
+
+        if (date === '') {
+            return false;
+        }
+
+        return typeof date !== undefined;
+
+    }
 
     let isStartDateNotLaterThanEndDate = function (startDate, endDate) {
 
@@ -107,11 +140,18 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
             return false;
         }
 
-        if (startDate.getMonth() > endDate.getMonth()) {
-            return false;
-        }
+        if (startDate.getFullYear() < endDate.getFullYear()) {
+            return true;
+        } else {
 
-        return startDate.getDate() <= endDate.getDate();
+            if (startDate.getMonth() > endDate.getMonth()) {
+                return false;
+            }
+
+            if (startDate.getMonth() < endDate.getMonth()) {
+                return true;
+            } else return startDate.getDate() <= endDate.getDate();
+        }
 
     }
 
@@ -139,7 +179,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
     // }
 
     $scope.putIntoCart = function (toolId) {
-        if (typeof $scope.filter != 'undefined' &&
+        if (isApplyFiltersButtonPressed && typeof $scope.filter != 'undefined' &&
             $scope.filter.startDate != null && $scope.filter.endDate != null &&
             $scope.filter.startDate !== '' && $scope.filter.endDate !== '' &&
             typeof $scope.filter.startDate != 'undefined' && typeof $scope.filter.endDate != 'undefined') {
@@ -155,7 +195,7 @@ angular.module('tools').controller('toolsListController', function ($scope, $htt
                 }, 3000);
             });
         } else {
-            alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды");
+            alert("Для добавления в корзину необходимо ввести в полях фильтрации даты начала и окончания аренды и применить фильтрацию");
         }
     }
 
